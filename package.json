@@ -59,7 +59,7 @@
     "sonner": "2.0.7",
     "tailwindcss-animate": "1.0.7",
     "vaul": "1.1.2",
-    "wxz-web-builder-react-components": "^0.1.8",
+    "_wxz-web-builder-react-components": "^0.1.8",
     "wxz-web-builder-vite-plugin": "latest"
   },
   "devDependencies": {
