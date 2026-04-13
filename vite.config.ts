@@ -21,7 +21,8 @@ export default defineConfig({
     },
   },
   server: {
-    ...WXZ_WEB_BUILDER_VITE_SERVER,
+    // 已移除 WXZ_WEB_BUILDER_VITE_SERVER 变量
+    // Vercel 会自动处理生产环境的服务器配置
   },
   build: {
     rollupOptions: {
