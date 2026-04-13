@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
-import {
-  LanguageSwitcher,
-  LanguageSwitcherTrigger,
-  LanguageSwitcherContent,
-  LanguageSwitcherList,
-  LanguageSwitcherValue,
-} from "wxz-web-builder-react-components";
 
 interface HeaderProps {
   isDark: boolean;
@@ -18,6 +11,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [currentLanguage, setCurrentLanguage] = useState("zh");
   const location = useLocation();
 
   useEffect(() => {
@@ -48,6 +42,51 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
       return location.pathname === "/blog" || location.pathname === "/";
     }
     return location.pathname === path;
+  };
+
+  // 语言切换器实现
+  const LanguageSwitcher = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const languages = [
+      { code: "zh", name: "中文" },
+      { code: "en", name: "English" },
+    ];
+
+    const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const handleLanguageChange = (code: string) => {
+      setCurrentLanguage(code);
+      setIsOpen(false);
+    };
+
+    return (
+      <div className="relative">
+        <button
+          onClick={toggleDropdown}
+          className="p-2 text-foreground hover:text-primary transition-colors flex items-center gap-2"
+          aria-label="切换语言"
+        >
+          <span>{languages.find(lang => lang.code === currentLanguage)?.name}</span>
+        </button>
+        {isOpen && (
+          <div className="absolute top-full left-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => handleLanguageChange(lang.code)}
+                className={`block px-4 py-2 text-sm w-full text-left ${
+                  currentLanguage === lang.code
+                    ? "text-primary font-medium"
+                    : "text-foreground hover:bg-muted hover:text-primary"
+                } transition-colors`}
+              >
+                {lang.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -102,14 +141,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <LanguageSwitcher>
-              <LanguageSwitcherTrigger className="p-2 text-foreground hover:text-primary transition-colors flex items-center gap-2">
-                <LanguageSwitcherValue placeholder="选择语言" />
-              </LanguageSwitcherTrigger>
-              <LanguageSwitcherContent className="bg-card border border-border rounded-lg shadow-lg py-1 min-w-[160px]">
-                <LanguageSwitcherList itemClassName="px-4 py-2 text-sm hover:bg-muted cursor-pointer transition-colors" />
-              </LanguageSwitcherContent>
-            </LanguageSwitcher>
+            <LanguageSwitcher />
 
             <button
               onClick={toggleTheme}
@@ -145,14 +177,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
               </Link>
             ))}
             <div className="pt-4 border-t border-border flex items-center space-x-4">
-              <LanguageSwitcher>
-                <LanguageSwitcherTrigger className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
-                  <LanguageSwitcherValue placeholder="选择语言" />
-                </LanguageSwitcherTrigger>
-                <LanguageSwitcherContent className="bg-card border border-border rounded-lg shadow-lg py-1 min-w-[160px]">
-                  <LanguageSwitcherList itemClassName="px-4 py-2 text-sm hover:bg-muted cursor-pointer transition-colors" />
-                </LanguageSwitcherContent>
-              </LanguageSwitcher>
+              <LanguageSwitcher />
               <button
                 onClick={toggleTheme}
                 className="flex items-center space-x-2 text-sm text-foreground hover:text-primary transition-colors"
@@ -167,3 +192,4 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
     </header>
   );
 }
+
