@@ -1,0 +1,5 @@
+src/components/generated/AboutPage.tsx
+src/components/generated/BlogDetail.tsx
+src/components/generated/Header.tsx
+supabase/migrations/create_blog_tables.sql
+package.json
