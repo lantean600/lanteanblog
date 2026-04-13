@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
+import { useLanguage, type Language } from "@/context/LanguageContext";
 
 interface HeaderProps {
   isDark: boolean;
@@ -11,7 +12,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [currentLanguage, setCurrentLanguage] = useState("zh");
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
@@ -23,18 +24,18 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   }, []);
 
   const navItems = [
-    { name: "博客", path: "/blog", hasDropdown: true },
-    { name: "学术", path: "/academic" },
-    { name: "项目", path: "/projects" },
-    { name: "友链", path: "/links" },
-    { name: "关于", path: "/about" },
+    { name: language === "zh" ? "博客" : "Blog", path: "/blog", hasDropdown: true },
+    { name: language === "zh" ? "学术" : "Academic", path: "/academic" },
+    { name: language === "zh" ? "项目" : "Projects", path: "/projects" },
+    { name: language === "zh" ? "友链" : "Links", path: "/links" },
+    { name: language === "zh" ? "关于" : "About", path: "/about" },
   ];
 
   const blogCategories = [
-    { name: "研究", path: "/blog?category=research" },
-    { name: "技术", path: "/blog?category=technical" },
-    { name: "日常", path: "/blog?category=daily" },
-    { name: "月刊", path: "/blog?category=journal" },
+    { name: language === "zh" ? "研究" : "Research", path: "/blog?category=research" },
+    { name: language === "zh" ? "技术" : "Technical", path: "/blog?category=technical" },
+    { name: language === "zh" ? "日常" : "Daily", path: "/blog?category=daily" },
+    { name: language === "zh" ? "月刊" : "Journal", path: "/blog?category=journal" },
   ];
 
   const isActive = (path: string) => {
@@ -47,15 +48,15 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   // 语言切换器实现
   const LanguageSwitcher = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const languages = [
+    const languages: { code: Language; name: string }[] = [
       { code: "zh", name: "中文" },
       { code: "en", name: "English" },
     ];
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
-    const handleLanguageChange = (code: string) => {
-      setCurrentLanguage(code);
+    const handleLanguageChange = (code: "zh" | "en") => {
+      setLanguage(code);
       setIsOpen(false);
     };
 
@@ -64,9 +65,9 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
         <button
           onClick={toggleDropdown}
           className="p-2 text-foreground hover:text-primary transition-colors flex items-center gap-2"
-          aria-label="切换语言"
+          aria-label={language === "zh" ? "切换语言" : "Switch language"}
         >
-          <span>{languages.find(lang => lang.code === currentLanguage)?.name}</span>
+          <span>{languages.find((lang) => lang.code === language)?.name}</span>
         </button>
         {isOpen && (
           <div className="absolute top-full left-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2">
@@ -75,7 +76,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
                 key={lang.code}
                 onClick={() => handleLanguageChange(lang.code)}
                 className={`block px-4 py-2 text-sm w-full text-left ${
-                  currentLanguage === lang.code
+                  language === lang.code
                     ? "text-primary font-medium"
                     : "text-foreground hover:bg-muted hover:text-primary"
                 } transition-colors`}
@@ -121,7 +122,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
                 </Link>
                 {item.hasDropdown && (
                   <div
-                    className={`absolute top-full left-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2 transition-all duration-200 ${
+                    className={`absolute top-full left-0 w-48 bg-card border border-border rounded-lg shadow-lg py-2 transition-all duration-200 ${
                       activeDropdown === item.path ? "opacity-100 visible" : "opacity-0 invisible"
                     }`}
                   >
@@ -183,7 +184,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
                 className="flex items-center space-x-2 text-sm text-foreground hover:text-primary transition-colors"
               >
                 {isDark ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
-                <span>{isDark ? "浅色模式" : "深色模式"}</span>
+                <span>{isDark ? (language === "zh" ? "浅色模式" : "Light Mode") : (language === "zh" ? "深色模式" : "Dark Mode")}</span>
               </button>
             </div>
           </div>

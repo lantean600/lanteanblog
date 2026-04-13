@@ -1,33 +1,19 @@
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function AcademicPage() {
+  const { language } = useLanguage();
   const projects = [
     {
       id: 1,
-      title: "多模态具身智能研究",
-      description: "研究如何让机器人通过视觉、语言等多模态信息理解环境并执行复杂任务。",
+      title: language === "zh" ? "多模态具身智能研究（样例）" : "Multimodal Embodied AI Research (Sample)",
+      description: language === "zh"
+        ? "样例数据：研究如何让机器人通过视觉、语言等多模态信息理解环境并执行复杂任务。"
+        : "Sample entry: exploring how robots understand environments and perform tasks with multimodal signals such as vision and language.",
       tags: ["AI", "Robotics", "Multimodal"],
-      link: "#",
-      paper: "#",
+      link: "https://github.com/",
+      paper: "https://arxiv.org/",
       period: "2024.07 - Present",
-    },
-    {
-      id: 2,
-      title: "高效 Transformer 架构优化",
-      description: "探索降低 Transformer 模型计算复杂度的方法，提升推理效率。",
-      tags: ["Deep Learning", "NLP", "Optimization"],
-      link: "#",
-      paper: "#",
-      period: "2023.09 - 2024.06",
-    },
-    {
-      id: 3,
-      title: "基于图神经网络的知识图谱推理",
-      description: "利用图神经网络进行知识图谱补全和关系推理。",
-      tags: ["GNN", "Knowledge Graph", "AI"],
-      link: "#",
-      paper: "#",
-      period: "2022.09 - 2023.08",
     },
   ];
 
@@ -36,10 +22,12 @@ export function AcademicPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            学术研究
+            {language === "zh" ? "学术研究" : "Academic Research"}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            展示我的研究成果和学术论文
+            {language === "zh"
+              ? "展示我的研究成果和学术论文"
+              : "Showcasing my research projects and publications"}
           </p>
         </div>
 
@@ -76,14 +64,14 @@ export function AcademicPage() {
                   className="flex items-center space-x-1 text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   <FaGithub className="w-4 h-4" />
-                  <span>查看项目</span>
+                  <span>{language === "zh" ? "查看项目" : "Project"}</span>
                 </a>
                 <a
                   href={project.paper}
                   className="flex items-center space-x-1 text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   <FaExternalLinkAlt className="w-4 h-4" />
-                  <span>查看论文</span>
+                  <span>{language === "zh" ? "查看论文" : "Paper"}</span>
                 </a>
               </div>
             </div>

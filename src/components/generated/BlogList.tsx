@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { useLanguage } from "@/context/LanguageContext";
+import hero1 from "@/assets/hero1.jpg";
 
 export function BlogList() {
+  const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const category = searchParams.get("category") || "all";
 
   const categories = [
-    { key: "all", label: "全部" },
-    { key: "research", label: "研究" },
-    { key: "technical", label: "技术" },
-    { key: "daily", label: "日常" },
-    { key: "journal", label: "月刊" },
+    { key: "all", label: language === "zh" ? "全部" : "All" },
+    { key: "research", label: language === "zh" ? "研究" : "Research" },
+    { key: "technical", label: language === "zh" ? "技术" : "Technical" },
+    { key: "daily", label: language === "zh" ? "日常" : "Daily" },
+    { key: "journal", label: language === "zh" ? "月刊" : "Journal" },
   ];
 
   const posts = [
@@ -24,6 +27,8 @@ export function BlogList() {
       tags: ["AI", "Deep Learning", "NLP"],
       date: "2026-04-10",
       views: 1234,
+      heroImage: hero1,
+      heroLink: "https://www.pixiv.net/en/artworks/142350190",
     },
     {
       id: 2,
@@ -33,6 +38,8 @@ export function BlogList() {
       tags: ["React", "JavaScript", "Performance"],
       date: "2026-04-05",
       views: 892,
+      heroImage: hero1,
+      heroLink: "https://www.pixiv.net/en/artworks/142350190",
     },
     {
       id: 3,
@@ -42,6 +49,8 @@ export function BlogList() {
       tags: ["Life", "Review"],
       date: "2026-04-01",
       views: 567,
+      heroImage: hero1,
+      heroLink: "https://www.pixiv.net/en/artworks/142350190",
     },
     {
       id: 4,
@@ -51,6 +60,8 @@ export function BlogList() {
       tags: ["Life", "Outdoor"],
       date: "2026-03-28",
       views: 423,
+      heroImage: hero1,
+      heroLink: "https://www.pixiv.net/en/artworks/142350190",
     },
   ];
 
@@ -79,7 +90,7 @@ export function BlogList() {
           {/* Main Content */}
           <div className="flex-1">
             <h1 className="text-3xl font-bold text-foreground mb-6">
-              博客文章
+              {language === "zh" ? "博客文章" : "Blog Posts"}
             </h1>
 
             {/* Category Tabs */}
@@ -106,6 +117,22 @@ export function BlogList() {
                   key={post.id}
                   className="p-6 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 hover:translate-y-[-2px] transition-all duration-200"
                 >
+                  <a
+                    href={post.heroLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative block mb-5 overflow-hidden rounded-2xl shadow-lg bg-card transition-shadow duration-300 hover:shadow-xl"
+                  >
+                    <img
+                      src={post.heroImage}
+                      alt={`${post.title} hero`}
+                      className="block w-full aspect-[16/9] object-cover rounded-2xl transition-[filter] duration-300 group-hover:brightness-95"
+                      loading="lazy"
+                    />
+                    <span className="absolute right-3 bottom-3 px-3 py-1.5 text-xs font-medium text-white bg-black/50 rounded-md backdrop-blur-sm opacity-90 group-hover:opacity-100 transition-all duration-300">
+                      Hero Image
+                    </span>
+                  </a>
                   <Link to={`/blog/${post.id}`}>
                     <h2 className="text-xl font-bold text-foreground mb-2 hover:text-primary transition-colors">
                       {post.title}
@@ -135,13 +162,13 @@ export function BlogList() {
                     </div>
                     <div className="flex items-center space-x-4">
                       <span className="text-sm text-muted-foreground">
-                        阅读：{post.views}
+                        {language === "zh" ? `阅读：${post.views}` : `Views: ${post.views}`}
                       </span>
                       <Link
                         to={`/blog/${post.id}`}
                         className="text-sm text-primary hover:text-primary/80 font-medium"
                       >
-                        阅读更多 →
+                        {language === "zh" ? "阅读更多 →" : "Read More →"}
                       </Link>
                     </div>
                   </div>
@@ -159,7 +186,7 @@ export function BlogList() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="搜索文章..."
+                  placeholder={language === "zh" ? "搜索文章..." : "Search posts..."}
                   className="w-full px-4 py-3 pl-10 bg-card border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                 />
                 <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -168,7 +195,7 @@ export function BlogList() {
               {/* Tags Cloud */}
               <div className="p-4 bg-card border border-border rounded-lg">
                 <h3 className="text-sm font-semibold text-foreground mb-3">
-                  热门标签
+                  {language === "zh" ? "热门标签" : "Popular Tags"}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {["AI", "React", "JavaScript", "Life", "NLP", "Performance"].map(

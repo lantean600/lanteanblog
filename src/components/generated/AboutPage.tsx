@@ -1,10 +1,13 @@
 import { FaGithub, FaEnvelope, FaGraduationCap, FaMapMarkerAlt } from "react-icons/fa";
+import avatarFallback from "@/assets/avatar-fallback.svg";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function AboutPage() {
+  const { language } = useLanguage();
   const skills = [
-    { category: "编程语言", items: ["Python", "JavaScript", "TypeScript", "C++"] },
-    { category: "框架", items: ["React", "PyTorch", "TensorFlow", "Node.js"] },
-    { category: "工具", items: ["Git", "Docker", "Linux", "PostgreSQL"] },
+    { category: language === "zh" ? "编程语言" : "Languages", items: ["Python", "JavaScript", "TypeScript", "C++"] },
+    { category: language === "zh" ? "框架" : "Frameworks", items: ["React", "PyTorch", "TensorFlow", "Node.js"] },
+    { category: language === "zh" ? "工具" : "Tools", items: ["Git", "Docker", "Linux", "PostgreSQL"] },
   ];
 
   return (
@@ -13,32 +16,30 @@ export function AboutPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <img
-            src="https://baas-api.wanwang.xin/toc/image/preview/professional-avatar-large.jpg?w=200&h=200&q=85"
+            src={avatarFallback}
             alt="Avatar"
             className="w-32 h-32 mx-auto rounded-2xl object-cover border-2 border-border shadow-lg mb-6"
           />
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            关于我
+            {language === "zh" ? "关于我" : "About Me"}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            你好！我是 Lantean，一名热爱技术的开发者和研究者。
+            {language === "zh"
+              ? "你好！我是 Lantean，一名热爱技术的开发者和研究者。"
+              : "Hi, I'm Lantean, a developer and researcher passionate about technology."}
           </p>
         </div>
 
         {/* About Section */}
         <section className="mb-12">
           <h2 className="text-xl font-bold text-foreground mb-4">
-            详细介绍
+            {language === "zh" ? "详细介绍" : "Introduction"}
           </h2>
           <div className="p-6 bg-card border border-border rounded-lg">
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              我目前在上海人工智能实验室具身智能中心实习，专注于多模态学习和机器人控制方向的研究。
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              在此之前，我在西安交通大学攻读人工智能专业学士学位，打下了坚实的理论基础。
-            </p>
             <p className="text-muted-foreground leading-relaxed">
-              我对人工智能、深度学习、自然语言处理等领域充满热情，喜欢探索前沿技术并将其应用于实际问题。
+              {language === "zh"
+                ? "我对人工智能、深度学习、自然语言处理等领域充满热情，喜欢探索前沿技术并将其应用于实际问题。"
+                : "I'm passionate about AI, deep learning, and NLP, and enjoy applying cutting-edge tech to real-world problems."}
             </p>
           </div>
         </section>
@@ -47,32 +48,20 @@ export function AboutPage() {
         <section className="mb-12">
           <h2 className="text-xl font-bold text-foreground mb-4 flex items-center">
             <FaGraduationCap className="w-5 h-5 mr-2" />
-            教育经历
+            {language === "zh" ? "教育经历" : "Education"}
           </h2>
           <div className="space-y-4">
             <div className="p-6 bg-card border border-border rounded-lg">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="font-bold text-foreground">上海人工智能实验室</h3>
-                  <p className="text-sm text-muted-foreground">具身智能中心</p>
+                  <h3 className="font-bold text-foreground">太原理工大学</h3>
+                  <p className="text-sm text-muted-foreground">软件工程专业</p>
                 </div>
                 <span className="text-xs text-muted-foreground font-mono">
-                  2024 年 7 月 - 至今
+                  2025 年 9 月 - 至今
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground">实习生</p>
-            </div>
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <h3 className="font-bold text-foreground">西安交通大学</h3>
-                  <p className="text-sm text-muted-foreground">人工智能专业</p>
-                </div>
-                <span className="text-xs text-muted-foreground font-mono">
-                  2022 年 9 月 - 至今
-                </span>
-              </div>
-              <p className="text-sm text-muted-foreground">本科</p>
+              <p className="text-sm text-muted-foreground">{language === "zh" ? "本科" : "Bachelor's Degree"}</p>
             </div>
           </div>
         </section>
@@ -80,11 +69,13 @@ export function AboutPage() {
         {/* Research Areas */}
         <section className="mb-12">
           <h2 className="text-xl font-bold text-foreground mb-4">
-            研究方向
+            {language === "zh" ? "研究方向" : "Research Areas"}
           </h2>
           <div className="p-6 bg-card border border-border rounded-lg">
             <p className="text-muted-foreground">
-              多模态学习、具身智能、自然语言处理、深度学习
+              {language === "zh"
+                ? "多模态学习、具身智能、自然语言处理、深度学习"
+                : "Multimodal Learning, Embodied AI, Natural Language Processing, Deep Learning"}
             </p>
           </div>
         </section>
@@ -92,7 +83,7 @@ export function AboutPage() {
         {/* Skills */}
         <section className="mb-12">
           <h2 className="text-xl font-bold text-foreground mb-4">
-            技能栈
+            {language === "zh" ? "技能栈" : "Skills"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {skills.map((skill) => (
@@ -122,14 +113,14 @@ export function AboutPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-4 flex items-center">
             <FaEnvelope className="w-5 h-5 mr-2" />
-            联系方式
+            {language === "zh" ? "联系方式" : "Contact"}
           </h2>
           <div className="p-6 bg-card border border-border rounded-lg">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="w-5 h-5 text-primary" />
                 <span className="text-muted-foreground">
-                  邮箱：contact@lantean.com
+                  {language === "zh" ? "邮箱：contact@lantean.com" : "Email: contact@lantean.com"}
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -146,7 +137,7 @@ export function AboutPage() {
               <div className="flex items-center space-x-3">
                 <FaMapMarkerAlt className="w-5 h-5 text-primary" />
                 <span className="text-muted-foreground">
-                  所在地：中国·上海
+                  {language === "zh" ? "所在地：中国·上海" : "Location: Shanghai, China"}
                 </span>
               </div>
             </div>

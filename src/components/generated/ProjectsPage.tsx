@@ -1,42 +1,19 @@
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function ProjectsPage() {
+  const { language } = useLanguage();
   const projects = [
     {
       id: 1,
-      title: "智能文档助手",
-      description: "基于 AI 的文档自动化工具，支持智能分类、摘要生成和关键词提取。",
+      title: language === "zh" ? "智能文档助手（样例）" : "Smart Document Assistant (Sample)",
+      description: language === "zh"
+        ? "样例数据：基于 AI 的文档自动化工具，支持智能分类、摘要生成和关键词提取。"
+        : "Sample entry: an AI-powered document automation tool for classification, summarization, and keyword extraction.",
       tags: ["React", "Python", "AI"],
-      demo: "#",
-      code: "#",
+      demo: "https://example.com/",
+      code: "https://github.com/",
       period: "2025.12 - 2026.03",
-    },
-    {
-      id: 2,
-      title: "个人博客系统",
-      description: "功能完整的博客平台，支持 Markdown 编辑、分类标签、评论系统等功能。",
-      tags: ["React", "Node.js", "PostgreSQL"],
-      demo: "#",
-      code: "#",
-      period: "2025.06 - 2025.11",
-    },
-    {
-      id: 3,
-      title: "在线协作白板",
-      description: "实时多人协作白板工具，支持绘图、便签、投票等功能。",
-      tags: ["WebSocket", "Canvas", "React"],
-      demo: "#",
-      code: "#",
-      period: "2025.01 - 2025.05",
-    },
-    {
-      id: 4,
-      title: "任务管理应用",
-      description: "简洁高效的任务管理工具，支持看板视图、提醒和团队协作。",
-      tags: ["Vue", "Firebase", "PWA"],
-      demo: "#",
-      code: "#",
-      period: "2024.09 - 2024.12",
     },
   ];
 
@@ -45,10 +22,12 @@ export function ProjectsPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            项目作品
+            {language === "zh" ? "项目作品" : "Projects"}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            展示我参与和开发的个人项目
+            {language === "zh"
+              ? "展示我参与和开发的个人项目"
+              : "A collection of projects I built and contributed to"}
           </p>
         </div>
 
@@ -85,14 +64,14 @@ export function ProjectsPage() {
                   className="flex items-center space-x-1 text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   <FaExternalLinkAlt className="w-4 h-4" />
-                  <span>查看演示</span>
+                  <span>{language === "zh" ? "查看演示" : "Live Demo"}</span>
                 </a>
                 <a
                   href={project.code}
                   className="flex items-center space-x-1 text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   <FaGithub className="w-4 h-4" />
-                  <span>查看代码</span>
+                  <span>{language === "zh" ? "查看代码" : "Source Code"}</span>
                 </a>
               </div>
             </div>

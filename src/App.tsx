@@ -11,6 +11,7 @@ import { ProjectsPage } from "./components/generated/ProjectsPage";
 import { LinksPage } from "./components/generated/LinksPage";
 import { AboutPage } from "./components/generated/AboutPage";
 import { PageMeta } from "./components/common/PageMeta";
+import { LanguageProvider } from "./context/LanguageContext";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -37,26 +38,28 @@ function App() {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <div className="min-h-screen bg-background">
-          <PageMeta
-            title="Lantean's Blog"
-            description="分享技术文章、研究成果、日常生活记录"
-            keywords={["blog", "technology", "AI", "research", "Lantean"]}
-          />
-          <Header isDark={isDark} toggleTheme={toggleTheme} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route path="/academic" element={<AcademicPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/links" element={<LinksPage />} />
-            <Route path="/about" element={<AboutPage />} />
-          </Routes>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <LanguageProvider>
+        <BrowserRouter>
+          <div className="min-h-screen bg-background">
+            <PageMeta
+              title="Lantean's Blog"
+              description="分享技术文章、研究成果、日常生活记录"
+              keywords={["blog", "technology", "AI", "research", "Lantean"]}
+            />
+            <Header isDark={isDark} toggleTheme={toggleTheme} />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/blog" element={<BlogList />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/academic" element={<AcademicPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/links" element={<LinksPage />} />
+              <Route path="/about" element={<AboutPage />} />
+            </Routes>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </LanguageProvider>
     </HelmetProvider>
   );
 }
