@@ -23,25 +23,35 @@ const getHeatmapColor = (level: number, isDark: boolean = false) => {
   return colors[level] || colors[0];
 };
 
-const getMonthLabels = () => {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const now = new Date();
-  const labels: string[] = [];
-  
-  // 生成过去12个月的标签
-  for (let i = 11; i >= 0; i--) {
-    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    labels.push(months[date.getMonth()]);
-  }
-  
-  return labels;
-};
-
 export function HomePage() {
   const { language } = useLanguage();
   const { totalPosts, totalWords, daysOnline, lastUpdate, heatmap, totalContributions } = useBlogStatistics();
 
   const isDark = document.documentElement.classList.contains('dark');
+
+  const monthLabels: { weekIndex: number; month: number }[] = [];
+  if (heatmap && heatmap.length > 0) {
+    let currentMonth = -1;
+    for (let weekIndex = 0; weekIndex < 52; weekIndex++) {
+      const day = heatmap[weekIndex * 7];
+      if (!day) continue;
+      // parse date properly avoiding timezone shift
+      const [year, monthStr, dayStr] = day.date.split('-');
+      const dateObj = new Date(parseInt(year), parseInt(monthStr) - 1, parseInt(dayStr));
+      const month = dateObj.getMonth();
+      
+      // 只在月份真正发生变化且不与前一个标签距离过近（例如距离至少 3 周）时才添加标签
+      if (month !== currentMonth) {
+        if (monthLabels.length === 0 || weekIndex - monthLabels[monthLabels.length - 1].weekIndex >= 3) {
+          monthLabels.push({ weekIndex, month });
+          currentMonth = month;
+        }
+      }
+    }
+  }
+
+  const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <div className="min-h-screen pt-20 pb-12">
@@ -180,26 +190,24 @@ export function HomePage() {
           <div className="glass-card p-6 rounded-lg overflow-x-auto">
             <div className="min-w-[650px]">
               {/* Month labels */}
-              <div className="flex mb-2 pl-[52px]">
-                <div className="flex-1 flex justify-between">
-                  {getMonthLabels().map((month, i) => (
-                    <div
-                      key={i}
-                      className="text-xs text-muted-foreground"
-                      style={{ flex: 1 }}
-                    >
-                      {month}
-                    </div>
-                  ))}
-                </div>
+              <div className="relative h-6 mb-1 ml-[34px]">
+                {monthLabels.map((label, i) => (
+                  <div
+                    key={i}
+                    className="absolute text-xs text-muted-foreground whitespace-nowrap"
+                    style={{ left: `${label.weekIndex * 14}px` }}
+                  >
+                    {monthsNames[label.month]}
+                  </div>
+                ))}
               </div>
 
               {/* Heatmap grid */}
               <div className="flex gap-2">
                 {/* Day labels */}
-                <div className="flex flex-col gap-[3px] justify-between text-xs text-muted-foreground py-[2px]">
-                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
-                    <div key={i} className="h-[11px] leading-[11px] text-right pr-2">
+                <div className="flex flex-col gap-[3px] justify-between text-xs text-muted-foreground py-[2px] w-[26px]">
+                  {dayNames.map((day, i) => (
+                    <div key={i} className="h-[11px] leading-[11px] text-right pr-1">
                       {i % 2 === 1 ? day : ''}
                     </div>
                   ))}
@@ -221,7 +229,7 @@ export function HomePage() {
                             <div
                               key={`${weekIndex}-${dayIndex}`}
                               className={`w-[11px] h-[11px] rounded-sm ${getHeatmapColor(level, isDark)} hover:opacity-80 transition-opacity cursor-pointer`}
-                              title={`${date}: ${count} ${language === "zh" ? "篇文章" : "post(s)"}`}
+                              title={`${date}: ${count} contribution(s)`}
                             />
                           );
                         })}
@@ -234,10 +242,10 @@ export function HomePage() {
               {/* Legend */}
               <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
                 <span>
-                  {totalContributions} {language === "zh" ? "次贡献" : "contributions"} {language === "zh" ? "在过去一年" : "in the last year"}
+                  {totalContributions} contributions in the last year
                 </span>
                 <div className="flex items-center gap-2">
-                  <span>{language === "zh" ? "少" : "Less"}</span>
+                  <span>Less</span>
                   <div className="flex gap-[3px]">
                     {[0, 1, 2, 3, 4].map((level) => (
                       <div
@@ -246,7 +254,7 @@ export function HomePage() {
                       />
                     ))}
                   </div>
-                  <span>{language === "zh" ? "多" : "More"}</span>
+                  <span>More</span>
                 </div>
               </div>
             </div>

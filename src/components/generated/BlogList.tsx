@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaCalendarAlt, FaClock, FaArrowRight } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
-import { getAllPosts, searchPosts } from "@/lib/content";
+import { getAllPosts, searchPosts, type PostMeta } from "@/lib/content";
 import { CATEGORIES, CATEGORY_LABELS } from "@/lib/constants";
 import { getAllCollections } from "@/lib/collections";
 
@@ -20,7 +20,7 @@ export function BlogList() {
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery] = useState("");
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<PostMeta[]>([]);
   const [loading, setLoading] = useState(true);
   const allPosts = useMemo(() => getAllPosts(), []);
 

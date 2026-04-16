@@ -15,6 +15,7 @@ import { SearchPostsPage } from "./components/generated/SearchPostsPage";
 import { CollectionsPage } from "./components/generated/CollectionsPage";
 import { PageMeta } from "./components/common/PageMeta";
 import { LanguageProvider } from "./context/LanguageContext";
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -41,31 +42,33 @@ function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
-        <BrowserRouter>
-          <div className="min-h-screen bg-background">
-            <PageMeta
-              title="Lantean's Blog"
-              description="Sharing technical articles, research updates, and daily notes"
-              keywords={["blog", "technology", "AI", "research", "Lantean"]}
-            />
-            <Header isDark={isDark} toggleTheme={toggleTheme} />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/blog" element={<BlogList />} />
-              <Route path="/search" element={<SearchPostsPage />} />
-              <Route path="/blog/tag/:tag" element={<TagPostsPage />} />
-              <Route path="/blog/collections" element={<CollectionsPage />} />
-              <Route path="/blog/collections/:collectionId" element={<CollectionsPage />} />
-              <Route path="/blog/:category/:slug" element={<BlogDetail />} />
-              <Route path="/blog/:slug" element={<BlogDetail />} />
-              <Route path="/academic" element={<AcademicPage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/links" element={<LinksPage />} />
-              <Route path="/about" element={<AboutPage />} />
-            </Routes>
-            <Footer />
-          </div>
-        </BrowserRouter>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <div className="min-h-screen bg-background">
+              <PageMeta
+                title="Lantean's Blog"
+                description="Sharing technical articles, research updates, and daily notes"
+                keywords={["blog", "technology", "AI", "research", "Lantean"]}
+              />
+              <Header isDark={isDark} toggleTheme={toggleTheme} />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/blog" element={<BlogList />} />
+                <Route path="/search" element={<SearchPostsPage />} />
+                <Route path="/blog/tag/:tag" element={<TagPostsPage />} />
+                <Route path="/blog/collections" element={<CollectionsPage />} />
+                <Route path="/blog/collections/:collectionId" element={<CollectionsPage />} />
+                <Route path="/blog/:category/:slug" element={<BlogDetail />} />
+                <Route path="/blog/:slug" element={<BlogDetail />} />
+                <Route path="/academic" element={<AcademicPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/links" element={<LinksPage />} />
+                <Route path="/about" element={<AboutPage />} />
+              </Routes>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </ErrorBoundary>
       </LanguageProvider>
     </HelmetProvider>
   );

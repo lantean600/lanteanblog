@@ -1,0 +1,111 @@
+[
+  {
+    "slug": "2025-10-18-experience-post",
+    "category": "daily",
+    "title": "写论文的一些经验帖",
+    "excerpt": "一些汇总。",
+    "tags": [
+      "paper"
+    ],
+    "plainText": "!1 计算机科研经验 清华计算机入学教育之“关于如何做科研的一些个人经验” ZHANG Mingxing的文章 知乎 https://zhuanlan.zhihu.com/p/718156903 写作 输出 棋盘法 读论文 写论文 八股文 !NOTE 2 物理学科研经验 你想对物理学专业的人说些什么? 苇草的回答 知乎 https://www.zhihu.com/question/1022588196/answer/1901151731125032333 赶快去读论文！ !NOTE 3 太理 港中文校友 在太原理工大学就读是怎样一番体验？ Henry TIAN的回答 知乎 https://www.zhihu.com/question/24423090/answer/2471708803 多去层次比自己高的老师和人去碰壁，利用好仅有的资源收益最大。 !NOTE 4 CS高校内卷恶劣 官媒下场手撕张雪峰，张雪峰的结局会是什么？ 纳米酱的回答 知乎 https://www.zhihu.com/question/638740157/answer/1915799428444451029 到底转哪个专业？仔细考虑一下，结合科研 !5 留学东大物理系 2024年东京大学理学系物理学专攻 大学院一般入试 个人向备考心得 千叶絮语的文章 知乎 https://zhuanlan.zhihu.com/p/720661430 !6 双非保研北大理论物理 高考对未来的人生选择还有多大影响？ 拉格朗日的忧郁的回答 知乎 https://www.zhihu.com/question/1905630080295723647/answer/1911748623093462004 !NOTE 港大 哥本哈根 写在高三之后 姜尧耕 渔樵耕牍 的文章 知乎 https://zhuanlan.zhihu.com/p/703161684 活出自己 !NOTE 科研干货 博士生每日科研很累，累到几乎没力气，怎么办？ 李乾元的回答 知乎 https://www.zhihu.com/question/621912340/answer/1901458932209264354 !NOTE 大学榜样 一个阶段的落幕和迷茫 东川路第一伊蕾娜的文章 知乎 https://zhuanlan.zhihu.com/p/8647906358 !pdf提取文本工具 【工具分享】PDF、图片、公式——阻碍我们知识数字化的敌人终于倒下了，吗？ Thoughts Memo的文章 知乎 https://zhuanlan.zhihu.com/p/16167738894"
+  },
+  {
+    "slug": "2026-03-28-weekend-hiking",
+    "category": "daily",
+    "title": "周末徒步记录",
+    "excerpt": "上周末去爬了附近的山，记录一下沿途的美景和感受。",
+    "tags": [
+      "Life",
+      "Outdoor"
+    ],
+    "plainText": "周末徒步 路线 本次路线全程约 12 公里，爬升约 700 米，整体难度中等。 风景 山脊视野开阔，途中有一段林间小道，适合拍照和短暂停留。 感受 徒步是很好的重启方式。离开屏幕一整天后，回到工作状态会更专注。"
+  },
+  {
+    "slug": "2026-04-14-pytorch-note",
+    "category": "daily",
+    "title": "《Pytorch实用教程》笔记（一）数据模块",
+    "excerpt": "文章摘要",
+    "tags": [
+      "pytorch"
+    ],
+    "plainText": "数据处理流程 COVID19图像分类－数据处理流程图.canvas 安卓端无法导出为矢量图 之后会优化这个画布引用 Dataset 这个模块的学习主要还是读代码。我之前主要精读了一个函数代码，笔记如下： DataLoader"
+  },
+  {
+    "slug": "2026-04-16-",
+    "category": "daily",
+    "title": "测试文章",
+    "excerpt": "a passage for test",
+    "tags": [
+      "test"
+    ],
+    "plainText": "我不是taffy喵。"
+  },
+  {
+    "slug": "2026-04-16-deep-learning-intro",
+    "category": "daily",
+    "title": "深度学习入门：从零开始理解神经网络",
+    "excerpt": "深入理解深度学习的基础概念，包括神经网络的工作原理、激活函数的选择以及训练技巧。",
+    "tags": [
+      "deep learning",
+      "neural network",
+      "机器学习"
+    ],
+    "plainText": "深度学习入门：从零开始理解神经网络 什么是深度学习？ 深度学习是机器学习的一个子领域，它使用多层神经网络来学习数据的层次化表示。 神经网络基础 神经元模型 一个简单的人工神经元接受多个输入，每个输入都有对应的权重，然后通过激活函数产生输出。 多层感知机 将多个神经元层叠在一起，就形成了多层感知机（MLP）。 常见的激活函数 ReLU : 最常用的激活函数，计算简单，收敛快 Sigmoid : 输出在 0, 1 之间，适合二分类问题 Tanh : 输出在 1, 1 之间，零中心化 训练技巧 批量归一化 批量归一化（Batch Normalization）可以加速训练过程，减少内部协变量偏移。 Dropout Dropout 是一种正则化技术，通过在训练过程中随机丢弃一部分神经元来防止过拟合。 总结 深度学习是一个庞大而复杂的领域，本文只介绍了最基础的概念。想要深入学习，建议结合实际的编程练习。"
+  },
+  {
+    "slug": "2026-04-16-test",
+    "category": "daily",
+    "title": "test",
+    "excerpt": "无",
+    "tags": [
+      "test"
+    ],
+    "plainText": "test 在此开始写作..."
+  },
+  {
+    "slug": "2026-04-01-q1-summary",
+    "category": "journal",
+    "title": "我的 2026 年第一季度总结",
+    "excerpt": "回顾过去三个月的学习、工作和生活，分享一些感悟和收获。",
+    "tags": [
+      "Life",
+      "Review"
+    ],
+    "plainText": "2026 Q1 总结 工作进展 本季度完成了博客系统核心模块与多语言切换重构，提升了整体可维护性。 学习收获 重点深入了前端工程化与 AI 应用落地实践，对性能优化和用户体验有了更系统理解。 生活记录 保持阅读与运动，整体节奏更稳定，也更注重复盘与长期规划。"
+  },
+  {
+    "slug": "2026-04-10-transformer-architecture",
+    "category": "research",
+    "title": "深入理解 Transformer 架构",
+    "excerpt": "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。",
+    "tags": [
+      "AI",
+      "Deep Learning",
+      "NLP"
+    ],
+    "plainText": "引言 Transformer 模型自 2017 年提出以来，彻底改变了自然语言处理领域。本文将深入探讨其核心机制。 自注意力机制 自注意力机制是 Transformer 的核心创新。它允许模型在处理序列时，关注输入的不同部分。 计算过程 1. 计算 Query、Key、Value 矩阵 2. 计算注意力分数 3. 应用 Softmax 归一化 4. 加权求和得到输出 位置编码 由于 Transformer 没有递归结构，需要显式地注入位置信息。 总结 Transformer 的成功在于其并行化能力和强大的长距离依赖建模能力。"
+  },
+  {
+    "slug": "2026-04-05-react-performance",
+    "category": "technical",
+    "title": "React 性能优化最佳实践",
+    "excerpt": "在大型 React 应用中，性能优化至关重要。本文分享了一系列实用的优化技巧和最佳实践。",
+    "tags": [
+      "React",
+      "JavaScript",
+      "Performance"
+    ],
+    "plainText": "React 性能优化 1. 减少不必要渲染 使用 包裹纯展示组件 合理拆分组件，避免大组件全量重渲染 使用稳定的 ，避免列表抖动 2. 缓存计算和回调 用 缓存高开销计算 用 稳定函数引用 3. 代码分割 用路由级懒加载降低首屏体积 按页面拆包，提升首屏加载速度"
+  },
+  {
+    "slug": "2026-04-16-test-rich-text",
+    "category": "technical",
+    "title": "测试富文本支持",
+    "excerpt": "测试代码、数学公式、图片等富文本特性",
+    "tags": [
+      "Test",
+      "Markdown"
+    ],
+    "plainText": "富文本支持测试 这是一篇用于验证博客 Markdown 富文本支持特性的文章。 1. 代码块高亮测试 下面是一段 Python 代码： 2. 数学公式测试 KaTeX 这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。 这里是一个块级公式（微积分定义）： $$ \\frac{\\partial f}{\\partial x} = \\lim {h \\to 0} \\frac{f x+h f x }{h} $$ 再来一个复杂一点的矩阵： $$ \\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{bmatrix} $$ 3. 图片支持测试 下面是一张通过绝对路径 引入的图片（该图片存放在根目录的 文件夹下）："
+  }
+]

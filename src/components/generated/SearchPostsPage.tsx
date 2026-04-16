@@ -1,24 +1,50 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useMemo, useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaArrowLeft, FaSearch } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
-import { postsWithContent, type Post } from "@/lib/content";
+
+// 使用预构建的搜索索引，包含纯文本的 plainText
+import searchIndexData from "@/data/search-index.json";
+
+export interface SearchIndexItem {
+  slug: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  tags: string[];
+  plainText: string;
+  date?: string;
+}
+
+const searchIndex = searchIndexData as SearchIndexItem[];
+
+// 简单的防抖 Hook
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 function normalize(text: string): string {
   return text.toLowerCase();
 }
 
-function buildSnippet(content: string, q: string): string {
-  const plain = content
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/`[^`]*`/g, " ")
-    .replace(/[#>*_\-\[\]()]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  if (!q) return plain.slice(0, 150);
+function buildSnippet(plain: string, q: string): string {
+  if (!q || !plain) return plain.slice(0, 150);
+  
   const i = normalize(plain).indexOf(q);
   if (i < 0) return plain.slice(0, 150);
+  
   const start = Math.max(0, i - 40);
   const end = Math.min(plain.length, i + 110);
   return `${start > 0 ? "..." : ""}${plain.slice(start, end)}${end < plain.length ? "..." : ""}`;
@@ -29,23 +55,23 @@ export function SearchPostsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initial = searchParams.get("q") ?? "";
   const [query, setQuery] = useState(initial);
+  const debouncedQuery = useDebounce(query, 300); // 300ms 防抖延迟
 
-  const normalizedQuery = normalize(query.trim());
+  const normalizedQuery = normalize(debouncedQuery.trim());
 
   const results = useMemo(() => {
-    if (!normalizedQuery) return [] as Post[];
+    if (!normalizedQuery) return [] as SearchIndexItem[];
 
-    return postsWithContent
+    return searchIndex
       .filter((post) => {
         const haystack = normalize([
           post.title,
           post.excerpt,
           post.tags.join(" "),
-          post.content,
+          post.plainText, // 使用提取好的纯文本
         ].join("\n"));
         return haystack.includes(normalizedQuery);
-      })
-      .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+      });
   }, [normalizedQuery]);
 
   const onSubmit = (e: React.FormEvent) => {
@@ -81,6 +107,7 @@ export function SearchPostsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={language === "zh" ? "输入关键词，例如：transformer / dataset" : "Type keywords..."}
+              aria-label="Search posts"
               className="w-full rounded-lg border border-border bg-background py-2.5 pl-10 pr-24 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <FaSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -111,7 +138,7 @@ export function SearchPostsPage() {
                 </h2>
               </Link>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                {buildSnippet(post.content || post.excerpt, normalizedQuery)}
+                {buildSnippet(post.plainText || post.excerpt, normalizedQuery)}
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 <span>{post.date}</span>

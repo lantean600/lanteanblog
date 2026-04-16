@@ -102,10 +102,16 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
               className="relative"
               onMouseEnter={() => item.hasDropdown && setActiveDropdown(item.path)}
               onMouseLeave={() => item.hasDropdown && setActiveDropdown(null)}
+              onFocus={() => item.hasDropdown && setActiveDropdown(item.path)}
+              onBlur={(e) => {
+                if (item.hasDropdown && !e.currentTarget.contains(e.relatedTarget)) {
+                  setActiveDropdown(null);
+                }
+              }}
             >
               <Link
                 to={item.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`text-sm font-medium transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 rounded-sm px-1 ${
                   isActive(item.path) ? "text-primary" : "text-foreground"
                 }`}
               >

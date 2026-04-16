@@ -36,11 +36,19 @@ function walkDir(dir, fileList = []) {
   return fileList;
 }
 
+function formatDateLocal(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function buildData() {
   console.log('📦 正在预构建博客数据...');
   
   const allFiles = walkDir(contentDir);
   const postsList = [];
+  const searchIndex = [];
   let totalWords = 0;
 
   for (const filePath of allFiles) {
@@ -65,7 +73,7 @@ function buildData() {
       const wordCount = countWords(content);
       totalWords += wordCount;
 
-      postsList.push({
+      const postMeta = {
         slug,
         category,
         title,
@@ -77,6 +85,27 @@ function buildData() {
         collection,
         // filePath 用于前端做动态按需加载匹配
         filePath: `../content/${category}/${fileName}`
+      };
+
+      postsList.push(postMeta);
+
+      // 提取纯文本用于搜索
+      const plainText = content
+        .replace(/```[\s\S]*?```/g, " ") // 移除代码块
+        .replace(/`[^`]*`/g, " ")        // 移除行内代码
+        .replace(/!\[[^\]]*\]\([^)]+\)/g, " ") // 移除图片
+        .replace(/\[[^\]]*\]\([^)]+\)/g, " ") // 移除链接
+        .replace(/[#>*_\-\[\]()]/g, " ") // 移除 markdown 符号
+        .replace(/\s+/g, " ")
+        .trim();
+
+      searchIndex.push({
+        slug,
+        category,
+        title,
+        excerpt,
+        tags,
+        plainText
       });
 
     } catch (err) {
@@ -90,16 +119,17 @@ function buildData() {
   // 计算热力图数据 (过去 52 周，共 364 天)
   const heatmap = [];
   const today = new Date();
-  // 找准 52 周前的起点（倒推 364 天）
+  
+  // 找准 52 周前的起点（倒推 363 天，使得包含今天共 364 天）
   const startDate = new Date(today);
-  startDate.setDate(today.getDate() - 364);
+  startDate.setDate(today.getDate() - 363);
 
   // 初始化一个 364 天的空热力图数组
   for (let i = 0; i < 364; i++) {
     const date = new Date(startDate);
     date.setDate(startDate.getDate() + i);
     heatmap.push({
-      date: date.toISOString().split('T')[0],
+      date: formatDateLocal(date),
       count: 0,
       level: 0
     });
@@ -109,7 +139,8 @@ function buildData() {
   // 统计每天的文章数
   for (const post of postsList) {
     if (!post.date) continue;
-    const postDate = new Date(post.date).toISOString().split('T')[0];
+    // 如果 post.date 是 "2026-04-16"，直接使用即可
+    const postDate = post.date;
     const targetCell = heatmap.find(cell => cell.date === postDate);
     if (targetCell) {
       targetCell.count += 1;
@@ -127,7 +158,7 @@ function buildData() {
   }
 
   // 生成最后更新日期
-  const lastUpdate = postsList.length > 0 ? postsList[0].date : new Date().toISOString().split('T')[0];
+  const lastUpdate = postsList.length > 0 ? postsList[0].date : formatDateLocal(new Date());
 
   // 生成统计数据
   const statistics = {
@@ -142,6 +173,11 @@ function buildData() {
   fs.writeFileSync(
     path.join(outputDir, 'posts-list.json'),
     JSON.stringify(postsList, null, 2)
+  );
+
+  fs.writeFileSync(
+    path.join(outputDir, 'search-index.json'),
+    JSON.stringify(searchIndex, null, 2)
   );
 
   fs.writeFileSync(
