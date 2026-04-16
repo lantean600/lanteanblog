@@ -19,10 +19,12 @@ function processMarkdownFile(filePath, category, slug) {
     title: data.title || '无标题',
     date: data.date || '',
     tags: data.tags || [],
+    collections: data.collections || [],
     views: data.views || 0,
     heroImage: data.heroImage || '/assets/hero1.jpg',
     heroLink: data.heroLink || '',
     excerpt: data.excerpt || '',
+    draft: data.draft || false,
     content: markdownContent,
   };
 }
@@ -41,6 +43,7 @@ function scanContentDirectory() {
       const slug = file.replace('.md', '');
       const filePath = path.join(categoryDir, file);
       const post = processMarkdownFile(filePath, category, slug);
+      if (post.draft) continue;
       posts.push(post);
     }
   }
@@ -58,10 +61,12 @@ export interface Post {
   title: string;
   date: string;
   tags: string[];
+  collections: string[];
   views: number;
   heroImage: string;
   heroLink: string;
   excerpt: string;
+  draft: boolean;
   content: string;
 }
 

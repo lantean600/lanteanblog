@@ -59,6 +59,42 @@ lanteanblog-main/
 pnpm install
 ```
 
+## 在线写作（推荐：Decap CMS）
+
+本项目已内置 Decap CMS，可在浏览器中直接新建/编辑 Markdown，并自动提交到 GitHub 仓库触发 Cloudflare Pages 部署。
+
+### 1) 访问入口
+
+- 后台入口：`/admin`（例如 `https://<你的-pages.dev>/admin`）
+
+### 2) 在 Cloudflare Pages 配置环境变量
+
+在 Cloudflare Pages 项目设置里添加以下环境变量（Production + Preview 都建议配置）：
+
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`
+
+### 3) 在 GitHub 创建 OAuth App
+
+GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+
+- Homepage URL：`https://<你的-pages.dev>`
+- Authorization callback URL：`https://<你的-pages.dev>/api/auth`
+
+创建后将 Client ID/Secret 填到 Cloudflare Pages 环境变量中。
+
+### 4) 写作与发布流程
+
+- 进入 `/admin` → GitHub 授权登录
+- 在左侧选择分类（research/technical/daily/journal）新建文章
+- 默认 `草稿(draft)=true`：草稿不会出现在博客列表和线上
+- 写完后把 `草稿(draft)` 取消勾选，再保存/发布即可上线
+- “收藏夹”是后置整理用的二级分类：先创建收藏夹条目，再在文章里多选勾选即可
+
+### 5) 重要安全提示
+
+如果你曾把 GitHub token 写进仓库/日志，请视为已泄露并立即在 GitHub 侧旋转（revoke + regenerate）。
+
 2. 配置环境变量（推荐新建 `.env.local`）
 
 ```env

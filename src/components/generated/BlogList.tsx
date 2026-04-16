@@ -29,7 +29,7 @@ const estimateReadMinutes = (text: string) => {
 export function BlogList() {
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [loading, setLoading] = useState(true);
   const allPosts = useMemo(() => getAllPosts(), []);

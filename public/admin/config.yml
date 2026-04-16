@@ -1,0 +1,101 @@
+backend:
+  name: github
+  repo: lantean600/lanteanblog
+  branch: main
+  base_url: https://lanteanblog.pages.dev
+  auth_endpoint: api/auth
+
+publish_mode: editorial_workflow
+
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: collections
+    label: 收藏夹
+    label_singular: 收藏夹
+    folder: src/content/collections
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: slug, label: 标识, widget: string }
+      - { name: description, label: 描述, widget: text, required: false }
+      - { name: coverImage, label: 封面图, widget: image, required: false }
+      - { name: body, label: 正文, widget: markdown, required: false }
+
+  - name: research
+    label: 研究
+    label_singular: 文章
+    folder: src/content/research
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: date, label: 日期, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: category, label: 分类, widget: hidden, default: research }
+      - { name: draft, label: 草稿, widget: boolean, default: true, required: false }
+      - { name: tags, label: 标签, widget: list, default: [], required: false }
+      - { name: collections, label: 收藏夹, widget: relation, collection: collections, search_fields: ["title", "slug"], value_field: "slug", display_fields: ["title"], multiple: true, required: false }
+      - { name: heroImage, label: 头图, widget: image, required: false }
+      - { name: heroLink, label: 头图来源链接, widget: string, required: false }
+      - { name: excerpt, label: 摘要, widget: text, required: false }
+      - { name: views, label: 阅读量, widget: number, value_type: int, default: 0, required: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: technical
+    label: 技术
+    label_singular: 文章
+    folder: src/content/technical
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: date, label: 日期, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: category, label: 分类, widget: hidden, default: technical }
+      - { name: draft, label: 草稿, widget: boolean, default: true, required: false }
+      - { name: tags, label: 标签, widget: list, default: [], required: false }
+      - { name: collections, label: 收藏夹, widget: relation, collection: collections, search_fields: ["title", "slug"], value_field: "slug", display_fields: ["title"], multiple: true, required: false }
+      - { name: heroImage, label: 头图, widget: image, required: false }
+      - { name: heroLink, label: 头图来源链接, widget: string, required: false }
+      - { name: excerpt, label: 摘要, widget: text, required: false }
+      - { name: views, label: 阅读量, widget: number, value_type: int, default: 0, required: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: daily
+    label: 日常
+    label_singular: 文章
+    folder: src/content/daily
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: date, label: 日期, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: category, label: 分类, widget: hidden, default: daily }
+      - { name: draft, label: 草稿, widget: boolean, default: true, required: false }
+      - { name: tags, label: 标签, widget: list, default: [], required: false }
+      - { name: collections, label: 收藏夹, widget: relation, collection: collections, search_fields: ["title", "slug"], value_field: "slug", display_fields: ["title"], multiple: true, required: false }
+      - { name: heroImage, label: 头图, widget: image, required: false }
+      - { name: heroLink, label: 头图来源链接, widget: string, required: false }
+      - { name: excerpt, label: 摘要, widget: text, required: false }
+      - { name: views, label: 阅读量, widget: number, value_type: int, default: 0, required: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: journal
+    label: 月刊
+    label_singular: 文章
+    folder: src/content/journal
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: date, label: 日期, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: category, label: 分类, widget: hidden, default: journal }
+      - { name: draft, label: 草稿, widget: boolean, default: true, required: false }
+      - { name: tags, label: 标签, widget: list, default: [], required: false }
+      - { name: collections, label: 收藏夹, widget: relation, collection: collections, search_fields: ["title", "slug"], value_field: "slug", display_fields: ["title"], multiple: true, required: false }
+      - { name: heroImage, label: 头图, widget: image, required: false }
+      - { name: heroLink, label: 头图来源链接, widget: string, required: false }
+      - { name: excerpt, label: 摘要, widget: text, required: false }
+      - { name: views, label: 阅读量, widget: number, value_type: int, default: 0, required: false }
+      - { name: body, label: 正文, widget: markdown }
