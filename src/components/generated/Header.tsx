@@ -60,7 +60,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
           <span>{languages.find((lang) => lang.code === language)?.name}</span>
         </button>
         {isOpen && (
-          <div className="absolute left-0 top-full mt-2 w-44 rounded-lg border border-border bg-card py-2 shadow-lg">
+          <div className="absolute left-0 top-full mt-2 w-44 rounded-lg border border-border/50 bg-card/90 py-2 shadow-lg backdrop-blur-md">
             {languages.map((lang) => (
               <button
                 key={lang.code}
@@ -86,7 +86,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   return (
     <header
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "border-b border-border bg-background/80 backdrop-blur-md" : "bg-transparent"
+        isScrolled ? "glass-strong shadow-lg shadow-black/5" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -112,7 +112,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
               </Link>
               {item.hasDropdown && (
                 <div
-                  className={`absolute left-0 top-full w-48 rounded-lg border border-border bg-card py-2 shadow-lg transition-all duration-200 ${
+                  className={`absolute left-0 top-full w-48 rounded-lg border border-border/50 bg-card/90 py-2 shadow-lg backdrop-blur-md transition-all duration-200 ${
                     activeDropdown === item.path ? "visible opacity-100" : "invisible opacity-0"
                   }`}
                 >
@@ -161,7 +161,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="border-b border-border bg-card md:hidden">
+        <div className="border-b border-border/50 bg-card/90 backdrop-blur-md md:hidden">
           <div className="space-y-4 px-4 py-4">
             {navItems.map((item) => (
               <Link

@@ -2,15 +2,54 @@ import { Link } from "react-router-dom";
 import { FaGithub, FaEnvelope } from "react-icons/fa";
 import avatarFallback from "@/assets/avatar-fallback.svg";
 import { useLanguage } from "@/context/LanguageContext";
+import { useBlogStatistics } from "@/hooks/use-blog-statistics";
+
+const getHeatmapColor = (level: number, isDark: boolean = false) => {
+  const colors = isDark
+    ? [
+        "bg-gray-800", // level 0
+        "bg-green-900", // level 1
+        "bg-green-700", // level 2
+        "bg-green-500", // level 3
+        "bg-green-300", // level 4
+      ]
+    : [
+        "bg-gray-200", // level 0
+        "bg-green-200", // level 1
+        "bg-green-400", // level 2
+        "bg-green-600", // level 3
+        "bg-green-800", // level 4
+      ];
+  return colors[level] || colors[0];
+};
+
+const getMonthLabels = () => {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const now = new Date();
+  const labels: string[] = [];
+  
+  // 生成过去12个月的标签
+  for (let i = 11; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    labels.push(months[date.getMonth()]);
+  }
+  
+  return labels;
+};
 
 export function HomePage() {
   const { language } = useLanguage();
-  const stats = {
-    daysOnline: 667,
-    lastUpdated: "Apr 13, 2026",
-    totalWords: "33.1w",
-    totalPosts: 42,
-  };
+  const { stats, loading } = useBlogStatistics(language);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-20 pb-12 flex items-center justify-center">
+        <div className="text-lg text-muted-foreground">
+          {language === "zh" ? "加载中..." : "Loading..."}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-20 pb-12">
@@ -103,7 +142,7 @@ export function HomePage() {
                 </h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-all duration-200">
+                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
                   <div className="text-3xl font-bold text-primary mb-2">
                     {stats.daysOnline}
                   </div>
@@ -111,24 +150,26 @@ export function HomePage() {
                     {language === "zh" ? "天在线" : "Days Online"}
                   </div>
                 </div>
-                <div className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-all duration-200">
-                  <div className="text-3xl font-bold text-primary mb-2">
+                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
+                  <div className="text-2xl font-bold text-primary mb-2">
                     {stats.lastUpdated}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     {language === "zh" ? "最后更新" : "Last Updated"}
                   </div>
                 </div>
-                <div className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-all duration-200">
+                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
                   <div className="text-3xl font-bold text-primary mb-2">
-                    {stats.totalWords}
+                    {stats.totalWords >= 10000
+                      ? `${(stats.totalWords / 10000).toFixed(1)}w`
+                      : stats.totalWords.toLocaleString()}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     {language === "zh" ? "总字数" : "Total Words"}
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-card border border-border rounded-lg mb-6">
+              <div className="glass-card p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
                     {language === "zh" ? "文章总数" : "Total Posts"}
@@ -138,30 +179,82 @@ export function HomePage() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
-              {/* Contribution Heatmap Placeholder */}
-              <div className="p-6 bg-card border border-border rounded-lg">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Less</span>
-                  <span className="text-sm text-muted-foreground">More</span>
+        {/* Contribution Heatmap Section */}
+        <section className="mb-16">
+          <div className="glass-card p-6 rounded-lg overflow-x-auto">
+            <div className="min-w-[650px]">
+              {/* Month labels */}
+              <div className="flex mb-2 pl-[52px]">
+                <div className="flex-1 flex justify-between">
+                  {getMonthLabels().map((month, i) => (
+                    <div
+                      key={i}
+                      className="text-xs text-muted-foreground"
+                      style={{ flex: 1 }}
+                    >
+                      {month}
+                    </div>
+                  ))}
                 </div>
-                <div className="grid grid-cols-12 gap-1">
-                  {Array.from({ length: 84 }).map((_, i) => {
-                    const intensity = Math.random();
-                    let bgColor = "bg-muted";
-                    if (intensity > 0.8) bgColor = "bg-green-600";
-                    else if (intensity > 0.6) bgColor = "bg-green-500";
-                    else if (intensity > 0.4) bgColor = "bg-green-400";
-                    else if (intensity > 0.2) bgColor = "bg-green-300";
-                    else if (intensity > 0.1) bgColor = "bg-green-200";
-                    return (
+              </div>
+
+              {/* Heatmap grid */}
+              <div className="flex gap-2">
+                {/* Day labels */}
+                <div className="flex flex-col gap-[3px] justify-between text-xs text-muted-foreground py-[2px]">
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
+                    <div key={i} className="h-[11px] leading-[11px] text-right pr-2">
+                      {i % 2 === 1 ? day : ''}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Heatmap cells - 52 weeks x 7 days */}
+                <div className="flex-1">
+                  <div className="grid grid-flow-col grid-rows-7 gap-[3px]">
+                    {Array.from({ length: 52 }).map((_, weekIndex) => (
+                      <div key={weekIndex} className="contents">
+                        {Array.from({ length: 7 }).map((_, dayIndex) => {
+                          const cellIndex = weekIndex * 7 + dayIndex;
+                          const cell = stats.heatmap[cellIndex];
+                          const level = cell?.level ?? 0;
+                          const count = cell?.count ?? 0;
+                          const date = cell?.date ?? '';
+                          
+                          return (
+                            <div
+                              key={`${weekIndex}-${dayIndex}`}
+                              className={`w-[11px] h-[11px] rounded-sm ${getHeatmapColor(level)} hover:opacity-80 transition-opacity cursor-pointer`}
+                              title={`${date}: ${count} ${language === "zh" ? "篇文章" : "post(s)"}`}
+                            />
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Legend */}
+              <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+                <span>
+                  {stats.totalContributions} {language === "zh" ? "次贡献" : "contributions"} {language === "zh" ? "在过去一年" : "in the last year"}
+                </span>
+                <div className="flex items-center gap-2">
+                  <span>{language === "zh" ? "少" : "Less"}</span>
+                  <div className="flex gap-[3px]">
+                    {[0, 1, 2, 3, 4].map((level) => (
                       <div
-                        key={i}
-                        className={`w-3 h-3 rounded-sm ${bgColor} hover:scale-125 transition-transform cursor-pointer`}
-                        title={`Contribution ${Math.floor(intensity * 10)}`}
+                        key={level}
+                        className={`w-[11px] h-[11px] rounded-sm ${getHeatmapColor(level)}`}
                       />
-                    );
-                  })}
+                    ))}
+                  </div>
+                  <span>{language === "zh" ? "多" : "More"}</span>
                 </div>
               </div>
             </div>

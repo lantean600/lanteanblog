@@ -3,6 +3,7 @@ import { Layout } from "./layout";
 import Home from "./pages/Home";
 import { BlogList } from "./components/generated/BlogList";
 import { BlogDetail } from "./components/generated/BlogDetail";
+import { CollectionsPage } from "./components/generated/CollectionsPage";
 
 export const routes: RouteObject[] = [
   {
@@ -15,6 +16,14 @@ export const routes: RouteObject[] = [
       {
         path: "blog",
         element: <BlogList />,
+      },
+      {
+        path: "blog/collections/:collectionId",
+        element: <CollectionsPage />,
+      },
+      {
+        path: "blog/collections",
+        element: <CollectionsPage />,
       },
       {
         path: "blog/:category/:slug",

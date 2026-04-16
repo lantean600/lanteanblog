@@ -1,9 +1,8 @@
 ---
 title: "《Pytorch实用教程》笔记（一）数据模块"
-date: "2026-04-14"
+date: "2026-04-16"
 category: "daily"
 tags: ["pytorch"]
-views: 0
 heroImage: "/assets/hero1.jpg"
 heroLink: "https://www.pixiv.net/en/artworks/142350190"
 excerpt: "文章摘要"

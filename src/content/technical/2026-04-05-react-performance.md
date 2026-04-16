@@ -3,7 +3,6 @@ title: "React 性能优化最佳实践"
 date: "2026-04-05"
 category: "technical"
 tags: ["React", "JavaScript", "Performance"]
-views: 0
 heroImage: "/assets/hero1.jpg"
 heroLink: "https://www.pixiv.net/en/artworks/142350190"
 excerpt: "在大型 React 应用中，性能优化至关重要。本文分享了一系列实用的优化技巧和最佳实践。"

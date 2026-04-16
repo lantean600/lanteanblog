@@ -203,7 +203,7 @@ export function BlogDetail() {
   const tocNav = (
     <nav
       aria-label={language === "zh" ? "文章目录" : "Table of contents"}
-      className="rounded-2xl border border-border/80 bg-card/90 p-4 shadow-sm backdrop-blur"
+      className="glass-card rounded-2xl p-4"
     >
       <p className="mb-3 text-sm font-semibold text-foreground">
         {language === "zh" ? "目录" : "Contents"}
@@ -248,75 +248,81 @@ export function BlogDetail() {
           <span>{language === "zh" ? "返回博客列表" : "Back to Blog List"}</span>
         </Link>
 
-        <header className="mb-10 rounded-[2rem] border border-border/80 bg-card/70 p-4 sm:p-6 shadow-xl shadow-black/5">
-          <div className="relative overflow-hidden rounded-[1.5rem]">
-            <img
-              src={resolveHeroImage(post.heroImage)}
-              alt={`${post.title} hero`}
-              className="block w-full aspect-[16/9] object-cover"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src = hero1;
-              }}
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+        <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_min(320px,30%)] lg:gap-12">
+          {/* Left column: Hero image and article content */}
+          <div>
+            <header className="mb-10">
+              <div className="relative overflow-hidden rounded-2xl">
+                <img
+                  src={resolveHeroImage(post.heroImage)}
+                  alt={`${post.title} hero`}
+                  className="block w-full aspect-[16/9] object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = hero1;
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+              </div>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-2">
+                  <FaCalendarAlt className="h-4 w-4" />
+                  {language === "zh"
+                    ? `${post.date} / 更新 ${post.date}`
+                    : `${post.date} / Update ${post.date}`}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <FaClock className="h-4 w-4" />
+                  {readMinutes} {language === "zh" ? "分钟阅读" : "min read"}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <FaImage className="h-4 w-4" />
+                  {post.heroLink ? (
+                    <a
+                      href={post.heroLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:text-foreground"
+                    >
+                      Hero Image
+                    </a>
+                  ) : (
+                    <span>Hero Image</span>
+                  )}
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <FaHashtag className="h-4 w-4" />
+                  <span>{post.tags.join(" / ")}</span>
+                </span>
+              </div>
+
+              <h1 className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                {post.title}
+              </h1>
+              <p className="mt-2 text-base text-muted-foreground">{post.excerpt}</p>
+            </header>
+
+            <article ref={articleRef} className="prose prose-lg max-w-none dark:prose-invert min-w-0">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+                components={markdownComponents}
+              >
+                {post.content}
+              </ReactMarkdown>
+            </article>
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-2">
-              <FaCalendarAlt className="h-4 w-4" />
-              {language === "zh"
-                ? `${post.date} / 更新 ${post.date}`
-                : `${post.date} / Update ${post.date}`}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <FaClock className="h-4 w-4" />
-              {readMinutes} {language === "zh" ? "分钟阅读" : "min read"}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <FaImage className="h-4 w-4" />
-              {post.heroLink ? (
-                <a
-                  href={post.heroLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Hero Image
-                </a>
-              ) : (
-                <span>Hero Image</span>
-              )}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <FaHashtag className="h-4 w-4" />
-              <span>{post.tags.join(" / ")}</span>
-            </span>
-          </div>
-
-          <h1 className="mt-5 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
-            {post.title}
-          </h1>
-          <p className="mt-2 text-base text-muted-foreground">{post.excerpt}</p>
-        </header>
-
-        {toc.length > 0 && <div className="mb-8 lg:hidden">{tocNav}</div>}
-
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_min(300px,34%)] lg:items-start lg:gap-10">
-          <article ref={articleRef} className="prose prose-lg max-w-none dark:prose-invert min-w-0">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight]}
-              components={markdownComponents}
-            >
-              {post.content}
-            </ReactMarkdown>
-          </article>
-
+          {/* Right column: Table of contents */}
           {toc.length > 0 && (
-            <aside className="sticky top-28 mt-10 hidden self-start lg:mt-0 lg:block">{tocNav}</aside>
+            <aside className="hidden lg:block">
+              <div className="sticky top-24">{tocNav}</div>
+            </aside>
           )}
         </div>
+
+        {toc.length > 0 && <div className="mt-8 lg:hidden">{tocNav}</div>}
 
         <section className="mt-12 pt-8 border-t border-border">
           <h2 className="text-xl font-bold text-foreground mb-4">
@@ -328,7 +334,7 @@ export function BlogDetail() {
                 <Link
                   key={`${related.category}-${related.slug}`}
                   to={`/blog/${related.category}/${related.slug}`}
-                  className="block p-4 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 transition-all duration-200"
+                  className="glass-card block p-4 rounded-lg hover:border-foreground/20 hover:bg-card/70 transition-all duration-200"
                 >
                   <h3 className="font-medium text-foreground hover:text-primary transition-colors">
                     {related.title}

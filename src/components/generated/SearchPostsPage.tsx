@@ -66,7 +66,7 @@ export function SearchPostsPage() {
           <span>{language === "zh" ? "返回博客" : "Back to Blog"}</span>
         </Link>
 
-        <div className="mb-8 rounded-2xl border border-border bg-card p-5">
+        <div className="mb-8 glass-card rounded-2xl p-5">
           <h1 className="text-3xl font-black text-foreground">
             {language === "zh" ? "全站搜索" : "Global Search"}
           </h1>
@@ -95,7 +95,7 @@ export function SearchPostsPage() {
           <p className="mt-3 text-sm text-muted-foreground">
             {normalizedQuery
               ? (language === "zh" ? `匹配到 ${results.length} 篇文章` : `${results.length} article(s) matched`)
-              : (language === "zh" ? "输入关键词开始搜索" : "Enter a query to search")}
+              : null}
           </p>
         </div>
 

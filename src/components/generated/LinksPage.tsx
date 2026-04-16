@@ -76,7 +76,7 @@ export function LinksPage() {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-6 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 hover:shadow-lg transition-all duration-200 group"
+              className="glass-card p-6 rounded-lg hover:border-foreground/20 hover:bg-card/70 transition-all duration-200 group"
             >
               <div className="flex items-start gap-4">
                 <img

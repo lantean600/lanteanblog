@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { postsWithContent as localPosts } from "../lib/content";
 
 type PostRecord = {
   id: string;
@@ -71,20 +71,30 @@ function calculateDaysOnline() {
 }
 
 function toDateKey(value: string) {
+  // 直接使用字符串的前10位，避免时区问题
   return value.slice(0, 10);
 }
 
-function getHeatLevel(count: number, maxCount: number): 0 | 1 | 2 | 3 | 4 {
-  if (count <= 0 || maxCount <= 0) {
-    return 0;
-  }
+function toLocalDateKey(date: Date) {
+  // 使用本地日期而不是 toISOString()，避免时区偏移问题
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
-  const ratio = count / maxCount;
-
-  if (ratio >= 0.8) return 4;
-  if (ratio >= 0.55) return 3;
-  if (ratio >= 0.3) return 2;
-  return 1;
+function getHeatLevel(count: number): 0 | 1 | 2 | 3 | 4 {
+  // 根据文章数量决定颜色级别
+  // 0篇 = 灰色(level 0)
+  // 1篇 = 浅绿(level 1)
+  // 2篇 = 中绿(level 2)
+  // 3篇 = 深绿(level 3)
+  // 4篇及以上 = 最深绿(level 4)
+  if (count <= 0) return 0;
+  if (count === 1) return 1;
+  if (count === 2) return 2;
+  if (count === 3) return 3;
+  return 4;
 }
 
 function buildHeatmap(posts: PostRecord[]) {
@@ -107,19 +117,18 @@ function buildHeatmap(posts: PostRecord[]) {
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
 
-  const maxCount = Math.max(...counts.values(), 0);
   const cells: HeatmapCell[] = [];
 
   for (let i = 0; i < 364; i += 1) {
     const current = new Date(startDate);
     current.setDate(startDate.getDate() + i);
-    const key = current.toISOString().slice(0, 10);
+    const key = toLocalDateKey(current);
     const count = counts.get(key) ?? 0;
 
     cells.push({
       date: key,
       count,
-      level: getHeatLevel(count, maxCount),
+      level: getHeatLevel(count),
     });
   }
 
@@ -136,32 +145,19 @@ export function useBlogStatistics(language: "zh" | "en") {
     async function loadStatistics() {
       setLoading(true);
 
-      const [postsResult, statisticsResult] = await Promise.all([
-        supabase
-          .from("posts")
-          .select("id, content, published_at, updated_at")
-          .eq("is_deleted", false)
-          .eq("is_published", true)
-          .order("published_at", { ascending: false }),
-        supabase
-          .from("blog_statistics")
-          .select("manual_adjustment")
-          .eq("is_deleted", false)
-          .order("updated_at", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-      ]);
+      // 从本地 Markdown 文件获取数据
+      const posts: PostRecord[] = localPosts.map((post) => ({
+        id: post.slug,
+        content: post.content || "",
+        published_at: post.date,
+        updated_at: post.date,
+      }));
 
       if (!isMounted) {
         return;
       }
 
-      const posts = (postsResult.data ?? []) as PostRecord[];
-      const statistics = (statisticsResult.data ?? null) as BlogStatisticsRecord | null;
-
-      const totalWords =
-        posts.reduce((sum, post) => sum + countWords(post.content ?? ""), 0) +
-        Math.max(0, statistics?.manual_adjustment ?? 0);
+      const totalWords = posts.reduce((sum, post) => sum + countWords(post.content ?? ""), 0);
 
       const latestUpdatedAt =
         posts

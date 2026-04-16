@@ -35,7 +35,7 @@ export function AboutPage() {
           <h2 className="text-xl font-bold text-foreground mb-4">
             {language === "zh" ? "详细介绍" : "Introduction"}
           </h2>
-          <div className="p-6 bg-card border border-border rounded-lg">
+          <div className="glass-card p-6 rounded-lg">
             <p className="text-muted-foreground leading-relaxed">
               {language === "zh"
                 ? "我对人工智能、深度学习、自然语言处理等领域充满热情，喜欢探索前沿技术并将其应用于实际问题。"
@@ -51,7 +51,7 @@ export function AboutPage() {
             {language === "zh" ? "教育经历" : "Education"}
           </h2>
           <div className="space-y-4">
-            <div className="p-6 bg-card border border-border rounded-lg">
+            <div className="p-6 bg-card rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <h3 className="font-bold text-foreground">太原理工大学</h3>
@@ -71,7 +71,7 @@ export function AboutPage() {
           <h2 className="text-xl font-bold text-foreground mb-4">
             {language === "zh" ? "研究方向" : "Research Areas"}
           </h2>
-          <div className="p-6 bg-card border border-border rounded-lg">
+          <div className="glass-card p-6 rounded-lg">
             <p className="text-muted-foreground">
               {language === "zh"
                 ? "多模态学习、具身智能、自然语言处理、深度学习"
@@ -89,7 +89,7 @@ export function AboutPage() {
             {skills.map((skill) => (
               <div
                 key={skill.category}
-                className="p-4 bg-card border border-border rounded-lg"
+                className="glass-card p-4 rounded-lg"
               >
                 <h3 className="font-semibold text-foreground mb-3">
                   {skill.category}
@@ -115,7 +115,7 @@ export function AboutPage() {
             <FaEnvelope className="w-5 h-5 mr-2" />
             {language === "zh" ? "联系方式" : "Contact"}
           </h2>
-          <div className="p-6 bg-card border border-border rounded-lg">
+          <div className="glass-card p-6 rounded-lg">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="w-5 h-5 text-primary" />
