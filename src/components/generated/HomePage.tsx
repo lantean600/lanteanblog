@@ -29,7 +29,7 @@ export function HomePage() {
               </h1>
               <div className="flex items-center justify-center md:justify-start space-x-4 mb-4">
                 <a
-                  href="https://github.com/lantean"
+                  href="https://github.com/lantean600"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg hover:from-primary/10 hover:via-primary/5 hover:to-primary/10 transition-all duration-300 border border-border hover:border-primary/40"
@@ -38,12 +38,12 @@ export function HomePage() {
                   <span className="text-sm font-medium">GitHub</span>
                 </a>
                 <a
-                  href="mailto:contact@lantean.com"
+                  href="mailto:614635562@qq.com"
                   className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg hover:from-primary/10 hover:via-primary/5 hover:to-primary/10 transition-all duration-300 border border-border hover:border-primary/40"
                 >
                   <FaEnvelope className="w-5 h-5" />
                   <span className="text-sm font-medium">
-                    {language === "zh" ? "邮箱" : "Email"}
+                    {language === "zh" ? "邮箱" : "614635562@qq.com"}
                   </span>
                 </a>
                 <div className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg border border-border">

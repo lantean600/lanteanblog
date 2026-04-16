@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaMoon, FaSearch, FaSun, FaTimes } from "react-icons/fa";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
 interface HeaderProps {
@@ -16,9 +16,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -40,12 +38,11 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
 
   const isActive = (path: string) => {
     if (path === "/blog") {
-      return location.pathname === "/blog" || location.pathname === "/";
+      return location.pathname === "/blog" || location.pathname.startsWith("/blog/");
     }
     return location.pathname === path;
   };
 
-  // 语言切换器实现
   const LanguageSwitcher = () => {
     const [isOpen, setIsOpen] = useState(false);
     const languages: { code: Language; name: string }[] = [
@@ -53,33 +50,29 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
       { code: "en", name: "English" },
     ];
 
-    const toggleDropdown = () => setIsOpen(!isOpen);
-
-    const handleLanguageChange = (code: "zh" | "en") => {
-      setLanguage(code);
-      setIsOpen(false);
-    };
-
     return (
       <div className="relative">
         <button
-          onClick={toggleDropdown}
-          className="p-2 text-foreground hover:text-primary transition-colors flex items-center gap-2"
+          onClick={() => setIsOpen((v) => !v)}
+          className="flex items-center gap-2 p-2 text-foreground transition-colors hover:text-primary"
           aria-label={language === "zh" ? "切换语言" : "Switch language"}
         >
           <span>{languages.find((lang) => lang.code === language)?.name}</span>
         </button>
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2">
+          <div className="absolute left-0 top-full mt-2 w-44 rounded-lg border border-border bg-card py-2 shadow-lg">
             {languages.map((lang) => (
               <button
                 key={lang.code}
-                onClick={() => handleLanguageChange(lang.code)}
-                className={`block px-4 py-2 text-sm w-full text-left ${
+                onClick={() => {
+                  setLanguage(lang.code);
+                  setIsOpen(false);
+                }}
+                className={`block w-full px-4 py-2 text-left text-sm transition-colors ${
                   language === lang.code
-                    ? "text-primary font-medium"
+                    ? "font-medium text-primary"
                     : "text-foreground hover:bg-muted hover:text-primary"
-                } transition-colors`}
+                }`}
               >
                 {lang.name}
               </button>
@@ -92,79 +85,84 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "border-b border-border bg-background/80 backdrop-blur-md" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-xl font-bold text-foreground hover:text-primary transition-colors">
-            Lantean's Blog
-          </Link>
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link to="/" className="text-xl font-bold text-foreground transition-colors hover:text-primary">
+          Lantean's Blog
+        </Link>
 
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <div
-                key={item.path}
-                className="relative"
-                onMouseEnter={() => item.hasDropdown && setActiveDropdown(item.path)}
-                onMouseLeave={() => item.hasDropdown && setActiveDropdown(null)}
+        <nav className="hidden items-center space-x-8 md:flex">
+          {navItems.map((item) => (
+            <div
+              key={item.path}
+              className="relative"
+              onMouseEnter={() => item.hasDropdown && setActiveDropdown(item.path)}
+              onMouseLeave={() => item.hasDropdown && setActiveDropdown(null)}
+            >
+              <Link
+                to={item.path}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  isActive(item.path) ? "text-primary" : "text-foreground"
+                }`}
               >
-                <Link
-                  to={item.path}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isActive(item.path) ? "text-primary" : "text-foreground"
+                {item.name}
+              </Link>
+              {item.hasDropdown && (
+                <div
+                  className={`absolute left-0 top-full w-48 rounded-lg border border-border bg-card py-2 shadow-lg transition-all duration-200 ${
+                    activeDropdown === item.path ? "visible opacity-100" : "invisible opacity-0"
                   }`}
                 >
-                  {item.name}
-                </Link>
-                {item.hasDropdown && (
-                  <div
-                    className={`absolute top-full left-0 w-48 bg-card border border-border rounded-lg shadow-lg py-2 transition-all duration-200 ${
-                      activeDropdown === item.path ? "opacity-100 visible" : "opacity-0 invisible"
-                    }`}
-                  >
-                    {blogCategories.map((category) => (
-                      <Link
-                        key={category.path}
-                        to={category.path}
-                        className="block px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary transition-colors"
-                      >
-                        {category.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
+                  {blogCategories.map((category) => (
+                    <Link
+                      key={category.path}
+                      to={category.path}
+                      className="block px-4 py-2 text-sm text-foreground transition-colors hover:bg-muted hover:text-primary"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
 
-          <div className="flex items-center space-x-4">
-            <LanguageSwitcher />
+        <div className="flex items-center space-x-3">
+          <Link
+            to="/search"
+            className="hidden p-2 text-foreground transition-colors hover:text-primary md:inline-flex"
+            aria-label={language === "zh" ? "搜索" : "Search"}
+          >
+            <FaSearch className="h-4 w-4" />
+          </Link>
 
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-foreground hover:text-primary transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
-            </button>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
-            </button>
-          </div>
+          <LanguageSwitcher />
+
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-foreground transition-colors hover:text-primary"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <FaSun className="h-5 w-5" /> : <FaMoon className="h-5 w-5" />}
+          </button>
+
+          <button
+            onClick={() => setIsMobileMenuOpen((v) => !v)}
+            className="p-2 text-foreground transition-colors hover:text-primary md:hidden"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-card border-b border-border">
-          <div className="px-4 py-4 space-y-4">
+        <div className="border-b border-border bg-card md:hidden">
+          <div className="space-y-4 px-4 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -177,13 +175,22 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4 border-t border-border flex items-center space-x-4">
+
+            <Link
+              to="/search"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-sm font-medium text-foreground transition-colors hover:text-primary"
+            >
+              {language === "zh" ? "搜索" : "Search"}
+            </Link>
+
+            <div className="flex items-center space-x-4 border-t border-border pt-4">
               <LanguageSwitcher />
               <button
                 onClick={toggleTheme}
-                className="flex items-center space-x-2 text-sm text-foreground hover:text-primary transition-colors"
+                className="flex items-center space-x-2 text-sm text-foreground transition-colors hover:text-primary"
               >
-                {isDark ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
+                {isDark ? <FaSun className="h-4 w-4" /> : <FaMoon className="h-4 w-4" />}
                 <span>{isDark ? (language === "zh" ? "浅色模式" : "Light Mode") : (language === "zh" ? "深色模式" : "Dark Mode")}</span>
               </button>
             </div>
@@ -193,4 +200,3 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
     </header>
   );
 }
-

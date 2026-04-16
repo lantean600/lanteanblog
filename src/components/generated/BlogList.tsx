@@ -1,13 +1,39 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaCalendarAlt, FaClock, FaSearch } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
+import { getAllPosts, searchPosts } from "@/lib/content";
 import hero1 from "@/assets/hero1.jpg";
+
+interface PostMeta {
+  slug: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  views: number;
+  tags: string[];
+  heroImage?: string;
+}
+
+const resolveHeroImage = (image?: string) => {
+  if (!image || image === "/assets/hero1.jpg") return hero1;
+  return image;
+};
+
+const estimateReadMinutes = (text: string) => {
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 220));
+};
 
 export function BlogList() {
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const [posts, setPosts] = useState<PostMeta[]>([]);
+  const [loading, setLoading] = useState(true);
+  const allPosts = useMemo(() => getAllPosts(), []);
+
   const category = searchParams.get("category") || "all";
 
   const categories = [
@@ -18,60 +44,25 @@ export function BlogList() {
     { key: "journal", label: language === "zh" ? "月刊" : "Journal" },
   ];
 
-  const posts = [
-    {
-      id: 1,
-      title: "深入理解 Transformer 架构",
-      excerpt: "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。",
-      category: "research",
-      tags: ["AI", "Deep Learning", "NLP"],
-      date: "2026-04-10",
-      views: 1234,
-      heroImage: hero1,
-      heroLink: "https://www.pixiv.net/en/artworks/142350190",
-    },
-    {
-      id: 2,
-      title: "React 性能优化最佳实践",
-      excerpt: "在大型 React 应用中，性能优化至关重要。本文分享了一系列实用的优化技巧和最佳实践。",
-      category: "technical",
-      tags: ["React", "JavaScript", "Performance"],
-      date: "2026-04-05",
-      views: 892,
-      heroImage: hero1,
-      heroLink: "https://www.pixiv.net/en/artworks/142350190",
-    },
-    {
-      id: 3,
-      title: "我的 2026 年第一季度总结",
-      excerpt: "回顾过去三个月的学习、工作和生活，分享一些感悟和收获。",
-      category: "journal",
-      tags: ["Life", "Review"],
-      date: "2026-04-01",
-      views: 567,
-      heroImage: hero1,
-      heroLink: "https://www.pixiv.net/en/artworks/142350190",
-    },
-    {
-      id: 4,
-      title: "周末徒步记录",
-      excerpt: "上周末去爬了附近的山，记录一下沿途的美景和感受。",
-      category: "daily",
-      tags: ["Life", "Outdoor"],
-      date: "2026-03-28",
-      views: 423,
-      heroImage: hero1,
-      heroLink: "https://www.pixiv.net/en/artworks/142350190",
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    try {
+      let postsData = allPosts;
 
-  const filteredPosts = posts.filter((post) => {
-    const matchesCategory = category === "all" || post.category === category;
-    const matchesSearch =
-      searchQuery === "" ||
-      post.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+      if (searchQuery.trim()) {
+        postsData = searchPosts(searchQuery.trim());
+      } else if (category !== "all") {
+        postsData = postsData.filter((post) => post.category === category);
+      }
+
+      setPosts(postsData);
+    } catch (error) {
+      console.error("Failed to load posts:", error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [allPosts, category, searchQuery]);
 
   const handleCategoryChange = (newCategory: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -83,17 +74,48 @@ export function BlogList() {
     setSearchParams(newParams);
   };
 
+  const filteredPosts = useMemo(() => {
+    return posts.filter((post) => {
+      if (!searchQuery.trim()) return true;
+
+      const q = searchQuery.toLowerCase();
+      return (
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(q))
+      );
+    });
+  }, [posts, searchQuery]);
+
+  const popularTags = useMemo(() => {
+    const tagCount = new Map<string, number>();
+
+    for (const post of allPosts) {
+      for (const tag of post.tags) {
+        tagCount.set(tag, (tagCount.get(tag) ?? 0) + 1);
+      }
+    }
+
+    return Array.from(tagCount.entries())
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 18);
+  }, [allPosts]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-24 pb-12 flex items-center justify-center">
+        <div className="text-lg text-muted-foreground">{language === "zh" ? "加载中..." : "Loading..."}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen pt-24 pb-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Main Content */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-foreground mb-6">
-              {language === "zh" ? "博客文章" : "Blog Posts"}
-            </h1>
+            <h1 className="text-3xl font-bold text-foreground mb-6">{language === "zh" ? "博客文章" : "Blog Posts"}</h1>
 
-            {/* Category Tabs */}
             <div className="flex flex-wrap gap-2 mb-8">
               {categories.map((cat) => (
                 <button
@@ -110,104 +132,112 @@ export function BlogList() {
               ))}
             </div>
 
-            {/* Posts List */}
-            <div className="space-y-6">
-              {filteredPosts.map((post) => (
-                <article
-                  key={post.id}
-                  className="p-6 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 hover:translate-y-[-2px] transition-all duration-200"
-                >
-                  <a
-                    href={post.heroLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative block mb-5 overflow-hidden rounded-2xl shadow-lg bg-card transition-shadow duration-300 hover:shadow-xl"
-                  >
-                    <img
-                      src={post.heroImage}
-                      alt={`${post.title} hero`}
-                      className="block w-full aspect-[16/9] object-cover rounded-2xl transition-[filter] duration-300 group-hover:brightness-95"
-                      loading="lazy"
-                    />
-                    <span className="absolute right-3 bottom-3 px-3 py-1.5 text-xs font-medium text-white bg-black/50 rounded-md backdrop-blur-sm opacity-90 group-hover:opacity-100 transition-all duration-300">
-                      Hero Image
-                    </span>
-                  </a>
-                  <Link to={`/blog/${post.id}`}>
-                    <h2 className="text-xl font-bold text-foreground mb-2 hover:text-primary transition-colors">
-                      {post.title}
-                    </h2>
-                  </Link>
-                  <p className="text-muted-foreground mb-4 line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs text-muted-foreground font-mono">
-                        {post.date}
-                      </span>
-                      <span className="text-xs px-2 py-1 bg-muted rounded text-muted-foreground">
-                        {categories.find((c) => c.key === post.category)?.label}
-                      </span>
-                      <div className="flex items-center space-x-1">
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs px-2 py-1 bg-primary/10 text-primary rounded"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
+            <div className="space-y-5">
+              {filteredPosts.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  {language === "zh" ? "没有找到相关文章" : "No articles found"}
+                </div>
+              ) : (
+                filteredPosts.map((post) => {
+                  const heroImage = resolveHeroImage(post.heroImage);
+                  const readMinutes = estimateReadMinutes(`${post.title} ${post.excerpt}`);
+
+                  return (
+                    <article
+                      key={`${post.category}-${post.slug}`}
+                      className="relative isolate overflow-hidden rounded-3xl border border-border/70 bg-card shadow-lg shadow-black/5"
+                    >
+                      <img
+                        src={heroImage}
+                        alt=""
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-55 blur-[6px] saturate-115 contrast-105 scale-110"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = hero1;
+                        }}
+                      />
+                      <img
+                        src={heroImage}
+                        alt=""
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-34 [mask-image:linear-gradient(to_right,transparent_4%,rgba(0,0,0,0.85)_58%,black_100%)]"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = hero1;
+                        }}
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/97 via-background/86 via-[46%] to-background/60" />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(86%_100%_at_34%_44%,rgba(255,255,255,0.56)_0%,rgba(255,255,255,0.16)_48%,rgba(255,255,255,0)_78%)]" />
+
+                      <div className="relative min-h-[220px] md:min-h-[236px]">
+                        <div className="p-5 md:p-6 flex h-full flex-col justify-between">
+                          <div>
+                            <div className="mb-2 inline-flex items-center gap-2 text-xs tracking-wide text-muted-foreground">
+                              <FaCalendarAlt className="h-3.5 w-3.5" />
+                              {post.date}
+                            </div>
+                            <Link to={`/blog/${post.category}/${post.slug}`}>
+                              <h2 className="text-2xl md:text-[1.85rem] font-black leading-tight text-foreground hover:text-primary transition-colors line-clamp-2">
+                                {post.title}
+                              </h2>
+                            </Link>
+                            <p className="mt-2 text-sm md:text-base text-foreground/80 line-clamp-2">{post.excerpt}</p>
+                          </div>
+
+                          <div className="mt-4 flex flex-wrap items-center gap-2">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs text-foreground/85">
+                              <FaClock className="h-3 w-3" />
+                              {readMinutes} {language === "zh" ? "分钟" : "min"}
+                            </span>
+                            {post.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded-full border border-border/70 bg-background/65 px-3 py-1 text-xs text-foreground/85"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span className="text-sm text-muted-foreground">
-                        {language === "zh" ? `阅读：${post.views}` : `Views: ${post.views}`}
-                      </span>
-                      <Link
-                        to={`/blog/${post.id}`}
-                        className="text-sm text-primary hover:text-primary/80 font-medium"
-                      >
-                        {language === "zh" ? "阅读更多 →" : "Read More →"}
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
+                    </article>
+                  );
+                })
+              )}
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className="w-full md:w-72 flex-shrink-0">
             <div className="sticky top-24 space-y-6">
-              {/* Search Box */}
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={language === "zh" ? "搜索文章..." : "Search posts..."}
-                  className="w-full px-4 py-3 pl-10 bg-card border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <div className="p-4 bg-card border border-border rounded-lg">
+                <h3 className="text-sm font-semibold text-foreground mb-2">
+                  {language === "zh" ? "全站搜索" : "Global Search"}
+                </h3>
+                <p className="text-xs text-muted-foreground mb-3">
+                  {language === "zh"
+                    ? "检索标题、摘要、标签和正文内容"
+                    : "Search title, excerpt, tags, and full content"}
+                </p>
+                <Link
+                  to={searchQuery.trim() ? `/search?q=${encodeURIComponent(searchQuery.trim())}` : "/search"}
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                >
+                  <FaSearch className="h-3.5 w-3.5" />
+                  <span>{language === "zh" ? "打开搜索页" : "Open Search"}</span>
+                </Link>
               </div>
 
-              {/* Tags Cloud */}
               <div className="p-4 bg-card border border-border rounded-lg">
-                <h3 className="text-sm font-semibold text-foreground mb-3">
-                  {language === "zh" ? "热门标签" : "Popular Tags"}
-                </h3>
+                <h3 className="text-sm font-semibold text-foreground mb-3">{language === "zh" ? "热门标签" : "Popular Tags"}</h3>
                 <div className="flex flex-wrap gap-2">
-                  {["AI", "React", "JavaScript", "Life", "NLP", "Performance"].map(
-                    (tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-3 py-1 bg-muted text-muted-foreground rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors"
-                      >
-                        #{tag}
-                      </span>
-                    )
-                  )}
+                  {popularTags.map(([tag, count]) => (
+                    <Link
+                      key={tag}
+                      to={`/blog/tag/${encodeURIComponent(tag)}`}
+                      className="text-xs px-3 py-1 bg-muted text-muted-foreground rounded hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      #{tag} <span className="opacity-70">({count})</span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>

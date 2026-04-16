@@ -89,3 +89,63 @@
 .opacity-0:not([class*="animate-"]):not([class*="group-hover"]):not([class*="opacity-100"]):not([class*="pointer-events-none"]) {
   pointer-events: none;
 }
+
+/* Markdown code blocks: single surface + theme-aware colors */
+.prose pre {
+  background-color: hsl(210 20% 97%);
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+}
+
+.prose pre code {
+  background: transparent !important;
+  border: 0;
+  color: inherit;
+  display: block;
+  font-weight: 500;
+  padding: 0 !important;
+}
+
+.prose pre code.hljs {
+  background: transparent !important;
+  color: hsl(220 18% 20%);
+}
+
+.dark .prose pre {
+  background-color: hsl(222 26% 12%);
+  border-color: hsl(220 18% 24%);
+}
+
+.dark .prose pre code.hljs {
+  background: transparent !important;
+  color: hsl(220 24% 90%);
+}
+
+/* highlight.js token tuning for dark mode */
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: hsl(220 12% 62%);
+}
+
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-subst {
+  color: hsl(341 83% 72%);
+}
+
+.dark .hljs-string,
+.dark .hljs-doctag,
+.dark .hljs-title,
+.dark .hljs-section,
+.dark .hljs-selector-id {
+  color: hsl(94 66% 72%);
+}
+
+.dark .hljs-number,
+.dark .hljs-literal,
+.dark .hljs-variable,
+.dark .hljs-template-variable,
+.dark .hljs-tag .hljs-attr {
+  color: hsl(39 89% 74%);
+}
