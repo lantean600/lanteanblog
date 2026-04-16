@@ -131,7 +131,7 @@ export function AboutPage() {
                   rel="noopener noreferrer"
                   className="text-primary hover:text-primary/80 transition-colors"
                 >
-                  github.com/lantean
+                  github.com/lantean600
                 </a>
               </div>
               <div className="flex items-center space-x-3">
