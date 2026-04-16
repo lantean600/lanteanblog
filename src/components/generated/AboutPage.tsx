@@ -120,13 +120,13 @@ export function AboutPage() {
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="w-5 h-5 text-primary" />
                 <span className="text-muted-foreground">
-                  {language === "zh" ? "邮箱：contact@lantean.com" : "Email: contact@lantean.com"}
+                  {language === "zh" ? "邮箱：614635562@qq.com" : "Email: 614635562@qq.com"}
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <FaGithub className="w-5 h-5 text-primary" />
                 <a
-                  href="https://github.com/lantean"
+                  href="https://github.com/lantean600"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:text-primary/80 transition-colors"
@@ -137,7 +137,7 @@ export function AboutPage() {
               <div className="flex items-center space-x-3">
                 <FaMapMarkerAlt className="w-5 h-5 text-primary" />
                 <span className="text-muted-foreground">
-                  {language === "zh" ? "所在地：中国·上海" : "Location: Shanghai, China"}
+                  {language === "zh" ? "所在地：中国·太原" : "Location: Taiyuan, China"}
                 </span>
               </div>
             </div>
