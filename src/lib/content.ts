@@ -22,15 +22,25 @@ function parseMarkdownFile(filePath: string, rawContent: string): Post | null {
   try {
     // 从路径中提取分类和 slug
     const match = filePath.match(/\/content\/(\w+)\/([^.]+)\.md$/);
-    if (!match) return null;
+    if (!match) {
+      console.warn(`[Content] Failed to match path pattern for: ${filePath}`);
+      return null;
+    }
 
     const [, category, slug] = match;
 
-    // 简单的 Front Matter 解析（支持 gray-matter 格式）
-    const frontMatterMatch = rawContent.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
-    if (!frontMatterMatch) return null;
+    // 清理可能的 BOM 头
+    const cleanContent = rawContent.replace(/^\uFEFF/, "").trim();
+    
+    // 使用分割法解析 Front Matter，兼容不同的换行符和格式
+    const parts = cleanContent.split(/^---\s*$/m);
+    if (parts.length < 3) {
+      console.warn(`[Content] Failed to parse Front Matter for: ${filePath}`);
+      return null;
+    }
 
-    const [, frontMatterStr, content] = frontMatterMatch;
+    const frontMatterStr = parts[1];
+    const content = parts.slice(2).join("---");
 
     // 解析 YAML Front Matter
     const titleMatch = frontMatterStr.match(/title:\s*["']?([^"'\n]+)["']?/);
@@ -59,7 +69,7 @@ function parseMarkdownFile(filePath: string, rawContent: string): Post | null {
       content: content.trim(),
     };
   } catch (error) {
-    console.error(`Failed to parse ${filePath}:`, error);
+    console.error(`[Content] Failed to parse ${filePath}:`, error);
     return null;
   }
 }

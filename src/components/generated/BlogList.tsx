@@ -48,6 +48,10 @@ export function BlogList() {
     setLoading(true);
     try {
       let postsData = allPosts;
+      
+      if (allPosts.length === 0) {
+        console.warn("[BlogList] No posts loaded from content.ts. This might indicate a markdown parsing issue or empty content directory.");
+      }
 
       if (searchQuery.trim()) {
         postsData = searchPosts(searchQuery.trim());
@@ -57,7 +61,7 @@ export function BlogList() {
 
       setPosts(postsData);
     } catch (error) {
-      console.error("Failed to load posts:", error);
+      console.error("[BlogList] Failed to load posts:", error);
       setPosts([]);
     } finally {
       setLoading(false);

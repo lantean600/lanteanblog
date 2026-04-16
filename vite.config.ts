@@ -20,8 +20,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // 处理 Markdown 文件为原始文本
-  assetsInclude: ["**/*.md"],
   server: {
     // 已移除 WXZ_WEB_BUILDER_VITE_SERVER 变量
     // Vercel 会自动处理生产环境的服务器配置
