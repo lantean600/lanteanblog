@@ -149,26 +149,26 @@ export function BlogList() {
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/95 via-[40%] to-transparent" />
 
                     <Link to={`/blog/${post.category}/${post.slug}`} className="block h-full">
-                      <div className="relative min-h-[240px] md:min-h-[260px] flex items-center px-6 md:px-8">
+                      <div className="relative min-h-[180px] md:min-h-[200px] flex items-center px-6 md:px-8 py-6">
                         <div className="flex-1 pr-12">
-                          <div className="mb-3 text-sm tracking-wide text-muted-foreground">
+                          <div className="mb-2 text-xs tracking-wide text-muted-foreground">
                             {post.date}
                           </div>
-                          <h2 className="text-xl md:text-2xl font-bold leading-tight text-foreground mb-3">
+                          <h2 className="text-lg md:text-xl font-bold leading-tight text-foreground mb-2">
                             {post.title}
                           </h2>
-                          <p className="text-base md:text-lg text-foreground/70 mb-4 line-clamp-2">{post.excerpt}</p>
+                          <p className="text-sm md:text-base text-foreground/70 mb-3 line-clamp-2">{post.excerpt}</p>
 
-                          <div className="flex items-center gap-2 text-foreground/80 mb-4">
-                            <FaClock className="h-4 w-4" />
-                            <span className="text-base font-normal">{readMinutes} min read</span>
+                          <div className="flex items-center gap-2 text-foreground/80 mb-3">
+                            <FaClock className="h-3.5 w-3.5" />
+                            <span className="text-sm font-normal">{readMinutes} min read</span>
                           </div>
 
-                          <div className="flex flex-wrap gap-3">
+                          <div className="flex flex-wrap gap-2">
                             {post.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
-                                className="rounded-full bg-muted/80 px-5 py-2 text-sm text-foreground/85 hover:bg-muted transition-colors"
+                                className="rounded-full bg-muted/80 px-3 py-1 text-xs text-foreground/85 hover:bg-muted transition-colors"
                               >
                                 {tag}
                               </span>
