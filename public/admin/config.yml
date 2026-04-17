@@ -1,0 +1,106 @@
+backend:
+  name: github
+  repo: lantean600/lanteanblog
+  branch: main
+
+local_backend:
+  url: http://localhost:8091/api/v1
+
+publish_mode: editorial_workflow
+
+media_folder: public/images
+public_folder: /images
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: research
+    label: Research
+    folder: src/content/research
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
+      - { label: Category, name: category, widget: hidden, default: research }
+      - label: Tags
+        name: tags
+        widget: list
+        default: []
+      - { label: Collection, name: collection, widget: string, required: false }
+      - { label: Hero Image, name: heroImage, widget: image, required: false, default: "/images/yachiyo.jpg" }
+      - { label: Hero Link, name: heroLink, widget: string, required: false }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: technical
+    label: Technical
+    folder: src/content/technical
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
+      - { label: Category, name: category, widget: hidden, default: technical }
+      - label: Tags
+        name: tags
+        widget: list
+        default: []
+      - { label: Collection, name: collection, widget: string, required: false }
+      - { label: Hero Image, name: heroImage, widget: image, required: false, default: "/images/yachiyo.jpg" }
+      - { label: Hero Link, name: heroLink, widget: string, required: false }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: daily
+    label: Daily
+    folder: src/content/daily
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
+      - { label: Category, name: category, widget: hidden, default: daily }
+      - label: Tags
+        name: tags
+        widget: list
+        default: []
+      - { label: Collection, name: collection, widget: string, required: false }
+      - { label: Hero Image, name: heroImage, widget: image, required: false, default: "/images/yachiyo.jpg" }
+      - { label: Hero Link, name: heroLink, widget: string, required: false }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: journal
+    label: Journal
+    folder: src/content/journal
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
+      - { label: Category, name: category, widget: hidden, default: journal }
+      - label: Tags
+        name: tags
+        widget: list
+        default: []
+      - { label: Collection, name: collection, widget: string, required: false }
+      - { label: Hero Image, name: heroImage, widget: image, required: false, default: "/images/yachiyo.jpg" }
+      - { label: Hero Link, name: heroLink, widget: string, required: false }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Body, name: body, widget: markdown }
