@@ -34,8 +34,7 @@
     "title": "测试富文本支持",
     "date": "2026-04-16",
     "tags": [
-      "Test",
-      "Markdown"
+      "Test"
     ],
     "excerpt": "测试代码、数学公式、图片等富文本特性",
     "heroImage": "/images/142545101_p0_master1200.jpg",
@@ -69,7 +68,6 @@
     "excerpt": "回顾过去三个月的学习、工作和生活，分享一些感悟和收获。",
     "heroImage": "/images/143202526_p0.jpg",
     "heroLink": "https://www.pixiv.net/en/artworks/143202526",
-    "collection": "反思总结",
     "filePath": "../content/journal/2026-04-01-q1-summary.md"
   },
   {

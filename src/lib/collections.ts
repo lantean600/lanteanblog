@@ -31,10 +31,6 @@ const COLLECTION_METADATA: Record<string, Omit<Collection, "id" | "items">> = {
     name: { zh: "pytorch-深度学习", en: "pytorch-deeplearning" },
     description: { zh: "《Pytorch实用教程》学习笔记", en: "PyTorch-Practical-Guide-Notes" },
   },
-  "反思总结": {
-    name: { zh: "反思总结", en: "Reflection-Summary" },
-    description: { zh: "每周的学习和生活反思记录", en: "Weekly reflection on learning and life" },
-  },
 };
 
 /**

@@ -4,7 +4,6 @@ date: 2026-04-16
 category: technical
 tags:
   - Test
-  - Markdown
 heroImage: /images/142545101_p0_master1200.jpg
 heroLink: https://www.pixiv.net/artworks/142545101
 excerpt: 测试代码、数学公式、图片等富文本特性

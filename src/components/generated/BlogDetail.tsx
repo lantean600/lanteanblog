@@ -40,6 +40,10 @@ export function BlogDetail() {
   const articleRef = useRef<HTMLElement | null>(null);
   const headingElementsRef = useRef<HTMLElement[]>([]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [category, slug]);
+
   const scrollToHeading = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
