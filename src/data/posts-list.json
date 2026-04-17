@@ -14,49 +14,6 @@
     "filePath": "../content/daily/2026-04-14-pytorch-note.md"
   },
   {
-    "slug": "2026-04-16-",
-    "category": "daily",
-    "title": "测试文章",
-    "date": "2026-04-16",
-    "tags": [
-      "test"
-    ],
-    "excerpt": "a passage for test",
-    "heroImage": "/assets/hero1.jpg",
-    "heroLink": "",
-    "filePath": "../content/daily/2026-04-16-.md"
-  },
-  {
-    "slug": "2026-04-16-deep-learning-intro",
-    "category": "daily",
-    "title": "深度学习入门：从零开始理解神经网络",
-    "date": "2026-04-16",
-    "tags": [
-      "deep learning",
-      "neural network",
-      "机器学习"
-    ],
-    "excerpt": "深入理解深度学习的基础概念，包括神经网络的工作原理、激活函数的选择以及训练技巧。",
-    "heroImage": "/assets/hero1.jpg",
-    "heroLink": "",
-    "collection": "deep-learning-notes",
-    "filePath": "../content/daily/2026-04-16-deep-learning-intro.md"
-  },
-  {
-    "slug": "2026-04-16-test",
-    "category": "daily",
-    "title": "test",
-    "date": "2026-04-16",
-    "tags": [
-      "test"
-    ],
-    "excerpt": "无",
-    "heroImage": "/assets/hero1.jpg",
-    "heroLink": "",
-    "collection": "deep-learning-notes",
-    "filePath": "../content/daily/2026-04-16-test.md"
-  },
-  {
     "slug": "2026-04-16-test-rich-text",
     "category": "technical",
     "title": "测试富文本支持",
@@ -86,22 +43,6 @@
     "filePath": "../content/research/2026-04-10-transformer-architecture.md"
   },
   {
-    "slug": "2026-04-05-react-performance",
-    "category": "technical",
-    "title": "React 性能优化最佳实践",
-    "date": "2026-04-05",
-    "tags": [
-      "React",
-      "JavaScript",
-      "Performance"
-    ],
-    "excerpt": "在大型 React 应用中，性能优化至关重要。本文分享了一系列实用的优化技巧和最佳实践。",
-    "heroImage": "/assets/hero1.jpg",
-    "heroLink": "https://www.pixiv.net/en/artworks/142350190",
-    "collection": "frontend-performance",
-    "filePath": "../content/technical/2026-04-05-react-performance.md"
-  },
-  {
     "slug": "2026-04-01-q1-summary",
     "category": "journal",
     "title": "我的 2026 年第一季度总结",
@@ -115,20 +56,6 @@
     "heroLink": "https://www.pixiv.net/en/artworks/142350190",
     "collection": "weekly-reflection",
     "filePath": "../content/journal/2026-04-01-q1-summary.md"
-  },
-  {
-    "slug": "2026-03-28-weekend-hiking",
-    "category": "daily",
-    "title": "周末徒步记录",
-    "date": "2026-03-28",
-    "tags": [
-      "Life",
-      "Outdoor"
-    ],
-    "excerpt": "上周末去爬了附近的山，记录一下沿途的美景和感受。",
-    "heroImage": "/assets/hero1.jpg",
-    "heroLink": "https://www.pixiv.net/en/artworks/142350190",
-    "filePath": "../content/daily/2026-03-28-weekend-hiking.md"
   },
   {
     "slug": "2025-10-18-experience-post",

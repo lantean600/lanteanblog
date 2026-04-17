@@ -28,15 +28,11 @@ export interface Collection {
  */
 const COLLECTION_METADATA: Record<string, Omit<Collection, "id" | "items">> = {
   "deep-learning-notes": {
-    name: { zh: "深度学习笔记", en: "Deep Learning Notes" },
-    description: { zh: "记录深度学习相关的学习笔记和实践经验", en: "Study notes and practical experiences on deep learning" },
-  },
-  "frontend-performance": {
-    name: { zh: "前端性能优化", en: "Frontend Performance" },
-    description: { zh: "前端性能优化的实践经验和技巧", en: "Practical experiences and tips on frontend performance optimization" },
+    name: { zh: "pytorch-深度学习", en: "pytorch-deeplearning" },
+    description: { zh: "《Pytorch实用教程》学习笔记", en: "PyTorch-Practical-Guide-Notes" },
   },
   "weekly-reflection": {
-    name: { zh: "每周反思", en: "Weekly Reflection" },
+    name: { zh: "反思", en: "Reflection" },
     description: { zh: "每周的学习和生活反思记录", en: "Weekly reflection on learning and life" },
   },
 };

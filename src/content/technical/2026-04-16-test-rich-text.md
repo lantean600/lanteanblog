@@ -3,7 +3,6 @@ title: "测试富文本支持"
 date: "2026-04-16"
 category: "technical"
 tags: ["Test", "Markdown"]
-views: 0
 heroImage: "/assets/hero1.jpg"
 excerpt: "测试代码、数学公式、图片等富文本特性"
 ---
