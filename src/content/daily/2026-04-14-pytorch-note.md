@@ -4,7 +4,7 @@ date: "2026-04-16"
 category: "daily"
 tags: ["pytorch"]
 collection: "pytorch-深度学习"
-heroImage: "/assets/hero1.jpg"
+heroImage: "/public/images/kayuya.jpg"
 heroLink: "https://www.pixiv.net/en/artworks/142350190"
 excerpt: "文章摘要"
 ---

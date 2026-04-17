@@ -3,8 +3,8 @@ title: "深入理解 Transformer 架构"
 date: "2026-04-10"
 category: "research"
 tags: ["AI", "Deep Learning", "NLP"]
-heroImage: "/assets/hero1.jpg"
-heroLink: "https://www.pixiv.net/en/artworks/142350190"
+heroImage: "/public/images/yachiyo.jpg"
+heroLink: "https://www.pixiv.net/artworks/142573289"
 excerpt: "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。"
 ---
 

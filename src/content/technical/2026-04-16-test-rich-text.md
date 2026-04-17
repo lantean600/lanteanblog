@@ -3,7 +3,8 @@ title: "测试富文本支持"
 date: "2026-04-16"
 category: "technical"
 tags: ["Test", "Markdown"]
-heroImage: "/assets/hero1.jpg"
+heroImage: "/public/images/kayuya.jpg"
+heroLink: "https://www.pixiv.net/artworks/142573289"
 excerpt: "测试代码、数学公式、图片等富文本特性"
 ---
 
@@ -49,4 +50,4 @@ $$
 
 下面是一张通过绝对路径 `/images/...` 引入的图片（该图片存放在根目录的 `public/images/` 文件夹下）：
 
-![测试图片](/images/my-pic.jpg)
+![测试图片](/images/hero1.jpg)
