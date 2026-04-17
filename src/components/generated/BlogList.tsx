@@ -8,6 +8,7 @@ import { getAllCollections } from "@/lib/collections";
 
 const resolveHeroImage = (image?: string) => {
   if (!image || image === "/assets/hero1.jpg" || image === "/images/hero1.jpg") return "/images/hero1.jpg";
+  if (image.startsWith("/public/images/")) return image.replace("/public", "");
   return image;
 };
 

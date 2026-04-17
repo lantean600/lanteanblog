@@ -3,7 +3,7 @@ title: "测试富文本支持"
 date: "2026-04-16"
 category: "technical"
 tags: ["Test", "Markdown"]
-heroImage: "/public/images/kayuya.jpg"
+heroImage: "/images/kayuya.jpg"
 heroLink: "https://www.pixiv.net/artworks/142573289"
 excerpt: "测试代码、数学公式、图片等富文本特性"
 ---

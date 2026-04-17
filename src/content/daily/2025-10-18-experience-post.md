@@ -3,7 +3,7 @@ title: "写论文的一些经验帖"
 date: "2025-10-18"
 category: "daily"
 tags: ["paper"]
-heroImage: "/public/images/aemeath.jpg"
+heroImage: "/images/aemeath.jpg"
 heroLink: "https://www.pixiv.net/artworks/142035931"
 excerpt: "一些汇总。"
 ---

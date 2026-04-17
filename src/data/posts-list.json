@@ -8,7 +8,7 @@
       "pytorch"
     ],
     "excerpt": "文章摘要",
-    "heroImage": "/public/images/kayuya.jpg",
+    "heroImage": "/images/kayuya.jpg",
     "heroLink": "https://www.pixiv.net/en/artworks/142350190",
     "collection": "pytorch-深度学习",
     "filePath": "../content/daily/2026-04-14-pytorch-note.md"
@@ -23,7 +23,7 @@
       "Markdown"
     ],
     "excerpt": "测试代码、数学公式、图片等富文本特性",
-    "heroImage": "/public/images/kayuya.jpg",
+    "heroImage": "/images/kayuya.jpg",
     "heroLink": "https://www.pixiv.net/artworks/142573289",
     "filePath": "../content/technical/2026-04-16-test-rich-text.md"
   },
@@ -38,7 +38,7 @@
       "NLP"
     ],
     "excerpt": "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。",
-    "heroImage": "/public/images/yachiyo.jpg",
+    "heroImage": "/images/yachiyo.jpg",
     "heroLink": "https://www.pixiv.net/artworks/142573289",
     "filePath": "../content/research/2026-04-10-transformer-architecture.md"
   },
@@ -52,7 +52,7 @@
       "Review"
     ],
     "excerpt": "回顾过去三个月的学习、工作和生活，分享一些感悟和收获。",
-    "heroImage": "/public/images/kayuya.jpg",
+    "heroImage": "/images/kayuya.jpg",
     "heroLink": "https://www.pixiv.net/en/artworks/142350190",
     "collection": "反思总结",
     "filePath": "../content/journal/2026-04-01-q1-summary.md"
@@ -66,7 +66,7 @@
       "paper"
     ],
     "excerpt": "一些汇总。",
-    "heroImage": "/public/images/aemeath.jpg",
+    "heroImage": "/images/aemeath.jpg",
     "heroLink": "https://www.pixiv.net/artworks/142035931",
     "filePath": "../content/daily/2025-10-18-experience-post.md"
   }
