@@ -27,12 +27,12 @@ export interface Collection {
  * 如果没有定义，则直接以 ID 作为显示名称
  */
 const COLLECTION_METADATA: Record<string, Omit<Collection, "id" | "items">> = {
-  "deep-learning-notes": {
+  "pytorch-深度学习": {
     name: { zh: "pytorch-深度学习", en: "pytorch-deeplearning" },
     description: { zh: "《Pytorch实用教程》学习笔记", en: "PyTorch-Practical-Guide-Notes" },
   },
-  "weekly-reflection": {
-    name: { zh: "反思", en: "Reflection" },
+  "反思总结": {
+    name: { zh: "反思总结", en: "Reflection-Summary" },
     description: { zh: "每周的学习和生活反思记录", en: "Weekly reflection on learning and life" },
   },
 };
