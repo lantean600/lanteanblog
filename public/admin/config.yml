@@ -4,9 +4,9 @@ backend:
   branch: main
 
 local_backend:
-  url: http://localhost:8091/api/v1
+  url: /api/v1
 
-publish_mode: editorial_workflow
+publish_mode: simple
 
 media_folder: public/images
 public_folder: /images

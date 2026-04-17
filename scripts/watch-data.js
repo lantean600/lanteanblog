@@ -1,8 +1,9 @@
 import chokidar from "chokidar";
 import { spawn } from "node:child_process";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contentGlob = path.join(root, "src/content/**/*.md").replaceAll("\\", "/");
 const collectionsFile = path.join(root, "src/lib/collections.ts").replaceAll("\\", "/");
 const buildScript = path.join(root, "scripts/build-data.js");
