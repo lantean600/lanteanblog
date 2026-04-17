@@ -5,8 +5,8 @@ category: technical
 tags:
   - Test
   - Markdown
-heroImage: /images/kayuya.jpg
-heroLink: https://www.pixiv.net/artworks/142573289
+heroImage: /images/142545101_p0_master1200.jpg
+heroLink: https://www.pixiv.net/artworks/142545101
 excerpt: 测试代码、数学公式、图片等富文本特性
 ---
 # 富文本支持测试
