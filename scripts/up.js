@@ -10,10 +10,11 @@ const binDir = path.join(rootDir, "node_modules", ".bin");
 const isWindows = process.platform === "win32";
 const viteBin = isWindows ? path.join(binDir, "vite.cmd") : path.join(binDir, "vite");
 const cmsBin = isWindows ? path.join(binDir, "decap-server.cmd") : path.join(binDir, "decap-server");
+const cmsPort = "8091";
 
 function spawnProcess(label, command, args) {
   const spawnCommand = isWindows ? "cmd.exe" : command;
-  const spawnArgs = isWindows ? ["/d", "/s", "/c", `"${command}" ${args.join(" ")}`.trim()] : args;
+  const spawnArgs = isWindows ? ["/d", "/s", "/c", "call", command, ...args] : args;
 
   const child = spawn(spawnCommand, spawnArgs, {
     cwd: rootDir,
@@ -21,6 +22,7 @@ function spawnProcess(label, command, args) {
     shell: false,
     env: {
       ...process.env,
+      PORT: label === "cms:proxy" ? cmsPort : process.env.PORT ?? "",
       FORCE_COLOR: process.env.FORCE_COLOR ?? "1",
     },
   });
