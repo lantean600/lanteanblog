@@ -3,7 +3,7 @@ title: "《Pytorch实用教程》笔记（一）数据模块"
 date: "2026-04-16"
 category: "daily"
 tags: ["pytorch"]
-collection: "pytroch-深度学习"
+collection: "pytorch-深度学习"
 heroImage: "/assets/hero1.jpg"
 heroLink: "https://www.pixiv.net/en/artworks/142350190"
 excerpt: "文章摘要"
