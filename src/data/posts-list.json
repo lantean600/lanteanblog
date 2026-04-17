@@ -1,5 +1,20 @@
 [
   {
+    "slug": "2026-04-17-jump-links-demo",
+    "category": "daily",
+    "title": "Markdown 跳转示例：站内引用与锚点",
+    "date": "2026-04-17",
+    "tags": [
+      "Markdown",
+      "Jump",
+      "Demo"
+    ],
+    "excerpt": "演示同篇锚点跳转、跨文章跳转与外链跳转的标准写法",
+    "heroImage": "/images/141009077_0.png",
+    "heroLink": "https://www.pixiv.net/artworks/141009077",
+    "filePath": "../content/daily/2026-04-17-jump-links-demo.md"
+  },
+  {
     "slug": "2026-04-14-pytorch-note",
     "category": "daily",
     "title": "《Pytorch实用教程》笔记（一）数据模块",

@@ -1,13 +1,14 @@
 ---
-title: "测试富文本支持"
-date: "2026-04-16"
-category: "technical"
-tags: ["Test", "Markdown"]
-heroImage: "/images/kayuya.jpg"
-heroLink: "https://www.pixiv.net/artworks/142573289"
-excerpt: "测试代码、数学公式、图片等富文本特性"
+title: 测试富文本支持
+date: 2026-04-16
+category: technical
+tags:
+  - Test
+  - Markdown
+heroImage: /images/kayuya.jpg
+heroLink: https://www.pixiv.net/artworks/142573289
+excerpt: 测试代码、数学公式、图片等富文本特性
 ---
-
 # 富文本支持测试
 
 这是一篇用于验证博客 Markdown 富文本支持特性的文章。
@@ -40,8 +41,8 @@ $$
 
 $$
 \begin{bmatrix}
-1 & 2 & 3 \\
-4 & 5 & 6 \\
+1 & 2 & 3 \
+4 & 5 & 6 \
 7 & 8 & 9
 \end{bmatrix}
 $$
@@ -50,4 +51,4 @@ $$
 
 下面是一张通过绝对路径 `/images/...` 引入的图片（该图片存放在根目录的 `public/images/` 文件夹下）：
 
-![测试图片](/images/hero1.jpg)
+![测试图片](/images/kayuya.jpg)

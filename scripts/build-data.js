@@ -43,6 +43,33 @@ function formatDateLocal(date) {
   return `${year}-${month}-${day}`;
 }
 
+function normalizeFrontmatterDate(value) {
+  if (!value) return '';
+
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return formatDateLocal(value);
+  }
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (!trimmed) return '';
+
+    // Keep explicit YYYY-MM-DD unchanged to avoid timezone shifts.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+      return trimmed;
+    }
+
+    const parsed = new Date(trimmed);
+    if (!Number.isNaN(parsed.getTime())) {
+      return formatDateLocal(parsed);
+    }
+
+    return trimmed;
+  }
+
+  return String(value);
+}
+
 function buildData() {
   console.log('📦 正在预构建博客数据...');
   
@@ -63,7 +90,7 @@ function buildData() {
 
       // 从 frontmatter 中读取，没有则提供默认值
       const title = data.title || slug;
-      const date = data.date || '';
+      const date = normalizeFrontmatterDate(data.date);
       const tags = Array.isArray(data.tags) ? data.tags : [];
       const excerpt = data.excerpt || title;
       const heroImage = data.heroImage || '/assets/hero1.jpg';

@@ -1,11 +1,13 @@
 import { spawn } from "node:child_process";
 
-const npmCmd = process.platform === "win32" ? "npm.cmd" : "npm";
+const npmCmd = process.platform === "win32" ? "cmd.exe" : "npm";
 
 function startTask(name, args, fatalOnExit) {
-  const child = spawn(npmCmd, args, {
+  const spawnArgs = process.platform === "win32" ? ["/c", "npm", ...args] : args;
+
+  const child = spawn(npmCmd, spawnArgs, {
     stdio: "inherit",
-    shell: process.platform === "win32",
+    shell: false,
   });
 
   child.on("exit", (code) => {
