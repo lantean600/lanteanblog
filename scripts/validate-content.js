@@ -26,6 +26,20 @@ function toPosixPath(p) {
   return p.replace(/\\/g, "/");
 }
 
+function getEffectiveImageTarget(imagePath) {
+  const sourcePath = path.join(publicDir, imagePath.replace(/^\//, ""));
+  const ext = path.extname(sourcePath).toLowerCase();
+
+  if (ext === ".jpg" || ext === ".jpeg" || ext === ".png") {
+    const optimizedPath = sourcePath.replace(/\.(jpe?g|png)$/i, ".webp");
+    if (fs.existsSync(optimizedPath)) {
+      return optimizedPath;
+    }
+  }
+
+  return sourcePath;
+}
+
 function checkLocalImagePath(imagePath, sourceFile, errors, warnings) {
   if (!imagePath) return;
   if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) return;
@@ -40,7 +54,7 @@ function checkLocalImagePath(imagePath, sourceFile, errors, warnings) {
     return;
   }
 
-  const target = path.join(publicDir, imagePath.replace(/^\//, ""));
+  const target = getEffectiveImageTarget(imagePath);
   if (!fs.existsSync(target)) {
     errors.push(`${sourceFile}: heroImage file not found at '${toPosixPath(target)}'.`);
     return;

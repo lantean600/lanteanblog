@@ -5,12 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { getAllPosts, searchPosts, type PostMeta } from "@/lib/content";
 import { CATEGORIES, CATEGORY_LABELS } from "@/lib/constants";
 import { getAllCollections } from "@/lib/collections";
-
-const resolveHeroImage = (image?: string) => {
-  if (!image || image === "/assets/hero1.jpg" || image === "/images/hero1.jpg") return "/images/hero1.jpg";
-  if (image.startsWith("/public/images/")) return image.replace("/public", "");
-  return image;
-};
+import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
 const estimateReadMinutes = (text: string) => {
   const words = text.split(/\s+/).filter(Boolean).length;
@@ -130,7 +125,7 @@ export function BlogList() {
               </div>
             ) : (
               filteredPosts.map((post) => {
-                const heroImage = resolveHeroImage(post.heroImage);
+                const { original: heroImage, optimized: optimizedHeroImage } = getImagePaths(post.heroImage);
                 const readMinutes = estimateReadMinutes(`${post.title} ${post.excerpt}`);
 
                 return (
@@ -138,15 +133,30 @@ export function BlogList() {
                     key={`${post.category}-${post.slug}`}
                     className="glass-card group relative isolate overflow-hidden rounded-3xl shadow-lg shadow-black/5 hover:shadow-xl hover:bg-card/70 transition-all duration-300"
                   >
-                    <img
-                      src={heroImage}
-                      alt=""
-                      className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_40%,black_75%,black_100%)]"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/hero1.jpg";
-                      }}
-                    />
+                    {optimizedHeroImage ? (
+                      <picture>
+                        <source srcSet={optimizedHeroImage} type="image/webp" />
+                        <img
+                          src={heroImage || DEFAULT_HERO_IMAGE}
+                          alt=""
+                          className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_40%,black_75%,black_100%)]"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = DEFAULT_HERO_IMAGE;
+                          }}
+                        />
+                      </picture>
+                    ) : (
+                      <img
+                        src={heroImage || DEFAULT_HERO_IMAGE}
+                        alt=""
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_40%,black_75%,black_100%)]"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = DEFAULT_HERO_IMAGE;
+                        }}
+                      />
+                    )}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/95 via-[40%] to-transparent" />
 
                     <Link to={`/blog/${post.category}/${post.slug}`} className="block h-full">

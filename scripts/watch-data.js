@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contentGlob = path.join(root, "src/content/**/*.md").replaceAll("\\", "/");
+const imageGlob = path.join(root, "public/images/**/*.{jpg,jpeg,png}").replaceAll("\\", "/");
 const collectionsFile = path.join(root, "src/lib/collections.ts").replaceAll("\\", "/");
+const optimizeScript = path.join(root, "scripts/optimize-images.js");
 const buildScript = path.join(root, "scripts/build-data.js");
 
 let running = false;
@@ -21,15 +23,27 @@ function runBuild() {
   running = true;
   pending = false;
 
-  const child = spawn("node", [buildScript], { stdio: "inherit" });
-  child.on("exit", (code) => {
-    running = false;
-    if (code !== 0) {
-      process.exitCode = code;
+  const optimizeChild = spawn("node", [optimizeScript], { stdio: "inherit" });
+  optimizeChild.on("exit", (optimizeCode) => {
+    if (optimizeCode !== 0) {
+      running = false;
+      process.exitCode = optimizeCode;
+      if (pending) {
+        runBuild();
+      }
+      return;
     }
-    if (pending) {
-      runBuild();
-    }
+
+    const child = spawn("node", [buildScript], { stdio: "inherit" });
+    child.on("exit", (code) => {
+      running = false;
+      if (code !== 0) {
+        process.exitCode = code;
+      }
+      if (pending) {
+        runBuild();
+      }
+    });
   });
 }
 
@@ -44,7 +58,7 @@ function scheduleBuild() {
 console.log("Watching content changes...");
 runBuild();
 
-const watcher = chokidar.watch([contentGlob, collectionsFile], {
+const watcher = chokidar.watch([contentGlob, imageGlob, collectionsFile], {
   ignoreInitial: true,
 });
 

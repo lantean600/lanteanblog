@@ -9,12 +9,7 @@ import rehypeKatex from "rehype-katex";
 import { useLanguage } from "@/context/LanguageContext";
 import { extractTocFromMarkdown } from "@/lib/markdown-toc";
 import { Category, getAllPosts, getPostDetail, type Post } from "@/lib/content";
-
-const resolveHeroImage = (image?: string) => {
-  if (!image || image === "/assets/hero1.jpg" || image === "/images/hero1.jpg") return "/images/hero1.jpg";
-  if (image.startsWith("/public/images/")) return image.replace("/public", "");
-  return image;
-};
+import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
 const estimateReadMinutes = (markdown: string) => {
   const plainText = markdown
@@ -172,6 +167,37 @@ export function BlogDetail() {
       };
     };
 
+    const MarkdownImage = (
+      props: ComponentPropsWithoutRef<"img">,
+    ) => {
+      const { alt, src, className, ...rest } = props;
+      const { original, optimized } = getImagePaths(typeof src === "string" ? src : undefined);
+      return (
+        optimized ? (
+          <picture>
+            <source srcSet={optimized} type="image/webp" />
+            <img
+              {...rest}
+              alt={alt ?? ""}
+              src={original}
+              loading="lazy"
+              decoding="async"
+              className={`max-w-full rounded-xl border border-border/40 shadow-sm ${className ?? ""}`.trim()}
+            />
+          </picture>
+        ) : (
+          <img
+            {...rest}
+            alt={alt ?? ""}
+            src={original}
+            loading="lazy"
+            decoding="async"
+            className={`max-w-full rounded-xl border border-border/40 shadow-sm ${className ?? ""}`.trim()}
+          />
+        )
+      );
+    };
+
     return {
       h1: withId("h1"),
       h2: withId("h2"),
@@ -179,6 +205,7 @@ export function BlogDetail() {
       h4: withId("h4"),
       h5: withId("h5"),
       h6: withId("h6"),
+      img: MarkdownImage,
     };
   }, [toc]);
 
@@ -271,15 +298,33 @@ export function BlogDetail() {
           <div>
             <header className="mb-10">
               <div className="relative overflow-hidden rounded-2xl">
-                <img
-                  src={resolveHeroImage(post.heroImage)}
-                  alt={`${post.title} hero`}
-                  className="block w-full aspect-[16/9] object-cover"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = "/images/hero1.jpg";
-                  }}
-                />
+                {(() => {
+                  const { original, optimized } = getImagePaths(post.heroImage);
+                  return optimized ? (
+                    <picture>
+                      <source srcSet={optimized} type="image/webp" />
+                      <img
+                        src={original || DEFAULT_HERO_IMAGE}
+                        alt={`${post.title} hero`}
+                        className="block w-full aspect-[16/9] object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = DEFAULT_HERO_IMAGE;
+                        }}
+                      />
+                    </picture>
+                  ) : (
+                    <img
+                      src={original || DEFAULT_HERO_IMAGE}
+                      alt={`${post.title} hero`}
+                      className="block w-full aspect-[16/9] object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = DEFAULT_HERO_IMAGE;
+                      }}
+                    />
+                  );
+                })()}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
               </div>
 
