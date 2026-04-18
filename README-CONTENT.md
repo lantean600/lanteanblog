@@ -27,7 +27,7 @@ date: "2026-04-14"
 category: "research"  # research, technical, daily, journal
 tags: ["标签1", "标签2"]
 views: 0
-heroImage: "/assets/hero1.jpg"  # 可选
+heroImage: "/assets/kayuya.jpg"  # 可选
 heroLink: "https://example.com"  # 可选
 excerpt: "文章摘要，将显示在文章列表中"
 ---
@@ -60,7 +60,7 @@ date: "2026-04-10"
 category: "research"
 tags: ["AI", "Deep Learning", "NLP"]
 views: 1234
-heroImage: "/assets/hero1.jpg"
+heroImage: "/assets/kayuya.jpg"
 heroLink: "https://www.pixiv.net/en/artworks/142350190"
 excerpt: "Transformer 模型彻底改变了自然语言处理领域。"
 ---

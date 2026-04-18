@@ -1,9 +1,9 @@
 import imageVariants from "../data/image-variants.json";
 
-const DEFAULT_HERO_IMAGE = "/images/hero1.jpg";
+const DEFAULT_HERO_IMAGE = "/images/kayuya.jpg";
 
 function normalizeImagePath(image?: string) {
-  if (!image || image === "/assets/hero1.jpg" || image === DEFAULT_HERO_IMAGE) {
+  if (!image || image === "/assets/kayuya.jpg" || image === DEFAULT_HERO_IMAGE) {
     return DEFAULT_HERO_IMAGE;
   }
 

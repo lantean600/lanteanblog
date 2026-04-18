@@ -82,5 +82,19 @@
     "heroImage": "/images/aemeath.jpg",
     "heroLink": "https://www.pixiv.net/artworks/142035931",
     "filePath": "../content/daily/2025-10-18-experience-post.md"
+  },
+  {
+    "slug": "2026-04-18-",
+    "category": "daily",
+    "title": "《致新生的你》阅读笔记",
+    "date": "",
+    "tags": [
+      "学习",
+      "路线"
+    ],
+    "excerpt": "读《致新生的你》的一些感悟和体会。",
+    "heroImage": "/images/142598882_p0_master1200.webp",
+    "heroLink": "https://www.pixiv.net/artworks/142598882",
+    "filePath": "../content/daily/2026-04-18-.md"
   }
 ]

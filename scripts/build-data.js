@@ -138,7 +138,7 @@ function buildData() {
       const date = normalizeFrontmatterDate(data.date);
       const tags = Array.isArray(data.tags) ? data.tags : [];
       const excerpt = data.excerpt || title;
-      const heroImage = data.heroImage || '/assets/hero1.jpg';
+      const heroImage = data.heroImage || '/assets/kayuya.jpg';
       const heroLink = data.heroLink || '';
       const collection = data.collection || undefined;
 

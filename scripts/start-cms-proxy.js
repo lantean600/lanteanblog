@@ -5,10 +5,13 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const port = Number.parseInt(process.env.PORT || "8091", 10);
 const host = process.env.BIND_HOST || "127.0.0.1";
+const maxImageWidth = 1600;
+const webpQuality = 84;
 
 const app = express();
 app.use(morgan("combined"));
@@ -29,6 +32,27 @@ function toAbsolute(relativePath) {
 
 function hashBuffer(buffer) {
   return crypto.createHash("sha256").update(buffer).digest("hex");
+}
+
+function isCompressibleImage(filePath) {
+  return /\.(jpe?g|png)$/i.test(filePath);
+}
+
+function isWebpImage(filePath) {
+  return /\.webp$/i.test(filePath);
+}
+
+function toWebpPath(filePath) {
+  return normalizePath(filePath.replace(/\.(jpe?g|png)$/i, ".webp"));
+}
+
+async function pathExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function ensureDir(filePath) {
@@ -80,14 +104,57 @@ async function readEntry(filePath, label) {
 }
 
 async function readMediaFile(filePath) {
-  const content = await fs.readFile(toAbsolute(filePath));
+  const preferredPath = await getPreferredMediaPath(filePath);
+  const content = await fs.readFile(toAbsolute(preferredPath));
   return {
     id: hashBuffer(content),
     content: content.toString("base64"),
     encoding: "base64",
-    path: normalizePath(filePath),
-    name: path.basename(filePath),
+    path: normalizePath(preferredPath),
+    name: path.basename(preferredPath),
   };
+}
+
+async function ensureCompressedMedia(filePath) {
+  const normalizedPath = normalizePath(filePath);
+  if (!isCompressibleImage(normalizedPath)) {
+    return normalizedPath;
+  }
+
+  const sourcePath = toAbsolute(normalizedPath);
+  const webpPath = toWebpPath(normalizedPath);
+  const webpAbsolutePath = toAbsolute(webpPath);
+
+  const sourceExists = await pathExists(sourcePath);
+  if (!sourceExists) {
+    return normalizedPath;
+  }
+
+  const webpExists = await pathExists(webpAbsolutePath);
+  if (!webpExists) {
+    await ensureDir(webpAbsolutePath);
+    await sharp(sourcePath)
+      .rotate()
+      .resize({ width: maxImageWidth, withoutEnlargement: true, fit: "inside" })
+      .webp({ quality: webpQuality, effort: 4, smartSubsample: true })
+      .toFile(webpAbsolutePath);
+  }
+
+  return webpPath;
+}
+
+async function getPreferredMediaPath(filePath) {
+  const normalizedPath = normalizePath(filePath);
+
+  if (isWebpImage(normalizedPath)) {
+    return normalizedPath;
+  }
+
+  if (isCompressibleImage(normalizedPath)) {
+    return ensureCompressedMedia(normalizedPath);
+  }
+
+  return normalizedPath;
 }
 
 async function writeFile(filePath, content) {
@@ -143,7 +210,22 @@ app.post("/api/v1", async (req, res) => {
       }
       case "getMedia": {
         const files = await listRepoFiles(params.mediaFolder, "", 1);
-        const items = await Promise.all(files.map((filePath) => readMediaFile(filePath)));
+        const preferredPaths = new Set();
+
+        for (const filePath of files) {
+          const preferredPath = await getPreferredMediaPath(filePath);
+          if (isCompressibleImage(filePath)) {
+            preferredPaths.add(preferredPath);
+            continue;
+          }
+          if (isWebpImage(filePath)) {
+            preferredPaths.add(normalizePath(filePath));
+            continue;
+          }
+          preferredPaths.add(normalizePath(filePath));
+        }
+
+        const items = await Promise.all(Array.from(preferredPaths).map((filePath) => readMediaFile(filePath)));
         res.json(items);
         return;
       }
@@ -154,6 +236,11 @@ app.post("/api/v1", async (req, res) => {
         const { entry, dataFiles = [entry], assets = [] } = params;
         await Promise.all(dataFiles.map(({ path: filePath, raw }) => writeFile(filePath, raw)));
         await Promise.all(assets.map(({ path: filePath, content, encoding }) => writeFile(filePath, Buffer.from(content, encoding))));
+        await Promise.all(assets.map(async ({ path: filePath }) => {
+          if (isCompressibleImage(filePath)) {
+            await ensureCompressedMedia(filePath);
+          }
+        }));
         for (const file of dataFiles) {
           if (file.newPath) {
             await moveFile(file.path, file.newPath);
@@ -165,7 +252,8 @@ app.post("/api/v1", async (req, res) => {
       case "persistMedia": {
         const { asset } = params;
         await writeFile(asset.path, Buffer.from(asset.content, asset.encoding));
-        res.json(await readMediaFile(asset.path));
+        const preferredPath = await getPreferredMediaPath(asset.path);
+        res.json(await readMediaFile(preferredPath));
         return;
       }
       case "deleteFile": {

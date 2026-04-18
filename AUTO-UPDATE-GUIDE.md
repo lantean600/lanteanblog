@@ -50,7 +50,7 @@ npm run new-post
    category: "research"
    tags: ["标签1", "标签2"]
    views: 0
-   heroImage: "/assets/hero1.jpg"
+   heroImage: "/assets/kayuya.jpg"
    excerpt: "文章摘要"
    ---
    

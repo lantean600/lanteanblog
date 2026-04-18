@@ -81,7 +81,7 @@ category: "${category}"
 tags: ${JSON.stringify(tags)}
 ${collection ? `collection: "${collection}"` : ''}
 views: 0
-heroImage: "/assets/hero1.jpg"
+heroImage: "/assets/kayuya.jpg"
 excerpt: "${excerpt || title}"
 ---
 
