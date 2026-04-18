@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect } from "react";
+﻿import { useMemo, useState, useEffect, type ReactNode } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaArrowLeft, FaSearch } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
@@ -39,15 +39,89 @@ function normalize(text: string): string {
   return text.toLowerCase();
 }
 
-function buildSnippet(plain: string, q: string): string {
-  if (!q || !plain) return plain.slice(0, 150);
-  
-  const i = normalize(plain).indexOf(q);
-  if (i < 0) return plain.slice(0, 150);
-  
-  const start = Math.max(0, i - 40);
-  const end = Math.min(plain.length, i + 110);
-  return `${start > 0 ? "..." : ""}${plain.slice(start, end)}${end < plain.length ? "..." : ""}`;
+function tokenizeQuery(query: string): string[] {
+  return query
+    .split(/\s+/)
+    .map((token) => normalize(token.trim()))
+    .filter(Boolean);
+}
+
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function splitSections(plain: string): string[] {
+  const normalized = plain.replace(/\r\n?/g, "\n");
+
+  // Prefer natural paragraph boundaries first.
+  let sections = normalized
+    .split(/\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (sections.length <= 1) {
+    // Fallback: many historical plainText records are one-line, split by sentence endings.
+    sections = normalized
+      .split(/(?<=[。！？；.!?;])/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  return sections;
+}
+
+function clipLine(text: string, maxLength = 170): string {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength)}...`;
+}
+
+function buildSnippets(plain: string, tokens: string[], maxSnippets = 8): string[] {
+  if (!plain) return [];
+
+  const sections = splitSections(plain);
+  if (sections.length === 0) return [];
+  if (tokens.length === 0) return [clipLine(sections[0])];
+
+  const matchedIndexes = sections
+    .map((section, idx) => ({ idx, normalized: normalize(section) }))
+    .filter((item) => tokens.some((token) => item.normalized.includes(token)))
+    .map((item) => item.idx);
+
+  if (matchedIndexes.length === 0) {
+    return [clipLine(sections[0])];
+  }
+
+  const expanded = new Set<number>();
+  for (const idx of matchedIndexes) {
+    // Keep local context and let different subtitle sections naturally break into lines.
+    expanded.add(Math.max(0, idx - 1));
+    expanded.add(idx);
+  }
+
+  return Array.from(expanded)
+    .sort((a, b) => a - b)
+    .slice(0, maxSnippets)
+    .map((idx) => clipLine(sections[idx]));
+}
+
+function highlightText(text: string, tokens: string[]): ReactNode {
+  if (!text || tokens.length === 0) return text;
+
+  const uniqueTokens = Array.from(new Set(tokens)).sort((a, b) => b.length - a.length);
+  const pattern = uniqueTokens.map(escapeRegExp).join("|");
+  if (!pattern) return text;
+
+  const parts = text.split(new RegExp(`(${pattern})`, "gi"));
+  return parts.map((part, idx) => {
+    const matched = uniqueTokens.some((token) => normalize(part) === token);
+    return matched ? (
+      <mark key={`${part}-${idx}`} className="rounded bg-yellow-200 px-0.5 text-foreground dark:bg-yellow-600/40">
+        {part}
+      </mark>
+    ) : (
+      <span key={`${part}-${idx}`}>{part}</span>
+    );
+  });
 }
 
 export function SearchPostsPage() {
@@ -58,9 +132,10 @@ export function SearchPostsPage() {
   const debouncedQuery = useDebounce(query, 300); // 300ms 防抖延迟
 
   const normalizedQuery = normalize(debouncedQuery.trim());
+  const queryTokens = useMemo(() => tokenizeQuery(normalizedQuery), [normalizedQuery]);
 
   const results = useMemo(() => {
-    if (!normalizedQuery) return [] as SearchIndexItem[];
+    if (queryTokens.length === 0) return [] as SearchIndexItem[];
 
     return searchIndex
       .filter((post) => {
@@ -70,9 +145,9 @@ export function SearchPostsPage() {
           post.tags.join(" "),
           post.plainText, // 使用提取好的纯文本
         ].join("\n"));
-        return haystack.includes(normalizedQuery);
+        return queryTokens.every((token) => haystack.includes(token));
       });
-  }, [normalizedQuery]);
+  }, [queryTokens]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,33 +202,44 @@ export function SearchPostsPage() {
         </div>
 
         <div className="space-y-4">
-          {results.map((post) => (
-            <article
-              key={`${post.category}-${post.slug}`}
-              className="rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/35"
-            >
-              <Link to={`/blog/${post.category}/${post.slug}`}>
-                <h2 className="text-xl font-bold text-foreground transition-colors hover:text-primary">
-                  {post.title}
-                </h2>
-              </Link>
-              <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                {buildSnippet(post.plainText || post.excerpt, normalizedQuery)}
-              </p>
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                <span>{post.date}</span>
-                {post.tags.map((t) => (
-                  <Link
-                    key={t}
-                    to={`/blog/tag/${encodeURIComponent(t)}`}
-                    className="rounded-full border border-border px-2 py-0.5 hover:border-primary/50 hover:text-primary"
-                  >
-                    #{t}
-                  </Link>
-                ))}
-              </div>
-            </article>
-          ))}
+          {results.map((post) => {
+            const snippets = buildSnippets(post.plainText || post.excerpt, queryTokens);
+
+            return (
+              <article
+                key={`${post.category}-${post.slug}`}
+                className="rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/35"
+              >
+                <Link to={`/blog/${post.category}/${post.slug}`}>
+                  <h2 className="text-xl font-bold text-foreground transition-colors hover:text-primary">
+                    {highlightText(post.title, queryTokens)}
+                  </h2>
+                </Link>
+
+                <div className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                  {snippets.map((snippet, idx) => (
+                    <p key={`${post.slug}-snippet-${idx}`}>
+                      <span className="mr-1 text-foreground/70">↳</span>
+                      {highlightText(snippet, queryTokens)}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  <span>{post.date}</span>
+                  {post.tags.map((t) => (
+                    <Link
+                      key={t}
+                      to={`/blog/tag/${encodeURIComponent(t)}`}
+                      className="rounded-full border border-border px-2 py-0.5 hover:border-primary/50 hover:text-primary"
+                    >
+                      #{t}
+                    </Link>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>
