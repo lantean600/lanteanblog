@@ -14,6 +14,19 @@ export interface SearchIndexItem {
   tags: string[];
   plainText: string;
   date?: string;
+  segments?: SearchSegment[];
+}
+
+export interface SearchSegment {
+  type: "heading" | "body";
+  text: string;
+  level?: number;
+}
+
+interface SearchRenderLine {
+  type: "heading" | "body";
+  text: string;
+  level: number;
 }
 
 const searchIndex = searchIndexData as SearchIndexItem[];
@@ -75,33 +88,94 @@ function clipLine(text: string, maxLength = 170): string {
   return `${text.slice(0, maxLength)}...`;
 }
 
-function buildSnippets(plain: string, tokens: string[], maxSnippets = 8): string[] {
-  if (!plain) return [];
+function toSegments(post: SearchIndexItem): SearchSegment[] {
+  if (post.segments && post.segments.length > 0) {
+    return post.segments;
+  }
 
-  const sections = splitSections(plain);
-  if (sections.length === 0) return [];
-  if (tokens.length === 0) return [clipLine(sections[0])];
+  return splitSections(post.plainText || post.excerpt).map((text) => ({
+    type: "body" as const,
+    text,
+    level: 0,
+  }));
+}
 
-  const matchedIndexes = sections
-    .map((section, idx) => ({ idx, normalized: normalize(section) }))
+function findHeadingChain(segments: SearchSegment[], index: number): SearchRenderLine[] {
+  const byLevel = new Map<number, SearchRenderLine>();
+
+  for (let i = 0; i < index; i++) {
+    const segment = segments[i];
+    if (segment.type !== "heading") continue;
+
+    const level = Math.max(1, Math.min(6, segment.level || 1));
+    byLevel.set(level, { type: "heading", text: segment.text, level });
+
+    for (const existingLevel of Array.from(byLevel.keys())) {
+      if (existingLevel > level) byLevel.delete(existingLevel);
+    }
+  }
+
+  return Array.from(byLevel.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([, line]) => line);
+}
+
+function buildRenderLines(post: SearchIndexItem, tokens: string[], maxLines = 12): SearchRenderLine[] {
+  const segments = toSegments(post);
+  if (segments.length === 0) return [];
+
+  if (tokens.length === 0) {
+    const first = segments[0];
+    return [{
+      type: first.type,
+      text: clipLine(first.text),
+      level: first.type === "heading" ? Math.max(1, Math.min(6, first.level || 1)) : 0,
+    }];
+  }
+
+  const matchedIndexes = segments
+    .map((segment, idx) => ({ idx, normalized: normalize(segment.text || "") }))
     .filter((item) => tokens.some((token) => item.normalized.includes(token)))
     .map((item) => item.idx);
 
   if (matchedIndexes.length === 0) {
-    return [clipLine(sections[0])];
+    return [{ type: "body", text: clipLine(post.excerpt || post.plainText || ""), level: 0 }];
   }
 
-  const expanded = new Set<number>();
+  const lines: SearchRenderLine[] = [];
+  const seen = new Set<string>();
+
+  const appendLine = (line: SearchRenderLine) => {
+    const key = `${line.type}:${line.level}:${line.text}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    lines.push(line);
+  };
+
   for (const idx of matchedIndexes) {
-    // Keep local context and let different subtitle sections naturally break into lines.
-    expanded.add(Math.max(0, idx - 1));
-    expanded.add(idx);
+    const segment = segments[idx];
+    if (!segment?.text) continue;
+
+    if (segment.type === "heading") {
+      appendLine({
+        type: "heading",
+        text: clipLine(segment.text, 120),
+        level: Math.max(1, Math.min(6, segment.level || 1)),
+      });
+    } else {
+      const headingChain = findHeadingChain(segments, idx);
+      headingChain.forEach(appendLine);
+      appendLine({
+        type: "body",
+        text: clipLine(segment.text, 180),
+        level: 0,
+      });
+    }
+
+    if (lines.length >= maxLines) break;
   }
 
-  return Array.from(expanded)
-    .sort((a, b) => a - b)
-    .slice(0, maxSnippets)
-    .map((idx) => clipLine(sections[idx]));
+  return lines.slice(0, maxLines);
 }
 
 function highlightText(text: string, tokens: string[]): ReactNode {
@@ -203,7 +277,7 @@ export function SearchPostsPage() {
 
         <div className="space-y-4">
           {results.map((post) => {
-            const snippets = buildSnippets(post.plainText || post.excerpt, queryTokens);
+            const lines = buildRenderLines(post, queryTokens);
 
             return (
               <article
@@ -217,10 +291,17 @@ export function SearchPostsPage() {
                 </Link>
 
                 <div className="mt-2 space-y-1.5 text-sm text-muted-foreground">
-                  {snippets.map((snippet, idx) => (
-                    <p key={`${post.slug}-snippet-${idx}`}>
-                      <span className="mr-1 text-foreground/70">↳</span>
-                      {highlightText(snippet, queryTokens)}
+                  {lines.map((line, idx) => (
+                    <p
+                      key={`${post.slug}-line-${idx}`}
+                      className={line.type === "heading" ? "font-black text-foreground" : "text-muted-foreground"}
+                    >
+                      {line.type === "heading"
+                        ? highlightText(line.text, queryTokens)
+                        : <>
+                            <span className="mr-1 text-foreground/70">↳</span>
+                            {highlightText(line.text, queryTokens)}
+                          </>}
                     </p>
                   ))}
                 </div>

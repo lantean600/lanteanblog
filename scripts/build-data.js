@@ -70,6 +70,51 @@ function normalizeFrontmatterDate(value) {
   return String(value);
 }
 
+function extractSearchSegments(markdown) {
+  const segments = [];
+  const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
+  let inCodeBlock = false;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (line.startsWith('```')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+
+    if (inCodeBlock) continue;
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const text = headingMatch[2].trim();
+      if (text) {
+        segments.push({ type: 'heading', level, text });
+      }
+      continue;
+    }
+
+    const bodyText = line
+      .replace(/`([^`]*)`/g, '$1')
+      .replace(/!\[[^\]]*\]\(([^)]+)\)/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/^[-*+]\s+/g, '')
+      .replace(/^\d+[.)]\s+/g, '')
+      .replace(/^>\s?/g, '')
+      .replace(/[~*_]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (bodyText) {
+      segments.push({ type: 'body', text: bodyText });
+    }
+  }
+
+  return segments;
+}
+
 function buildData() {
   console.log('📦 正在预构建博客数据...');
   
@@ -116,23 +161,18 @@ function buildData() {
 
       postsList.push(postMeta);
 
-      // 提取纯文本用于搜索
-      const plainText = content
-        .replace(/```[\s\S]*?```/g, " ") // 移除代码块
-        .replace(/`[^`]*`/g, " ")        // 移除行内代码
-        .replace(/!\[[^\]]*\]\([^)]+\)/g, " ") // 移除图片
-        .replace(/\[[^\]]*\]\([^)]+\)/g, " ") // 移除链接
-        .replace(/[#>*_\-\[\]()]/g, " ") // 移除 markdown 符号
-        .replace(/\s+/g, " ")
-        .trim();
+      const segments = extractSearchSegments(content);
+      const plainText = segments.map((segment) => segment.text).join("\n");
 
       searchIndex.push({
         slug,
         category,
         title,
+        date,
         excerpt,
         tags,
-        plainText
+        plainText,
+        segments,
       });
 
     } catch (err) {

@@ -3,65 +3,557 @@
     "slug": "2025-10-18-experience-post",
     "category": "daily",
     "title": "写论文的一些经验帖",
+    "date": "2025-10-18",
     "excerpt": "一些汇总。",
     "tags": [
       "paper"
     ],
-    "plainText": "!1 计算机科研经验 清华计算机入学教育之“关于如何做科研的一些个人经验” ZHANG Mingxing的文章 知乎 https://zhuanlan.zhihu.com/p/718156903 写作 输出 棋盘法 读论文 写论文 八股文 !NOTE 2 物理学科研经验 你想对物理学专业的人说些什么? 苇草的回答 知乎 https://www.zhihu.com/question/1022588196/answer/1901151731125032333 赶快去读论文！ !NOTE 3 太理 港中文校友 在太原理工大学就读是怎样一番体验？ Henry TIAN的回答 知乎 https://www.zhihu.com/question/24423090/answer/2471708803 多去层次比自己高的老师和人去碰壁，利用好仅有的资源收益最大。 !NOTE 4 CS高校内卷恶劣 官媒下场手撕张雪峰，张雪峰的结局会是什么？ 纳米酱的回答 知乎 https://www.zhihu.com/question/638740157/answer/1915799428444451029 到底转哪个专业？仔细考虑一下，结合科研 !5 留学东大物理系 2024年东京大学理学系物理学专攻 大学院一般入试 个人向备考心得 千叶絮语的文章 知乎 https://zhuanlan.zhihu.com/p/720661430 !6 双非保研北大理论物理 高考对未来的人生选择还有多大影响？ 拉格朗日的忧郁的回答 知乎 https://www.zhihu.com/question/1905630080295723647/answer/1911748623093462004 !NOTE 港大 哥本哈根 写在高三之后 姜尧耕 渔樵耕牍 的文章 知乎 https://zhuanlan.zhihu.com/p/703161684 活出自己 !NOTE 科研干货 博士生每日科研很累，累到几乎没力气，怎么办？ 李乾元的回答 知乎 https://www.zhihu.com/question/621912340/answer/1901458932209264354 !NOTE 大学榜样 一个阶段的落幕和迷茫 东川路第一伊蕾娜的文章 知乎 https://zhuanlan.zhihu.com/p/8647906358 !pdf提取文本工具 【工具分享】PDF、图片、公式——阻碍我们知识数字化的敌人终于倒下了，吗？ Thoughts Memo的文章 知乎 https://zhuanlan.zhihu.com/p/16167738894"
+    "plainText": "我是如何从头开始写一篇顶级论文的 - 重剑无锋的文章 - 知乎\n我是如何在本科期间发表顶会论文的？（内含开源代码和数据集） - Thoughts Memo的文章 - 知乎\n[!1 计算机科研经验]\n清华计算机入学教育之“关于如何做科研的一些个人经验” - ZHANG Mingxing的文章 - 知乎\nhttps://zhuanlan.zhihu.com/p/718156903\n写作 输出 棋盘法\n读论文 写论文 八股文\n[!NOTE] 2 物理学科研经验\n你想对物理学专业的人说些什么? - 苇草的回答 - 知乎\nhttps://www.zhihu.com/question/1022588196/answer/1901151731125032333\n赶快去读论文！\n[!NOTE] 3 太理-港中文校友\n在太原理工大学就读是怎样一番体验？ - Henry TIAN的回答 - 知乎\nhttps://www.zhihu.com/question/24423090/answer/2471708803\n多去层次比自己高的老师和人去碰壁，利用好仅有的资源收益最大。\n[!NOTE] 4 CS高校内卷恶劣\n官媒下场手撕张雪峰，张雪峰的结局会是什么？ - 纳米酱的回答 - 知乎\nhttps://www.zhihu.com/question/638740157/answer/1915799428444451029\n到底转哪个专业？仔细考虑一下，结合科研\n[!5 留学东大物理系]\n2024年东京大学理学系物理学专攻 大学院一般入试 个人向备考心得 - 千叶絮语的文章 - 知乎\nhttps://zhuanlan.zhihu.com/p/720661430\n[!6 双非保研北大理论物理]\n高考对未来的人生选择还有多大影响？ - 拉格朗日的忧郁的回答 - 知乎\nhttps://www.zhihu.com/question/1905630080295723647/answer/1911748623093462004\n[!NOTE] 港大-哥本哈根\n写在高三之后 - 姜尧耕(渔樵耕牍)的文章 - 知乎\nhttps://zhuanlan.zhihu.com/p/703161684\n活出自己\n[!NOTE] 科研干货\n博士生每日科研很累，累到几乎没力气，怎么办？ - 李乾元的回答 - 知乎\nhttps://www.zhihu.com/question/621912340/answer/1901458932209264354\n[!NOTE] 大学榜样\n一个阶段的落幕和迷茫 - 东川路第一伊蕾娜的文章 - 知乎\nhttps://zhuanlan.zhihu.com/p/8647906358\n[!pdf提取文本工具]\n【工具分享】PDF、图片、公式——阻碍我们知识数字化的敌人终于倒下了，吗？ - Thoughts Memo的文章 - 知乎\nhttps://zhuanlan.zhihu.com/p/16167738894",
+    "segments": [
+      {
+        "type": "body",
+        "text": "我是如何从头开始写一篇顶级论文的 - 重剑无锋的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "我是如何在本科期间发表顶会论文的？（内含开源代码和数据集） - Thoughts Memo的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "[!1 计算机科研经验]"
+      },
+      {
+        "type": "body",
+        "text": "清华计算机入学教育之“关于如何做科研的一些个人经验” - ZHANG Mingxing的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://zhuanlan.zhihu.com/p/718156903"
+      },
+      {
+        "type": "body",
+        "text": "写作 输出 棋盘法"
+      },
+      {
+        "type": "body",
+        "text": "读论文 写论文 八股文"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 2 物理学科研经验"
+      },
+      {
+        "type": "body",
+        "text": "你想对物理学专业的人说些什么? - 苇草的回答 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://www.zhihu.com/question/1022588196/answer/1901151731125032333"
+      },
+      {
+        "type": "body",
+        "text": "赶快去读论文！"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 3 太理-港中文校友"
+      },
+      {
+        "type": "body",
+        "text": "在太原理工大学就读是怎样一番体验？ - Henry TIAN的回答 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://www.zhihu.com/question/24423090/answer/2471708803"
+      },
+      {
+        "type": "body",
+        "text": "多去层次比自己高的老师和人去碰壁，利用好仅有的资源收益最大。"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 4 CS高校内卷恶劣"
+      },
+      {
+        "type": "body",
+        "text": "官媒下场手撕张雪峰，张雪峰的结局会是什么？ - 纳米酱的回答 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://www.zhihu.com/question/638740157/answer/1915799428444451029"
+      },
+      {
+        "type": "body",
+        "text": "到底转哪个专业？仔细考虑一下，结合科研"
+      },
+      {
+        "type": "body",
+        "text": "[!5 留学东大物理系]"
+      },
+      {
+        "type": "body",
+        "text": "2024年东京大学理学系物理学专攻 大学院一般入试 个人向备考心得 - 千叶絮语的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://zhuanlan.zhihu.com/p/720661430"
+      },
+      {
+        "type": "body",
+        "text": "[!6 双非保研北大理论物理]"
+      },
+      {
+        "type": "body",
+        "text": "高考对未来的人生选择还有多大影响？ - 拉格朗日的忧郁的回答 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://www.zhihu.com/question/1905630080295723647/answer/1911748623093462004"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 港大-哥本哈根"
+      },
+      {
+        "type": "body",
+        "text": "写在高三之后 - 姜尧耕(渔樵耕牍)的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://zhuanlan.zhihu.com/p/703161684"
+      },
+      {
+        "type": "body",
+        "text": "活出自己"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 科研干货"
+      },
+      {
+        "type": "body",
+        "text": "博士生每日科研很累，累到几乎没力气，怎么办？ - 李乾元的回答 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://www.zhihu.com/question/621912340/answer/1901458932209264354"
+      },
+      {
+        "type": "body",
+        "text": "[!NOTE] 大学榜样"
+      },
+      {
+        "type": "body",
+        "text": "一个阶段的落幕和迷茫 - 东川路第一伊蕾娜的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://zhuanlan.zhihu.com/p/8647906358"
+      },
+      {
+        "type": "body",
+        "text": "[!pdf提取文本工具]"
+      },
+      {
+        "type": "body",
+        "text": "【工具分享】PDF、图片、公式——阻碍我们知识数字化的敌人终于倒下了，吗？ - Thoughts Memo的文章 - 知乎"
+      },
+      {
+        "type": "body",
+        "text": "https://zhuanlan.zhihu.com/p/16167738894"
+      }
+    ]
   },
   {
     "slug": "2026-04-14-pytorch-note",
     "category": "daily",
     "title": "《Pytorch实用教程》笔记（一）数据模块",
+    "date": "2026-04-16",
     "excerpt": "文章摘要",
     "tags": [
       "pytorch"
     ],
-    "plainText": "数据处理流程 \\ COVID19图像分类－数据处理流程图.canvas 安卓端无法导出为矢量图 之后会优化这个画布引用 Dataset 这个模块的学习主要还是读代码。我之前主要精读了一个函数代码，笔记如下： DataLoader"
+    "plainText": "数据处理流程\n\\[[COVID19图像分类－数据处理流程图.canvas]]\n(安卓端无法导出为矢量图 之后会优化这个画布引用)\nDataset\n这个模块的学习主要还是读代码。我之前主要精读了一个函数代码，笔记如下：\nDataLoader",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "数据处理流程"
+      },
+      {
+        "type": "body",
+        "text": "\\[[COVID19图像分类－数据处理流程图.canvas]]"
+      },
+      {
+        "type": "body",
+        "text": "(安卓端无法导出为矢量图 之后会优化这个画布引用)"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Dataset"
+      },
+      {
+        "type": "body",
+        "text": "这个模块的学习主要还是读代码。我之前主要精读了一个函数代码，笔记如下："
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "DataLoader"
+      }
+    ]
   },
   {
     "slug": "2026-04-17-jump-links-demo",
     "category": "daily",
     "title": "Markdown 跳转示例：站内引用与锚点",
+    "date": "2026-04-17",
     "excerpt": "演示同篇锚点跳转、跨文章跳转与外链跳转的标准写法",
     "tags": [
       "Markdown",
       "Jump",
       "Demo"
     ],
-    "plainText": "Markdown 跳转示例 这篇文章用于演示在正文内部如何做“互相引用跳转”。 快速导航 同文锚点示例 你可以通过 的方式跳转到本页某个标题。 示例： 跨文章跳转示例 你的网站已经支持文章详情页路由，所以可直接链接到其他文章： 如果你想指定跳到目标文章中的某个小节，也可以加哈希： 外部链接示例 常见坑与建议 1. 标题锚点要与页面实际生成的标题一致，建议先在页面中点击目录确认哈希值。 2. 中文标题可以用于锚点，但如果标题里有大量标点，建议保持标题简洁，避免手写哈希出错。 3. 你当前项目不支持 语法自动转链接，建议使用标准 Markdown 链接写法。 如果你想，我可以下一步把这篇文章再补一版“Obsidian 双链风格对照表”，方便你写作时快速复制粘贴。"
+    "plainText": "Markdown 跳转示例\n这篇文章用于演示在正文内部如何做“互相引用跳转”。\n快速导航\n跳到：同文锚点示例\n跳到：跨文章跳转示例\n跳到：外部链接示例\n跳到：常见坑与建议\n同文锚点示例\n你可以通过 #标题文本 的方式跳转到本页某个标题。\n示例：\n查看“跨文章跳转示例”\n返回顶部“快速导航”\n跨文章跳转示例\n你的网站已经支持文章详情页路由，所以可直接链接到其他文章：\n跳到《测试富文本支持》\n跳到《《Pytorch实用教程》笔记（一）数据模块》\n跳到《Transformer 架构学习笔记》\n如果你想指定跳到目标文章中的某个小节，也可以加哈希：\n跳到《测试富文本支持》的“图片支持测试”\n外部链接示例\nOpenAI 官网\nGitHub\n常见坑与建议\n标题锚点要与页面实际生成的标题一致，建议先在页面中点击目录确认哈希值。\n中文标题可以用于锚点，但如果标题里有大量标点，建议保持标题简洁，避免手写哈希出错。\n你当前项目不支持 [[双中括号]] 语法自动转链接，建议使用标准 Markdown 链接写法。\n---\n如果你想，我可以下一步把这篇文章再补一版“Obsidian 双链风格对照表”，方便你写作时快速复制粘贴。",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Markdown 跳转示例"
+      },
+      {
+        "type": "body",
+        "text": "这篇文章用于演示在正文内部如何做“互相引用跳转”。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "快速导航"
+      },
+      {
+        "type": "body",
+        "text": "跳到：同文锚点示例"
+      },
+      {
+        "type": "body",
+        "text": "跳到：跨文章跳转示例"
+      },
+      {
+        "type": "body",
+        "text": "跳到：外部链接示例"
+      },
+      {
+        "type": "body",
+        "text": "跳到：常见坑与建议"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "同文锚点示例"
+      },
+      {
+        "type": "body",
+        "text": "你可以通过 #标题文本 的方式跳转到本页某个标题。"
+      },
+      {
+        "type": "body",
+        "text": "示例："
+      },
+      {
+        "type": "body",
+        "text": "查看“跨文章跳转示例”"
+      },
+      {
+        "type": "body",
+        "text": "返回顶部“快速导航”"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "跨文章跳转示例"
+      },
+      {
+        "type": "body",
+        "text": "你的网站已经支持文章详情页路由，所以可直接链接到其他文章："
+      },
+      {
+        "type": "body",
+        "text": "跳到《测试富文本支持》"
+      },
+      {
+        "type": "body",
+        "text": "跳到《《Pytorch实用教程》笔记（一）数据模块》"
+      },
+      {
+        "type": "body",
+        "text": "跳到《Transformer 架构学习笔记》"
+      },
+      {
+        "type": "body",
+        "text": "如果你想指定跳到目标文章中的某个小节，也可以加哈希："
+      },
+      {
+        "type": "body",
+        "text": "跳到《测试富文本支持》的“图片支持测试”"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "外部链接示例"
+      },
+      {
+        "type": "body",
+        "text": "OpenAI 官网"
+      },
+      {
+        "type": "body",
+        "text": "GitHub"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "常见坑与建议"
+      },
+      {
+        "type": "body",
+        "text": "标题锚点要与页面实际生成的标题一致，建议先在页面中点击目录确认哈希值。"
+      },
+      {
+        "type": "body",
+        "text": "中文标题可以用于锚点，但如果标题里有大量标点，建议保持标题简洁，避免手写哈希出错。"
+      },
+      {
+        "type": "body",
+        "text": "你当前项目不支持 [[双中括号]] 语法自动转链接，建议使用标准 Markdown 链接写法。"
+      },
+      {
+        "type": "body",
+        "text": "---"
+      },
+      {
+        "type": "body",
+        "text": "如果你想，我可以下一步把这篇文章再补一版“Obsidian 双链风格对照表”，方便你写作时快速复制粘贴。"
+      }
+    ]
   },
   {
     "slug": "2026-04-01-q1-summary",
     "category": "journal",
     "title": "我的 2026 年第一季度总结",
+    "date": "2026-04-01",
     "excerpt": "回顾过去三个月的学习、工作和生活，分享一些感悟和收获。",
     "tags": [
       "Life",
       "Review"
     ],
-    "plainText": "2026 Q1 总结 工作进展 本季度完成了博客系统核心模块与多语言切换重构，提升了整体可维护性。 学习收获 重点深入了前端工程化与 AI 应用落地实践，对性能优化和用户体验有了更系统理解。 生活记录 保持阅读与运动，整体节奏更稳定，也更注重复盘与长期规划。"
+    "plainText": "2026 Q1 总结\n工作进展\n本季度完成了博客系统核心模块与多语言切换重构，提升了整体可维护性。\n学习收获\n重点深入了前端工程化与 AI 应用落地实践，对性能优化和用户体验有了更系统理解。\n生活记录\n保持阅读与运动，整体节奏更稳定，也更注重复盘与长期规划。",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "2026 Q1 总结"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "工作进展"
+      },
+      {
+        "type": "body",
+        "text": "本季度完成了博客系统核心模块与多语言切换重构，提升了整体可维护性。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "学习收获"
+      },
+      {
+        "type": "body",
+        "text": "重点深入了前端工程化与 AI 应用落地实践，对性能优化和用户体验有了更系统理解。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "生活记录"
+      },
+      {
+        "type": "body",
+        "text": "保持阅读与运动，整体节奏更稳定，也更注重复盘与长期规划。"
+      }
+    ]
   },
   {
     "slug": "2026-04-10-transformer-architecture",
     "category": "research",
     "title": "深入理解 Transformer 架构",
+    "date": "2026-04-10",
     "excerpt": "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。",
     "tags": [
       "AI",
       "Deep Learning",
       "NLP"
     ],
-    "plainText": "引言 Transformer 模型自 2017 年提出以来，彻底改变了自然语言处理领域。本文将深入探讨其核心机制。 自注意力机制 自注意力机制是 Transformer 的核心创新。它允许模型在处理序列时，关注输入的不同部分。 计算过程 1. 计算 Query、Key、Value 矩阵 2. 计算注意力分数 3. 应用 Softmax 归一化 4. 加权求和得到输出 位置编码 由于 Transformer 没有递归结构，需要显式地注入位置信息。 总结 Transformer 的成功在于其并行化能力和强大的长距离依赖建模能力。"
+    "plainText": "引言\nTransformer 模型自 2017 年提出以来，彻底改变了自然语言处理领域。本文将深入探讨其核心机制。\n自注意力机制\n自注意力机制是 Transformer 的核心创新。它允许模型在处理序列时，关注输入的不同部分。\n计算过程\n计算 Query、Key、Value 矩阵\n计算注意力分数\n应用 Softmax 归一化\n加权求和得到输出\n位置编码\n由于 Transformer 没有递归结构，需要显式地注入位置信息。\n总结\nTransformer 的成功在于其并行化能力和强大的长距离依赖建模能力。",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "引言"
+      },
+      {
+        "type": "body",
+        "text": "Transformer 模型自 2017 年提出以来，彻底改变了自然语言处理领域。本文将深入探讨其核心机制。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "自注意力机制"
+      },
+      {
+        "type": "body",
+        "text": "自注意力机制是 Transformer 的核心创新。它允许模型在处理序列时，关注输入的不同部分。"
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "计算过程"
+      },
+      {
+        "type": "body",
+        "text": "计算 Query、Key、Value 矩阵"
+      },
+      {
+        "type": "body",
+        "text": "计算注意力分数"
+      },
+      {
+        "type": "body",
+        "text": "应用 Softmax 归一化"
+      },
+      {
+        "type": "body",
+        "text": "加权求和得到输出"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "位置编码"
+      },
+      {
+        "type": "body",
+        "text": "由于 Transformer 没有递归结构，需要显式地注入位置信息。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "总结"
+      },
+      {
+        "type": "body",
+        "text": "Transformer 的成功在于其并行化能力和强大的长距离依赖建模能力。"
+      }
+    ]
   },
   {
     "slug": "2026-04-16-test-rich-text",
     "category": "technical",
     "title": "测试富文本支持",
+    "date": "2026-04-16",
     "excerpt": "测试代码、数学公式、图片等富文本特性",
     "tags": [
       "Test"
     ],
-    "plainText": "富文本支持测试 这是一篇用于验证博客 Markdown 富文本支持特性的文章。 1. 代码块高亮测试 下面是一段 Python 代码： 2. 数学公式测试 KaTeX 这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。 这里是一个块级公式（微积分定义）： $$ \\frac{\\partial f}{\\partial x} = \\lim {h \\to 0} \\frac{f x+h f x }{h} $$ 再来一个复杂一点的矩阵： $$ \\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \\end{bmatrix} $$ 3. 图片支持测试 下面是一张通过绝对路径 引入的图片（该图片存放在根目录的 文件夹下）："
+    "plainText": "富文本支持测试\n这是一篇用于验证博客 Markdown 富文本支持特性的文章。\n1. 代码块高亮测试\n下面是一段 Python 代码：\n2. 数学公式测试 (KaTeX)\n这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。\n这里是一个块级公式（微积分定义）：\n$$\n\\frac{\\partial f}{\\partial x} = \\lim{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n$$\n再来一个复杂一点的矩阵：\n$$\n\\begin{bmatrix}\n1 & 2 & 3 \\\n4 & 5 & 6 \\\n7 & 8 & 9\n\\end{bmatrix}\n$$\n3. 图片支持测试\n下面是一张通过绝对路径 /images/... 引入的图片（该图片存放在根目录的 public/images/ 文件夹下）：\n/images/kayuya.jpg",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "富文本支持测试"
+      },
+      {
+        "type": "body",
+        "text": "这是一篇用于验证博客 Markdown 富文本支持特性的文章。"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. 代码块高亮测试"
+      },
+      {
+        "type": "body",
+        "text": "下面是一段 Python 代码："
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. 数学公式测试 (KaTeX)"
+      },
+      {
+        "type": "body",
+        "text": "这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。"
+      },
+      {
+        "type": "body",
+        "text": "这里是一个块级公式（微积分定义）："
+      },
+      {
+        "type": "body",
+        "text": "$$"
+      },
+      {
+        "type": "body",
+        "text": "\\frac{\\partial f}{\\partial x} = \\lim{h \\to 0} \\frac{f(x+h) - f(x)}{h}"
+      },
+      {
+        "type": "body",
+        "text": "$$"
+      },
+      {
+        "type": "body",
+        "text": "再来一个复杂一点的矩阵："
+      },
+      {
+        "type": "body",
+        "text": "$$"
+      },
+      {
+        "type": "body",
+        "text": "\\begin{bmatrix}"
+      },
+      {
+        "type": "body",
+        "text": "1 & 2 & 3 \\"
+      },
+      {
+        "type": "body",
+        "text": "4 & 5 & 6 \\"
+      },
+      {
+        "type": "body",
+        "text": "7 & 8 & 9"
+      },
+      {
+        "type": "body",
+        "text": "\\end{bmatrix}"
+      },
+      {
+        "type": "body",
+        "text": "$$"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. 图片支持测试"
+      },
+      {
+        "type": "body",
+        "text": "下面是一张通过绝对路径 /images/... 引入的图片（该图片存放在根目录的 public/images/ 文件夹下）："
+      },
+      {
+        "type": "body",
+        "text": "/images/kayuya.jpg"
+      }
+    ]
   }
 ]
