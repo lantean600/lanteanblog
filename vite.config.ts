@@ -4,6 +4,8 @@ import svgr from "vite-plugin-svgr";
 import path from "path";
 import { plugin as markdown } from "vite-plugin-markdown";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const rootDir = __dirname;
 const contentDir = path.resolve(rootDir, "./src/content");
 const imagesDir = path.resolve(rootDir, "./public/images");
@@ -53,18 +55,13 @@ const adminAndAssetPlugin = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    adminAndAssetPlugin,
-    react(),
-    svgr({
-      svgrOptions: {
-        icon: true,
-        exportType: "named",
-        namedExport: "ReactComponent",
-      },
-    }),
-    markdown({ mode: ["html", "toc"] }),
-  ],
+  plugins: [adminAndAssetPlugin, react(), svgr({
+    svgrOptions: {
+      icon: true,
+      exportType: "named",
+      namedExport: "ReactComponent",
+    },
+  }), markdown({ mode: ["html", "toc"] }), cloudflare()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
