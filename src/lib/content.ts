@@ -17,6 +17,7 @@ export interface PostMeta {
   heroLink: string;
   excerpt: string;
   collection?: string;
+  readMinutes?: number;
   filePath: string;
 }
 

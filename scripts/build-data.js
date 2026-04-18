@@ -23,6 +23,40 @@ function countWords(str) {
   return zhMatch.length + enMatch.length;
 }
 
+/**
+ * 计算预计阅读时间（分钟）
+ * 支持中英文混合
+ */
+function estimateReadMinutes(text) {
+  if (!text || typeof text !== 'string') return 1;
+
+  let processedText = text;
+
+  // 如果是 Markdown，去掉代码块、链接、图片等
+  if (processedText.includes('```') || processedText.includes('[')) {
+    processedText = processedText
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/`[^`]*`/g, ' ')
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+      .replace(/\[[^\]]*\]\([^)]+\)/g, ' ')
+      .replace(/[#>*_\-\[\]()]/g, ' ');
+  }
+
+  // 统一空白符
+  processedText = processedText.replace(/\s+/g, ' ').trim();
+
+  // 计算中文字符
+  const cjkChars = (processedText.match(/[\u3400-\u9FFF]/g) || []).length;
+
+  // 计算英文单词（包括数字）
+  const latinWords = (processedText.match(/[A-Za-z0-9]+/g) || []).length;
+
+  // 混合语言计算：中文按1个字=1字计，英文按1个单词=2字计
+  // 总体按380字/分钟阅读速度计算
+  const totalUnits = cjkChars + latinWords * 2;
+  return Math.max(1, Math.ceil(totalUnits / 380));
+}
+
 function walkDir(dir, fileList = []) {
   const files = fs.readdirSync(dir);
   for (const file of files) {
@@ -133,9 +167,17 @@ function buildData() {
       const category = pathParts.pop();
       const slug = fileName.replace('.md', '');
 
-      // 从 frontmatter 中读取，没有则提供默认值
+      // 从文件名中提取日期（格式为 YYYY-MM-DD-...）
+      // 文件名中的日期通常更准确，优先使用
+      const dateMatch = slug.match(/^(\d{4}-\d{2}-\d{2})/);
+      let date = dateMatch ? dateMatch[1] : '';
+
+      // 如果文件名中没有日期，再从 frontmatter 中读取
+      if (!date) {
+        date = normalizeFrontmatterDate(data.date);
+      }
+
       const title = data.title || slug;
-      const date = normalizeFrontmatterDate(data.date);
       const tags = Array.isArray(data.tags) ? data.tags : [];
       const excerpt = data.excerpt || title;
       const heroImage = data.heroImage || '/assets/kayuya.jpg';
@@ -143,6 +185,7 @@ function buildData() {
       const collection = data.collection || undefined;
 
       const wordCount = countWords(content);
+      const readMinutes = estimateReadMinutes(content);
       totalWords += wordCount;
 
       const postMeta = {
@@ -155,6 +198,7 @@ function buildData() {
         heroImage,
         heroLink,
         collection,
+        readMinutes,
         // filePath 用于前端做动态按需加载匹配
         filePath: `../content/${category}/${fileName}`
       };
@@ -171,6 +215,7 @@ function buildData() {
         date,
         excerpt,
         tags,
+        readMinutes,
         plainText,
         segments,
       });

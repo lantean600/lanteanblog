@@ -7,11 +7,6 @@ import { CATEGORIES, CATEGORY_LABELS } from "@/lib/constants";
 import { getAllCollections } from "@/lib/collections";
 import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
-const estimateReadMinutes = (text: string) => {
-  const words = text.split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / 220));
-};
-
 export function BlogList() {
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -126,7 +121,6 @@ export function BlogList() {
             ) : (
               filteredPosts.map((post) => {
                 const { original: heroImage, optimized: optimizedHeroImage } = getImagePaths(post.heroImage);
-                const readMinutes = estimateReadMinutes(`${post.title} ${post.excerpt}`);
 
                 return (
                   <article
@@ -172,7 +166,7 @@ export function BlogList() {
 
                           <div className="flex items-center gap-2 text-foreground/80 mb-3">
                             <FaClock className="h-3.5 w-3.5" />
-                            <span className="text-sm font-normal">{readMinutes} min read</span>
+                            <span className="text-sm font-normal">{post.readMinutes || 1} min read</span>
                           </div>
 
                           <div className="flex flex-wrap gap-2">

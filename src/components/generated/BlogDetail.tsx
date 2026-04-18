@@ -11,25 +11,6 @@ import { extractTocFromMarkdown } from "@/lib/markdown-toc";
 import { Category, getAllPosts, getPostDetail, type Post } from "@/lib/content";
 import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
-const estimateReadMinutes = (markdown: string) => {
-  const plainText = markdown
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/`[^`]*`/g, " ")
-    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
-    .replace(/\[[^\]]*\]\([^)]+\)/g, " ")
-    .replace(/[#>*_\-\[\]()]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  const cjkChars = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
-  const nonCjkText = plainText.replace(/[\u3400-\u9FFF]/g, " ");
-  const latinWords = (nonCjkText.match(/[A-Za-z0-9]+/g) || []).length;
-
-  // Approximate mixed-language reading workload into "char-equivalent" units.
-  const units = cjkChars + latinWords * 2;
-  return Math.max(1, Math.ceil(units / 380));
-};
-
 export function BlogDetail() {
   const { language } = useLanguage();
   const { category, slug } = useParams();
@@ -152,10 +133,7 @@ export function BlogDetail() {
     };
   }, [toc, post?.content]);
 
-  const readMinutes = useMemo(() => {
-    if (!post?.content) return 1;
-    return estimateReadMinutes(post.content);
-  }, [post?.content]);
+  const readMinutes = post?.readMinutes || 1;
 
   const markdownComponents = useMemo(() => {
     const withId = (Tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") => {
