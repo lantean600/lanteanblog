@@ -18,10 +18,11 @@ export function AcademicPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
+    <div className="min-h-screen pt-24 pb-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <p className="poetic-title mb-2">Research Ledger</p>
+          <h1 className="font-heading text-3xl md:text-4xl text-foreground mb-4">
             {language === "zh" ? "学术研究" : "Academic Research"}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -35,14 +36,14 @@ export function AcademicPage() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="p-6 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 hover:shadow-lg transition-all duration-200"
+              className="glass-card rounded-2xl p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20"
             >
               <div className="mb-4">
-                <span className="text-xs text-muted-foreground font-mono">
+                <span className="poetic-title text-[0.65rem]">
                   {project.period}
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
+              <h3 className="font-heading text-3xl text-foreground mb-2">
                 {project.title}
               </h3>
               <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
@@ -52,7 +53,7 @@ export function AcademicPage() {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs px-2 py-1 bg-primary/10 text-primary rounded"
+                    className="rounded-full border border-border/70 px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.1em] text-primary"
                   >
                     #{tag}
                   </span>

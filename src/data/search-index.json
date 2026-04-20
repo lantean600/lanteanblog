@@ -680,7 +680,7 @@
       "Test"
     ],
     "readMinutes": 1,
-    "plainText": "富文本支持测试\n这是一篇用于验证博客 Markdown 富文本支持特性的文章。\n1. 代码块高亮测试\n下面是一段 Python 代码：\n2. 数学公式测试 (KaTeX)\n这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。\n这里是一个块级公式（微积分定义）：\n$$\n\\frac{\\partial f}{\\partial x} = \\lim{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n$$\n再来一个复杂一点的矩阵：\n$$\n\\begin{bmatrix}\n1 & 2 & 3 \\\n4 & 5 & 6 \\\n7 & 8 & 9\n\\end{bmatrix}\n$$\n3. 图片支持测试\n下面是一张通过绝对路径 /images/... 引入的图片（该图片存放在根目录的 public/images/ 文件夹下）：\n/images/kayuya.jpg",
+    "plainText": "富文本支持测试\n这是一篇用于验证博客 Markdown 富文本支持特性的文章。\n1. 代码块高亮测试\n下面是一段 Python 代码：\n2. 数学公式测试 (KaTeX)\n这里是一个行内公式：爱因斯坦的质能方程是 $E=mc^2$，非常经典。\n这里是一个块级公式（微积分定义）：\n$$\n\\frac{\\partial f}{\\partial x} = \\lim{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n$$\n再来一个复杂一点的矩阵：\n$$\n\\begin{bmatrix}\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n7 & 8 & 9\n\\end{bmatrix}\n$$\n3. 图片支持测试\n下面是一张通过绝对路径 /images/... 引入的图片（该图片存放在根目录的 public/images/ 文件夹下）：\n/images/kayuya.jpg",
     "segments": [
       {
         "type": "heading",
@@ -739,11 +739,11 @@
       },
       {
         "type": "body",
-        "text": "1 & 2 & 3 \\"
+        "text": "1 & 2 & 3 \\\\"
       },
       {
         "type": "body",
-        "text": "4 & 5 & 6 \\"
+        "text": "4 & 5 & 6 \\\\"
       },
       {
         "type": "body",

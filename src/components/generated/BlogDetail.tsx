@@ -232,7 +232,8 @@ export function BlogDetail() {
       aria-label={language === "zh" ? "文章目录" : "Table of contents"}
       className="glass-card rounded-2xl p-4"
     >
-      <p className="mb-3 text-sm font-semibold text-foreground">
+      <p className="poetic-title mb-2">Navigation</p>
+      <p className="mb-3 font-heading text-xl text-foreground">
         {language === "zh" ? "目录" : "Contents"}
       </p>
       <ul className="max-h-[min(70vh,32rem)] space-y-1 overflow-y-auto text-sm">
@@ -252,7 +253,7 @@ export function BlogDetail() {
                 className={`block rounded-md px-2 py-1 transition-colors ${
                   isActive
                     ? "bg-primary/12 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-muted/60 hover:text-primary"
+                    : "text-muted-foreground hover:bg-muted/40 hover:text-primary"
                 }`}
               >
                 {item.text}
@@ -265,11 +266,11 @@ export function BlogDetail() {
   );
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
+    <div className="min-h-screen pt-24 pb-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/blog"
-          className="inline-flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors mb-8"
+          className="mb-8 inline-flex items-center space-x-2 text-muted-foreground transition-colors hover:text-primary"
         >
           <FaArrowLeft className="w-4 h-4" />
           <span>{language === "zh" ? "返回博客列表" : "Back to Blog List"}</span>
@@ -278,8 +279,9 @@ export function BlogDetail() {
         <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_min(320px,30%)] lg:gap-12">
           {/* Left column: Hero image and article content */}
           <div>
-            <header className="mb-10">
-              <div className="relative overflow-hidden rounded-2xl">
+            <header className="focus-halo mb-11">
+              <p className="poetic-title mb-2">Article</p>
+              <div className="relative overflow-hidden rounded-[1.55rem] border border-border/60">
                 {(() => {
                   const { original, optimized } = getImagePaths(post.heroImage);
                   return optimized ? (
@@ -307,7 +309,8 @@ export function BlogDetail() {
                     />
                   );
                 })()}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/14 to-transparent" />
+                <div className="cinematic-tone pointer-events-none absolute inset-0" />
               </div>
 
               <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
@@ -342,10 +345,10 @@ export function BlogDetail() {
                 </span>
               </div>
 
-              <h1 className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <h1 className="mt-5 font-heading text-3xl tracking-tight text-foreground sm:text-4xl">
                 {post.title}
               </h1>
-              <p className="mt-2 text-base text-muted-foreground">{post.excerpt}</p>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">{post.excerpt}</p>
             </header>
 
             <article ref={articleRef} className="prose prose-lg max-w-none dark:prose-invert min-w-0">
@@ -369,8 +372,9 @@ export function BlogDetail() {
 
         {toc.length > 0 && <div className="mt-8 lg:hidden">{tocNav}</div>}
 
-        <section className="mt-12 pt-8 border-t border-border">
-          <h2 className="text-xl font-bold text-foreground mb-4">
+        <section className="mt-12 border-t border-border/70 pt-8">
+          <p className="poetic-title mb-2">Further Reading</p>
+          <h2 className="mb-4 font-heading text-3xl text-foreground">
             {language === "zh" ? "相关文章" : "Related Posts"}
           </h2>
           <div className="space-y-4">
@@ -379,9 +383,9 @@ export function BlogDetail() {
                 <Link
                   key={`${related.category}-${related.slug}`}
                   to={`/blog/${related.category}/${related.slug}`}
-                  className="glass-card block p-4 rounded-lg hover:border-foreground/20 hover:bg-card/70 transition-all duration-200"
+                  className="glass-card block rounded-xl p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-card/75"
                 >
-                  <h3 className="font-medium text-foreground hover:text-primary transition-colors">
+                  <h3 className="font-heading text-2xl text-foreground transition-colors hover:text-primary">
                     {related.title}
                   </h3>
                 </Link>

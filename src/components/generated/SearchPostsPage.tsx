@@ -231,7 +231,7 @@ export function SearchPostsPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
+    <div className="min-h-screen pt-24 pb-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/blog"
@@ -241,8 +241,9 @@ export function SearchPostsPage() {
           <span>{language === "zh" ? "返回博客" : "Back to Blog"}</span>
         </Link>
 
-        <div className="mb-8 glass-card rounded-2xl p-5">
-          <h1 className="text-3xl font-black text-foreground">
+        <div className="mb-8 glass-card rounded-2xl p-6">
+          <p className="poetic-title mb-2">Search Atlas</p>
+          <h1 className="font-heading text-3xl text-foreground md:text-4xl">
             {language === "zh" ? "全站搜索" : "Global Search"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -257,12 +258,12 @@ export function SearchPostsPage() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={language === "zh" ? "输入关键词，例如：transformer / dataset" : "Type keywords..."}
               aria-label="Search posts"
-              className="w-full rounded-lg border border-border bg-background py-2.5 pl-10 pr-24 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="w-full rounded-full border border-border/75 bg-background/70 py-3 pl-11 pr-24 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <FaSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-medium uppercase tracking-[0.12em] text-primary-foreground"
             >
               {language === "zh" ? "检索" : "Search"}
             </button>
@@ -282,19 +283,19 @@ export function SearchPostsPage() {
             return (
               <article
                 key={`${post.category}-${post.slug}`}
-                className="rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/35"
+                className="glass-card rounded-2xl p-5 transition-colors hover:border-primary/35"
               >
                 <Link to={`/blog/${post.category}/${post.slug}`}>
-                  <h2 className="text-xl font-bold text-foreground transition-colors hover:text-primary">
+                  <h2 className="font-heading text-3xl text-foreground transition-colors hover:text-primary">
                     {highlightText(post.title, queryTokens)}
                   </h2>
                 </Link>
 
-                <div className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                <div className="mt-3 space-y-1.5 text-sm text-muted-foreground">
                   {lines.map((line, idx) => (
                     <p
                       key={`${post.slug}-line-${idx}`}
-                      className={line.type === "heading" ? "font-black text-foreground" : "text-muted-foreground"}
+                      className={line.type === "heading" ? "font-semibold text-foreground" : "text-muted-foreground"}
                     >
                       {line.type === "heading"
                         ? highlightText(line.text, queryTokens)
@@ -307,12 +308,12 @@ export function SearchPostsPage() {
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <span>{post.date}</span>
+                  <span className="poetic-title text-[0.65rem]">{post.date}</span>
                   {post.tags.map((t) => (
                     <Link
                       key={t}
                       to={`/blog/tag/${encodeURIComponent(t)}`}
-                      className="rounded-full border border-border px-2 py-0.5 hover:border-primary/50 hover:text-primary"
+                      className="rounded-full border border-border/70 px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.1em] hover:border-primary/50 hover:text-primary"
                     >
                       #{t}
                     </Link>

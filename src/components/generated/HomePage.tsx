@@ -54,46 +54,46 @@ export function HomePage() {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
-    <div className="min-h-screen pt-20 pb-12">
+    <div className="min-h-screen pt-20 pb-14">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <section className="mb-16">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+        <section className="mb-16 animate-softReveal">
+          <div className="focus-halo flex flex-col md:flex-row items-center md:items-start gap-6">
             <img
               src={avatarFallback}
               alt="Avatar"
-              className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-2 border-border shadow-lg"
+              className="w-32 h-32 md:w-40 md:h-40 rounded-[1.25rem] object-cover border border-border/70 shadow-[0_18px_34px_hsla(210,26%,16%,0.18)]"
             />
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <h1 className="mb-4 font-heading text-5xl text-foreground md:text-6xl">
                 Lantean
               </h1>
-              <div className="flex items-center justify-center md:justify-start space-x-4 mb-4">
+              <div className="mb-4 flex items-center justify-center space-x-3 md:justify-start">
                 <a
                   href="https://github.com/lantean600"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg hover:from-primary/10 hover:via-primary/5 hover:to-primary/10 transition-all duration-300 border border-border hover:border-primary/40"
+                  className="flex items-center space-x-2 rounded-full border border-border/75 bg-card/70 px-4 py-2 transition-all duration-300 hover:border-primary/40 hover:text-primary"
                 >
                   <FaGithub className="w-5 h-5" />
                   <span className="text-sm font-medium">GitHub</span>
                 </a>
                 <a
                   href="mailto:614635562@qq.com"
-                  className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg hover:from-primary/10 hover:via-primary/5 hover:to-primary/10 transition-all duration-300 border border-border hover:border-primary/40"
+                  className="flex items-center space-x-2 rounded-full border border-border/75 bg-card/70 px-4 py-2 transition-all duration-300 hover:border-primary/40 hover:text-primary"
                 >
                   <FaEnvelope className="w-5 h-5" />
                   <span className="text-sm font-medium">
                     {language === "zh" ? "邮箱" : "614635562@qq.com"}
                   </span>
                 </a>
-                <div className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-muted/80 via-muted/60 to-muted/80 rounded-lg border border-border">
+                <div className="flex items-center space-x-2 rounded-full border border-border/75 bg-card/70 px-4 py-2">
                   <span className="text-sm font-medium">
                     {language === "zh" ? "中国" : "China"}
                   </span>
                 </div>
               </div>
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="max-w-2xl text-muted-foreground leading-relaxed">
                 {language === "zh"
                   ? "你好！我是一名热爱技术的开发者，专注于人工智能和全栈开发。在这里分享我的技术文章、研究成果和日常生活。"
                   : "Hi! I'm a tech enthusiast focused on AI and full-stack development. I share technical articles, research progress, and daily notes here."}
@@ -106,18 +106,18 @@ export function HomePage() {
         <section className="mb-16">
           <div className="flex items-start gap-6">
             <div className="hidden md:block w-32 flex-shrink-0">
-              <h2 className="text-lg font-semibold text-foreground sticky top-24">
+              <h2 className="font-heading text-2xl text-foreground sticky top-24">
                 {language === "zh" ? "教育经历" : "Education"}
               </h2>
             </div>
             <div className="flex-1 space-y-4">
               <div className="md:hidden mb-4">
-                <h2 className="text-lg font-semibold text-foreground">
+                <h2 className="font-heading text-2xl text-foreground">
                   {language === "zh" ? "教育经历" : "Education"}
                 </h2>
               </div>
-              <div className="p-4 bg-card border border-border rounded-lg hover:border-foreground/20 hover:bg-muted/30 transition-all duration-200">
-                <h3 className="font-semibold text-foreground mb-1">太原理工大学</h3>
+              <div className="glass-card rounded-2xl p-5 transition-all duration-200 hover:border-foreground/20">
+                <h3 className="mb-1 font-heading text-2xl text-foreground">太原理工大学</h3>
                 <p className="text-sm text-muted-foreground mb-2">
                   {language === "zh" ? "软件工程专业，本科" : "B.S. in Taiyuan University of Technology"}
                 </p>
@@ -133,18 +133,18 @@ export function HomePage() {
         <section className="mb-16">
           <div className="flex items-start gap-6">
             <div className="hidden md:block w-32 flex-shrink-0">
-              <h2 className="text-lg font-semibold text-foreground sticky top-24">
+              <h2 className="font-heading text-2xl text-foreground sticky top-24">
                 {language === "zh" ? "数据统计" : "Statistics"}
               </h2>
             </div>
             <div className="flex-1">
               <div className="md:hidden mb-4">
-                <h2 className="text-lg font-semibold text-foreground">
+                <h2 className="font-heading text-2xl text-foreground">
                   {language === "zh" ? "数据统计" : "Statistics"}
                 </h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
+                <div className="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-0.5">
                   <div className="text-3xl font-bold text-primary mb-2">
                     {daysOnline}
                   </div>
@@ -152,7 +152,7 @@ export function HomePage() {
                     {language === "zh" ? "天在线" : "Days Online"}
                   </div>
                 </div>
-                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
+                <div className="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-0.5">
                 <div className="text-2xl font-bold text-primary mb-2">
                   {lastUpdate}
                 </div>
@@ -160,7 +160,7 @@ export function HomePage() {
                   {language === "zh" ? "最后更新" : "Last Updated"}
                 </div>
               </div>
-                <div className="glass-card p-6 rounded-lg hover:shadow-xl transition-all duration-300">
+                <div className="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-0.5">
                   <div className="text-3xl font-bold text-primary mb-2">
                     {totalWords >= 10000
                       ? `${(totalWords / 10000).toFixed(1)}w`
@@ -171,7 +171,7 @@ export function HomePage() {
                   </div>
                 </div>
               </div>
-              <div className="glass-card p-4 rounded-lg">
+              <div className="glass-card rounded-2xl p-5">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">
                     {language === "zh" ? "文章总数" : "Total Posts"}
@@ -187,7 +187,7 @@ export function HomePage() {
 
         {/* Contribution Heatmap Section */}
         <section className="mb-16">
-          <div className="glass-card p-6 rounded-lg overflow-x-auto">
+          <div className="glass-card overflow-x-auto rounded-2xl p-6">
             <div className="min-w-[650px]">
               {/* Month labels */}
               <div className="relative h-6 mb-1 ml-[34px]">
@@ -265,7 +265,7 @@ export function HomePage() {
         <section className="text-center">
           <Link
             to="/about"
-            className="inline-flex items-center space-x-2 text-primary hover:text-primary/80 transition-colors font-medium"
+            className="inline-flex items-center space-x-2 rounded-full border border-primary/35 px-5 py-2 text-primary transition-colors hover:border-primary/70 hover:text-primary/80"
           >
             <span>{language === "zh" ? "了解更多" : "Learn More"}</span>
             <span>→</span>

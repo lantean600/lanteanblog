@@ -4,6 +4,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ["Noto Serif SC", "Source Han Serif SC", "serif"],
+        heading: ["Cormorant Garamond", "Noto Serif SC", "serif"],
+        sans: ["IBM Plex Sans", "Noto Sans SC", "Segoe UI", "sans-serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -50,12 +55,22 @@ export default {
             transform: "translateY(0px)",
           },
           "50%": {
-            transform: "translateY(-20px)",
+            transform: "translateY(-12px)",
           },
+        },
+        softReveal: {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        shimmerDrift: {
+          "0%, 100%": { transform: "translateX(0)", opacity: "0.56" },
+          "50%": { transform: "translateX(8px)", opacity: "0.9" },
         },
       },
       animation: {
-        float: "float 3s ease-in-out infinite",
+        float: "float 4s ease-in-out infinite",
+        softReveal: "softReveal 0.44s ease-out both",
+        shimmerDrift: "shimmerDrift 4.4s ease-in-out infinite",
       },
       typography: {
         DEFAULT: {

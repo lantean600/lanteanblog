@@ -21,6 +21,16 @@ function App() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    const syncScrollDepth = () => {
+      document.documentElement.style.setProperty("--scroll-y", `${window.scrollY}px`);
+    };
+
+    syncScrollDepth();
+    window.addEventListener("scroll", syncScrollDepth, { passive: true });
+    return () => window.removeEventListener("scroll", syncScrollDepth);
+  }, []);
+
+  useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       setIsDark(true);
@@ -44,7 +54,11 @@ function App() {
       <LanguageProvider>
         <ErrorBoundary>
           <BrowserRouter>
-            <div className="min-h-screen bg-background">
+            <div className="relative min-h-screen overflow-x-clip bg-background">
+              <div aria-hidden className="atmo-layer atmo-layer-a" />
+              <div aria-hidden className="atmo-layer atmo-layer-b" />
+              <div aria-hidden className="atmo-layer atmo-layer-c" />
+              <div aria-hidden className="grain-overlay" />
               <PageMeta
                 title="Lantean's Blog"
                 description="Sharing technical articles, research updates, and daily notes"

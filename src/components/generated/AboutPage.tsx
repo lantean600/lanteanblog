@@ -11,16 +11,16 @@ export function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
+    <div className="min-h-screen pt-24 pb-14">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <img
             src={avatarFallback}
             alt="Avatar"
-            className="w-32 h-32 mx-auto rounded-2xl object-cover border-2 border-border shadow-lg mb-6"
+            className="mb-6 h-32 w-32 mx-auto rounded-[1.25rem] object-cover border border-border/70 shadow-[0_18px_34px_hsla(210,26%,16%,0.18)]"
           />
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h1 className="mb-4 font-heading text-3xl md:text-4xl text-foreground">
             {language === "zh" ? "关于我" : "About Me"}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -32,10 +32,11 @@ export function AboutPage() {
 
         {/* About Section */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-foreground mb-4">
+          <p className="poetic-title mb-2">Introduction</p>
+          <h2 className="font-heading text-3xl text-foreground mb-4">
             {language === "zh" ? "详细介绍" : "Introduction"}
           </h2>
-          <div className="glass-card p-6 rounded-lg">
+          <div className="glass-card rounded-2xl p-6">
             <p className="text-muted-foreground leading-relaxed">
               {language === "zh"
                 ? "我对人工智能、深度学习、自然语言处理等领域充满热情，喜欢探索前沿技术并将其应用于实际问题。"
@@ -46,32 +47,34 @@ export function AboutPage() {
 
         {/* Education Section */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-foreground mb-4 flex items-center">
+          <p className="poetic-title mb-2">Background</p>
+          <h2 className="font-heading text-3xl text-foreground mb-4 flex items-center">
             <FaGraduationCap className="w-5 h-5 mr-2" />
             {language === "zh" ? "教育经历" : "Education"}
           </h2>
           <div className="space-y-4">
-            <div className="p-6 bg-card rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <div className="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="font-bold text-foreground">太原理工大学</h3>
+                  <h3 className="font-heading text-2xl text-foreground">太原理工大学</h3>
                   <p className="text-sm text-muted-foreground">软件工程专业</p>
                 </div>
                 <span className="text-xs text-muted-foreground font-mono">
                   2025 年 9 月 - 至今
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground">{language === "zh" ? "本科" : "Bachelor's Degree"}</p>
+              <p className="text-sm text-muted-foreground">{language === "zh" ? "本科" : "B.S. in Taiyuan University of Technology"}</p>
             </div>
           </div>
         </section>
 
         {/* Research Areas */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-foreground mb-4">
+          <p className="poetic-title mb-2">Focus Areas</p>
+          <h2 className="font-heading text-3xl text-foreground mb-4">
             {language === "zh" ? "研究方向" : "Research Areas"}
           </h2>
-          <div className="glass-card p-6 rounded-lg">
+          <div className="glass-card rounded-2xl p-6">
             <p className="text-muted-foreground">
               {language === "zh"
                 ? "多模态学习、具身智能、自然语言处理、深度学习"
@@ -82,23 +85,24 @@ export function AboutPage() {
 
         {/* Skills */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-foreground mb-4">
+          <p className="poetic-title mb-2">Skill Matrix</p>
+          <h2 className="font-heading text-3xl text-foreground mb-4">
             {language === "zh" ? "技能栈" : "Skills"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {skills.map((skill) => (
               <div
                 key={skill.category}
-                className="glass-card p-4 rounded-lg"
+                className="glass-card rounded-2xl p-5"
               >
-                <h3 className="font-semibold text-foreground mb-3">
+                <h3 className="font-heading text-2xl text-foreground mb-3">
                   {skill.category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {skill.items.map((item) => (
                     <span
                       key={item}
-                      className="text-xs px-2 py-1 bg-primary/10 text-primary rounded"
+                      className="rounded-full border border-border/70 px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.1em] text-primary"
                     >
                       {item}
                     </span>
@@ -111,11 +115,12 @@ export function AboutPage() {
 
         {/* Contact */}
         <section>
-          <h2 className="text-xl font-bold text-foreground mb-4 flex items-center">
+          <p className="poetic-title mb-2">Contact</p>
+          <h2 className="font-heading text-3xl text-foreground mb-4 flex items-center">
             <FaEnvelope className="w-5 h-5 mr-2" />
             {language === "zh" ? "联系方式" : "Contact"}
           </h2>
-          <div className="glass-card p-6 rounded-lg">
+          <div className="glass-card rounded-2xl p-6">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="w-5 h-5 text-primary" />

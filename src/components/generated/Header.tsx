@@ -87,15 +87,16 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
   return (
     <header
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass-strong shadow-lg shadow-black/5" : "bg-transparent"
+        isScrolled ? "glass-strong border-b border-border/60 shadow-[0_8px_28px_hsla(210,20%,10%,0.1)]" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="text-xl font-bold text-foreground transition-colors hover:text-primary">
-          Lantean's Blog
+        <Link to="/" className="group inline-flex flex-col leading-none text-foreground transition-colors hover:text-primary">
+          <span className="font-heading text-2xl tracking-wide">Lantean</span>
+          <span className="poetic-title mt-1 transition-colors group-hover:text-primary/80">NOTES & RESEARCH</span>
         </Link>
 
-        <nav className="hidden items-center space-x-8 md:flex">
+        <nav className="hidden items-center space-x-7 md:flex">
           {navItems.map((item) => (
             <div
               key={item.path}
@@ -111,15 +112,15 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
             >
               <Link
                 to={item.path}
-                className={`text-sm font-medium transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 rounded-sm px-1 ${
-                  isActive(item.path) ? "text-primary" : "text-foreground"
+                className={`rounded-sm px-1 text-[0.86rem] uppercase tracking-[0.13em] transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                  isActive(item.path) ? "text-primary" : "text-foreground/88"
                 }`}
               >
                 {item.name}
               </Link>
               {item.hasDropdown && (
                 <div
-                  className={`absolute left-0 top-full w-48 rounded-lg border border-border/50 bg-card/90 py-2 shadow-lg backdrop-blur-md transition-all duration-200 ${
+                  className={`absolute left-0 top-full mt-2 w-52 rounded-xl border border-border/60 bg-card/85 py-2 shadow-[0_14px_34px_hsla(210,28%,12%,0.17)] backdrop-blur-xl transition-all duration-200 ${
                     activeDropdown === item.path ? "visible opacity-100" : "invisible opacity-0"
                   }`}
                 >
@@ -127,7 +128,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
                     <Link
                       key={category.path}
                       to={category.path}
-                      className="block px-4 py-2 text-sm text-foreground transition-colors hover:bg-muted hover:text-primary"
+                      className="block px-4 py-2 text-sm text-foreground/90 transition-colors hover:bg-muted/70 hover:text-primary"
                     >
                       {category.name}
                     </Link>
@@ -138,10 +139,10 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <Link
             to="/search"
-            className="hidden p-2 text-foreground transition-colors hover:text-primary md:inline-flex"
+            className="hidden rounded-full border border-transparent p-2 text-foreground transition-colors hover:border-border/70 hover:text-primary md:inline-flex"
             aria-label={language === "zh" ? "搜索" : "Search"}
           >
             <FaSearch className="h-4 w-4" />
@@ -151,7 +152,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
 
           <button
             onClick={toggleTheme}
-            className="p-2 text-foreground transition-colors hover:text-primary"
+            className="rounded-full border border-transparent p-2 text-foreground transition-colors hover:border-border/70 hover:text-primary"
             aria-label="Toggle theme"
           >
             {isDark ? <FaSun className="h-5 w-5" /> : <FaMoon className="h-5 w-5" />}
@@ -159,7 +160,7 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
 
           <button
             onClick={() => setIsMobileMenuOpen((v) => !v)}
-            className="p-2 text-foreground transition-colors hover:text-primary md:hidden"
+            className="rounded-full border border-transparent p-2 text-foreground transition-colors hover:border-border/70 hover:text-primary md:hidden"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
@@ -168,15 +169,15 @@ export function Header({ isDark, toggleTheme }: HeaderProps) {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="border-b border-border/50 bg-card/90 backdrop-blur-md md:hidden">
+        <div className="border-b border-border/60 bg-card/85 backdrop-blur-xl md:hidden">
           <div className="space-y-4 px-4 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`block text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.path) ? "text-primary" : "text-foreground"
+                className={`block text-[0.92rem] tracking-[0.06em] transition-colors hover:text-primary ${
+                  isActive(item.path) ? "text-primary" : "text-foreground/90"
                 }`}
               >
                 {item.name}

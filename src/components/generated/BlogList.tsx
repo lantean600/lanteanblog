@@ -108,21 +108,26 @@ export function BlogList() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12">
+    <div className="min-h-screen pt-24 pb-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-foreground mb-6">{language === "zh" ? "博客文章" : "Blog Posts"}</h1>
+        <div className="focus-halo mb-7 flex flex-col gap-2">
+          <p className="poetic-title">Reading Index</p>
+          <h1 className="font-heading text-3xl text-foreground md:text-4xl">
+            {language === "zh" ? "博客文章" : "Blog Posts"}
+          </h1>
+        </div>
 
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex-1">
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="mb-9 flex flex-wrap gap-2.5">
               {categories.map((cat) => (
                 <button
                   key={cat.key}
                   onClick={() => handleCategoryChange(cat.key)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.12em] transition-all duration-200 ${
                     category === cat.key
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-foreground hover:bg-muted/80"
+                      ? "border-primary/70 bg-primary/90 text-primary-foreground"
+                      : "border-border/70 bg-card/65 text-foreground/80 hover:border-primary/35 hover:text-primary"
                   }`}
                 >
                   {cat.label}
@@ -130,7 +135,7 @@ export function BlogList() {
               ))}
             </div>
 
-          <div className="space-y-5">
+          <div className="space-y-6">
             {filteredPosts.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
                 {language === "zh" ? "没有找到相关文章" : "No articles found"}
@@ -142,7 +147,7 @@ export function BlogList() {
                 return (
                   <article
                     key={`${post.category}-${post.slug}`}
-                    className="glass-card group relative isolate overflow-hidden rounded-3xl shadow-lg shadow-black/5 hover:shadow-xl hover:bg-card/70 transition-all duration-300"
+                    className="glass-card group relative isolate overflow-hidden rounded-[1.4rem] transition-all duration-300 hover:-translate-y-0.5"
                   >
                     {optimizedHeroImage ? (
                       <picture>
@@ -150,7 +155,7 @@ export function BlogList() {
                         <img
                           src={heroImage || DEFAULT_HERO_IMAGE}
                           alt=""
-                          className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_40%,black_75%,black_100%)]"
+                          className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_34%,black_72%,black_100%)]"
                           loading="lazy"
                           onError={(e) => {
                             e.currentTarget.src = DEFAULT_HERO_IMAGE;
@@ -161,27 +166,28 @@ export function BlogList() {
                       <img
                         src={heroImage || DEFAULT_HERO_IMAGE}
                         alt=""
-                        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_40%,black_75%,black_100%)]"
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_34%,black_72%,black_100%)]"
                         loading="lazy"
                         onError={(e) => {
                           e.currentTarget.src = DEFAULT_HERO_IMAGE;
                         }}
                       />
                     )}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/95 via-[40%] to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/95 via-[44%] to-transparent" />
+                    <div className="cinematic-tone pointer-events-none absolute inset-0" />
 
                     <Link to={`/blog/${post.category}/${post.slug}`} className="block h-full">
-                      <div className="relative min-h-[180px] md:min-h-[200px] flex items-center px-6 md:px-8 py-6">
+                      <div className="relative min-h-[190px] md:min-h-[214px] flex items-center px-6 md:px-8 py-7">
                         <div className="flex-1 pr-12">
-                          <div className="mb-2 text-xs tracking-wide text-muted-foreground">
+                          <div className="poetic-title mb-3 text-[0.66rem]">
                             {post.date}
                           </div>
-                          <h2 className="text-lg md:text-xl font-bold leading-tight text-foreground mb-2">
+                          <h2 className="mb-2 font-heading text-2xl leading-tight text-foreground md:text-[1.74rem]">
                             {post.title}
                           </h2>
-                          <p className="text-sm md:text-base text-foreground/70 mb-3 line-clamp-2">{post.excerpt}</p>
+                          <p className="mb-4 max-w-2xl text-sm leading-relaxed text-foreground/72 md:text-base line-clamp-2">{post.excerpt}</p>
 
-                          <div className="flex items-center gap-2 text-foreground/80 mb-3">
+                          <div className="mb-3 flex items-center gap-2 text-foreground/80">
                             <FaClock className="h-3.5 w-3.5" />
                             <span className="text-sm font-normal">{post.readMinutes || 1} min read</span>
                           </div>
@@ -190,7 +196,7 @@ export function BlogList() {
                             {post.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
-                                className="rounded-full bg-muted/80 px-3 py-1 text-xs text-foreground/85 hover:bg-muted transition-colors"
+                                className="rounded-full border border-border/70 bg-card/70 px-3 py-1 text-[0.72rem] uppercase tracking-[0.1em] text-foreground/78 transition-colors hover:border-primary/35 hover:text-primary"
                               >
                                 {tag}
                               </span>
@@ -198,7 +204,7 @@ export function BlogList() {
                           </div>
                         </div>
 
-                        <div className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 text-2xl text-muted-foreground/50">
+                        <div className="absolute right-6 top-1/2 -translate-y-1/2 text-xl text-muted-foreground/50 md:right-8 md:text-2xl">
                           <FaArrowRight />
                         </div>
                       </div>
@@ -212,14 +218,15 @@ export function BlogList() {
 
           <aside className="w-full md:w-72 flex-shrink-0">
             <div className="sticky top-24 space-y-6">
-              <div className="glass-card rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-foreground mb-3">{language === "zh" ? "文章集合" : "Collections"}</h3>
+              <div className="glass-card rounded-2xl p-5">
+                <p className="poetic-title mb-2">Collections</p>
+                <h3 className="mb-3 font-heading text-2xl text-foreground">{language === "zh" ? "文章集合" : "Collections"}</h3>
                 <div className="space-y-1">
                   {getAllCollections().map((col) => (
                     <Link
                       key={col.id}
                       to={`/blog/collections/${col.id}`}
-                      className="flex items-center justify-between px-3 py-2 rounded-md text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                      className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-foreground/90 transition-colors hover:bg-primary/10 hover:text-primary"
                     >
                       <span>{language === "zh" ? col.name.zh : col.name.en}</span>
                       <span className="text-xs text-muted-foreground">({col.items.length})</span>
@@ -228,14 +235,15 @@ export function BlogList() {
                 </div>
               </div>
 
-              <div className="glass-card rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-foreground mb-3">{language === "zh" ? "标签" : "Tags"}</h3>
+              <div className="glass-card rounded-2xl p-5">
+                <p className="poetic-title mb-2">Index Tags</p>
+                <h3 className="mb-3 font-heading text-2xl text-foreground">{language === "zh" ? "标签" : "Tags"}</h3>
                 <div className="flex flex-wrap gap-2">
                   {popularTags.map(([tag, count]) => (
                     <Link
                       key={tag}
                       to={`/blog/tag/${encodeURIComponent(tag)}`}
-                      className="text-xs px-3 py-1 bg-muted text-muted-foreground rounded hover:bg-primary/10 hover:text-primary transition-colors"
+                      className="rounded-full border border-border/65 px-3 py-1 text-[0.68rem] uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:border-primary/35 hover:text-primary"
                     >
                       #{tag} <span className="opacity-70">({count})</span>
                     </Link>
