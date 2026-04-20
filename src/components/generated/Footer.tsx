@@ -33,7 +33,7 @@ export function Footer() {
 
         <div className="flex items-center justify-center gap-5">
           <a
-            href="https://github.com/lantean"
+            href="https://github.com/lantean600"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-border/70 p-2 text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
@@ -42,7 +42,7 @@ export function Footer() {
             <FaGithub className="h-5 w-5" />
           </a>
           <a
-            href="mailto:contact@lantean.com"
+            href="mailto:contact614635562@qq.com"
             className="rounded-full border border-border/70 p-2 text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
             aria-label="Email"
           >
