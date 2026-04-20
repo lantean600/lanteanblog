@@ -28,7 +28,15 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
-      - { label: Category, name: category, widget: hidden, default: research }
+      - label: Category
+        name: category
+        widget: select
+        default: research
+        options:
+          - { label: Research, value: research }
+          - { label: Technical, value: technical }
+          - { label: Daily, value: daily }
+          - { label: Journal, value: journal }
       - label: Tags
         name: tags
         widget: list
@@ -50,7 +58,15 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
-      - { label: Category, name: category, widget: hidden, default: technical }
+      - label: Category
+        name: category
+        widget: select
+        default: technical
+        options:
+          - { label: Research, value: research }
+          - { label: Technical, value: technical }
+          - { label: Daily, value: daily }
+          - { label: Journal, value: journal }
       - label: Tags
         name: tags
         widget: list
@@ -72,7 +88,15 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
-      - { label: Category, name: category, widget: hidden, default: daily }
+      - label: Category
+        name: category
+        widget: select
+        default: daily
+        options:
+          - { label: Research, value: research }
+          - { label: Technical, value: technical }
+          - { label: Daily, value: daily }
+          - { label: Journal, value: journal }
       - label: Tags
         name: tags
         widget: list
@@ -94,7 +118,15 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: date, format: "YYYY-MM-DD" }
-      - { label: Category, name: category, widget: hidden, default: journal }
+      - label: Category
+        name: category
+        widget: select
+        default: journal
+        options:
+          - { label: Research, value: research }
+          - { label: Technical, value: technical }
+          - { label: Daily, value: daily }
+          - { label: Journal, value: journal }
       - label: Tags
         name: tags
         widget: list

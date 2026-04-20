@@ -8,10 +8,13 @@ const rootDir = __dirname;
 const contentDir = path.resolve(rootDir, "./src/content");
 const imagesDir = path.resolve(rootDir, "./public/images");
 const collectionsFile = path.resolve(rootDir, "./src/lib/collections.ts");
+const dataDir = path.resolve(rootDir, "./src/data");
 
 function needsFullReload(file: string) {
   const normalized = file.replace(/\\/g, "/");
-  return [contentDir, imagesDir, collectionsFile].some((base) => normalized.startsWith(base.replace(/\\/g, "/")));
+  return [contentDir, imagesDir, collectionsFile, dataDir].some((base) =>
+    normalized.startsWith(base.replace(/\\/g, "/")),
+  );
 }
 
 const adminAndAssetPlugin = {
@@ -27,7 +30,7 @@ const adminAndAssetPlugin = {
       next();
     });
 
-    server.watcher.add([contentDir, imagesDir, collectionsFile]);
+    server.watcher.add([contentDir, imagesDir, collectionsFile, dataDir]);
     server.watcher.on("add", (file: string) => {
       if (needsFullReload(file)) server.ws.send({ type: "full-reload", path: file });
     });

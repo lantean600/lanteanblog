@@ -12,6 +12,8 @@ const port = Number.parseInt(process.env.PORT || "8091", 10);
 const host = process.env.BIND_HOST || "127.0.0.1";
 const maxImageWidth = 1600;
 const webpQuality = 84;
+const contentRootPrefix = "src/content/";
+const validCategories = new Set(["research", "technical", "daily", "journal"]);
 
 const app = express();
 app.use(morgan("combined"));
@@ -20,6 +22,62 @@ app.use(express.json({ limit: "50mb" }));
 
 function normalizePath(filePath) {
   return filePath.replace(/\\/g, "/");
+}
+
+function extractFrontmatterCategory(raw) {
+  if (typeof raw !== "string") return "";
+
+  const frontmatterMatch = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---/);
+  if (!frontmatterMatch) return "";
+
+  const categoryMatch = frontmatterMatch[1].match(/^\s*category\s*:\s*["']?([A-Za-z0-9_-]+)["']?\s*$/m);
+  return categoryMatch ? categoryMatch[1].toLowerCase() : "";
+}
+
+function getMovedCategoryPath(filePath, raw) {
+  const normalizedPath = normalizePath(filePath);
+  if (!normalizedPath.startsWith(contentRootPrefix) || !normalizedPath.endsWith(".md")) {
+    return null;
+  }
+
+  const relativePath = normalizedPath.slice(contentRootPrefix.length);
+  const pathParts = relativePath.split("/");
+  if (pathParts.length < 2) {
+    return null;
+  }
+
+  const currentCategory = pathParts[0].toLowerCase();
+  const targetCategory = extractFrontmatterCategory(raw);
+
+  if (!targetCategory || !validCategories.has(targetCategory) || targetCategory === currentCategory) {
+    return null;
+  }
+
+  const fileName = pathParts[pathParts.length - 1];
+  return normalizePath(path.posix.join(contentRootPrefix, targetCategory, fileName));
+}
+
+async function cleanupCategoryDuplicates(targetPath) {
+  const normalizedTarget = normalizePath(targetPath);
+  if (!normalizedTarget.startsWith(contentRootPrefix) || !normalizedTarget.endsWith(".md")) {
+    return;
+  }
+
+  const relativePath = normalizedTarget.slice(contentRootPrefix.length);
+  const parts = relativePath.split("/");
+  if (parts.length < 2) return;
+
+  const targetCategory = parts[0].toLowerCase();
+  const fileName = parts[parts.length - 1];
+
+  await Promise.all(
+    Array.from(validCategories)
+      .filter((category) => category !== targetCategory)
+      .map(async (category) => {
+        const duplicatePath = normalizePath(path.posix.join(contentRootPrefix, category, fileName));
+        await deleteFile(duplicatePath);
+      }),
+  );
 }
 
 function toAbsolute(relativePath) {
@@ -242,8 +300,21 @@ app.post("/api/v1", async (req, res) => {
           }
         }));
         for (const file of dataFiles) {
-          if (file.newPath) {
-            await moveFile(file.path, file.newPath);
+          const configuredTargetPath = file.newPath ? normalizePath(file.newPath) : null;
+          const autoMovedPath = getMovedCategoryPath(file.path, file.raw);
+          const targetPath = autoMovedPath || configuredTargetPath;
+          const sourcePath = normalizePath(file.path);
+
+          if (targetPath && sourcePath !== targetPath) {
+            const sourceExists = await pathExists(toAbsolute(sourcePath));
+            if (sourceExists) {
+              await moveFile(sourcePath, targetPath);
+            }
+            await deleteFile(sourcePath);
+          }
+
+          if (autoMovedPath) {
+            await cleanupCategoryDuplicates(autoMovedPath);
           }
         }
         res.json({ message: "entry persisted" });

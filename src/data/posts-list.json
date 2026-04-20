@@ -61,19 +61,18 @@
   },
   {
     "slug": "2026-04-10-transformer-architecture",
-    "category": "research",
-    "title": "深入理解 Transformer 架构",
+    "category": "daily",
+    "title": "如何更有效地期末捞分",
     "date": "2026-04-10",
     "tags": [
-      "AI",
-      "Deep Learning",
-      "NLP"
+      "GPA",
+      "成绩"
     ],
-    "excerpt": "Transformer 模型彻底改变了自然语言处理领域。本文将深入探讨其核心机制，包括自注意力机制、位置编码等关键概念。",
+    "excerpt": "期末快速捞分的一些经验技巧。",
     "heroImage": "/images/yachiyo.jpg",
     "heroLink": "https://www.pixiv.net/artworks/142573289",
-    "readMinutes": 1,
-    "filePath": "../content/research/2026-04-10-transformer-architecture.md"
+    "readMinutes": 2,
+    "filePath": "../content/daily/2026-04-10-transformer-architecture.md"
   },
   {
     "slug": "2026-04-01-q1-summary",

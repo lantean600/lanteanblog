@@ -8,7 +8,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeKatex from "rehype-katex";
 import { useLanguage } from "@/context/LanguageContext";
 import { extractTocFromMarkdown } from "@/lib/markdown-toc";
-import { Category, getAllPosts, getPostDetail, type Post } from "@/lib/content";
+import { getAllPosts, getPostDetail, type Post } from "@/lib/content";
 import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
 export function BlogDetail() {

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { FaCalendarAlt, FaClock, FaArrowRight } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
 import { getAllPosts, searchPosts, type PostMeta } from "@/lib/content";
-import { CATEGORIES, CATEGORY_LABELS } from "@/lib/constants";
+import { CATEGORIES, getCategoryLabel } from "@/lib/constants";
 import { getAllCollections } from "@/lib/collections";
 import { DEFAULT_HERO_IMAGE, getImagePaths } from "@/lib/images";
 
@@ -17,13 +17,30 @@ export function BlogList() {
 
   const category = searchParams.get("category") || "all";
 
-  const categories = [
-    { key: "all", label: language === "zh" ? "全部" : "All" },
-    ...CATEGORIES.map(cat => ({
-      key: cat,
-      label: language === "zh" ? CATEGORY_LABELS[cat].zh : CATEGORY_LABELS[cat].en
-    }))
-  ];
+  const categories = useMemo(() => {
+    const knownOrder = new Map(CATEGORIES.map((cat, index) => [cat, index]));
+    const dynamicCategories = Array.from(
+      new Set(allPosts.map((post) => post.category).filter(Boolean)),
+    );
+
+    dynamicCategories.sort((a, b) => {
+      const orderA = knownOrder.get(a);
+      const orderB = knownOrder.get(b);
+
+      if (orderA !== undefined && orderB !== undefined) return orderA - orderB;
+      if (orderA !== undefined) return -1;
+      if (orderB !== undefined) return 1;
+      return a.localeCompare(b);
+    });
+
+    return [
+      { key: "all", label: language === "zh" ? "全部" : "All" },
+      ...dynamicCategories.map((cat) => ({
+        key: cat,
+        label: getCategoryLabel(cat, language),
+      })),
+    ];
+  }, [allPosts, language]);
 
   useEffect(() => {
     setLoading(true);
