@@ -468,6 +468,162 @@
     ]
   },
   {
+    "slug": "2026-04-20-",
+    "category": "daily",
+    "title": "高数题型总结（一）",
+    "date": "2026-04-20",
+    "excerpt": "对历年高数考题的针对性总结。",
+    "tags": [],
+    "readMinutes": 2,
+    "plainText": "一\n类型：\n给定隐式曲面 $F(x, y, z) = 0$ 和其法向量 $\\vec{n} = (A, B, C)$，求切点 $P(x0, y0, z0)$。\n理论基础：\n对于隐式曲面 $F(x, y, z) = 0$，在切点 $P(x0, y0, z0)$ 处：\n切向量：$\\vec{t} = (x - x0, y - y0, z - z0)$\n法向量：$\\vec{n} = \\nabla F(x0, y0, z0) = (A, B, C)$\n切平面方程满足 $\\vec{n} \\cdot \\vec{t} = 0$，即：\n$$A(x - x0) + B(y - y0) + C(z - z0) = 0$$\n方法：\n利用梯度共线建立方程：\n$$(Fx(x0, y0, z0), Fy(x0, y0, z0), Fz(x0, y0, z0)) = \\lambda (A, B, C)$$\n将 $P(x0, y0, z0)$ 的坐标用 $\\lambda$ 表达。\n将 $P$ 代入曲面方程 $F(x, y, z) = 0$ 求解 $\\lambda$。\n回代 $\\lambda$ 的值得到 $P$ 点坐标。\n例题：\n已知曲面 $x^2 + 2y^2 + 3z^2 = 21$ 的切平面为 $11x - 4y + 6z + 25 = 0$，求切点 $P(x0, y0, z0)$。\n---\n二\n理论\n第一类曲面积分：\n$$\\iint{\\Sigma} f(x, y, z) \\, dS$$\n物理意义： 计算曲面的质量（其中 $f(x, y, z)$ 代表面密度）。\n第二类曲面积分：\n$$\\iint{\\Sigma} P \\, dy \\, dz + Q \\, dz \\, dx + R \\, dx \\, dy$$\n物理意义： 计算通量。\n推导与转换关系：\n$$\\iint{\\Sigma} \\vec{F} \\cdot d\\vec{S} = \\iint{\\Sigma} \\vec{F} \\cdot \\vec{n} \\, dS$$\n$$= \\iint{\\Sigma} (P, Q, R) \\cdot (\\cos \\alpha, \\cos \\beta, \\cos \\gamma) \\, dS$$\n$$= \\iint{\\Sigma} (P, Q, R) \\cdot (dy \\, dz, dz \\, dx, dx \\, dy)$$\n$$= \\iint{\\Sigma} P \\, dy \\, dz + Q \\, dz \\, dx + R \\, dx \\, dy$$\n例题：\n计算 $\\iint{\\Sigma} (x^2 + y^2 + z^2) \\, dS$ ， $\\Sigma$ 为球面 $x^2+y^2+z^2=4^2$ 。\n---",
+    "segments": [
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "一"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "类型："
+      },
+      {
+        "type": "body",
+        "text": "给定隐式曲面 $F(x, y, z) = 0$ 和其法向量 $\\vec{n} = (A, B, C)$，求切点 $P(x0, y0, z0)$。"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "理论基础："
+      },
+      {
+        "type": "body",
+        "text": "对于隐式曲面 $F(x, y, z) = 0$，在切点 $P(x0, y0, z0)$ 处："
+      },
+      {
+        "type": "body",
+        "text": "切向量：$\\vec{t} = (x - x0, y - y0, z - z0)$"
+      },
+      {
+        "type": "body",
+        "text": "法向量：$\\vec{n} = \\nabla F(x0, y0, z0) = (A, B, C)$"
+      },
+      {
+        "type": "body",
+        "text": "切平面方程满足 $\\vec{n} \\cdot \\vec{t} = 0$，即："
+      },
+      {
+        "type": "body",
+        "text": "$$A(x - x0) + B(y - y0) + C(z - z0) = 0$$"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "方法："
+      },
+      {
+        "type": "body",
+        "text": "利用梯度共线建立方程："
+      },
+      {
+        "type": "body",
+        "text": "$$(Fx(x0, y0, z0), Fy(x0, y0, z0), Fz(x0, y0, z0)) = \\lambda (A, B, C)$$"
+      },
+      {
+        "type": "body",
+        "text": "将 $P(x0, y0, z0)$ 的坐标用 $\\lambda$ 表达。"
+      },
+      {
+        "type": "body",
+        "text": "将 $P$ 代入曲面方程 $F(x, y, z) = 0$ 求解 $\\lambda$。"
+      },
+      {
+        "type": "body",
+        "text": "回代 $\\lambda$ 的值得到 $P$ 点坐标。"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "例题："
+      },
+      {
+        "type": "body",
+        "text": "已知曲面 $x^2 + 2y^2 + 3z^2 = 21$ 的切平面为 $11x - 4y + 6z + 25 = 0$，求切点 $P(x0, y0, z0)$。"
+      },
+      {
+        "type": "body",
+        "text": "---"
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "text": "二"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "理论"
+      },
+      {
+        "type": "body",
+        "text": "第一类曲面积分："
+      },
+      {
+        "type": "body",
+        "text": "$$\\iint{\\Sigma} f(x, y, z) \\, dS$$"
+      },
+      {
+        "type": "body",
+        "text": "物理意义： 计算曲面的质量（其中 $f(x, y, z)$ 代表面密度）。"
+      },
+      {
+        "type": "body",
+        "text": "第二类曲面积分："
+      },
+      {
+        "type": "body",
+        "text": "$$\\iint{\\Sigma} P \\, dy \\, dz + Q \\, dz \\, dx + R \\, dx \\, dy$$"
+      },
+      {
+        "type": "body",
+        "text": "物理意义： 计算通量。"
+      },
+      {
+        "type": "body",
+        "text": "推导与转换关系："
+      },
+      {
+        "type": "body",
+        "text": "$$\\iint{\\Sigma} \\vec{F} \\cdot d\\vec{S} = \\iint{\\Sigma} \\vec{F} \\cdot \\vec{n} \\, dS$$"
+      },
+      {
+        "type": "body",
+        "text": "$$= \\iint{\\Sigma} (P, Q, R) \\cdot (\\cos \\alpha, \\cos \\beta, \\cos \\gamma) \\, dS$$"
+      },
+      {
+        "type": "body",
+        "text": "$$= \\iint{\\Sigma} (P, Q, R) \\cdot (dy \\, dz, dz \\, dx, dx \\, dy)$$"
+      },
+      {
+        "type": "body",
+        "text": "$$= \\iint{\\Sigma} P \\, dy \\, dz + Q \\, dz \\, dx + R \\, dx \\, dy$$"
+      },
+      {
+        "type": "heading",
+        "level": 4,
+        "text": "例题："
+      },
+      {
+        "type": "body",
+        "text": "计算 $\\iint{\\Sigma} (x^2 + y^2 + z^2) \\, dS$ ， $\\Sigma$ 为球面 $x^2+y^2+z^2=4^2$ 。"
+      },
+      {
+        "type": "body",
+        "text": "---"
+      }
+    ]
+  },
+  {
     "slug": "2026-04-01-q1-summary",
     "category": "journal",
     "title": "我的 2026 年第一季度总结",
