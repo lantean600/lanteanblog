@@ -64,7 +64,7 @@ function App() {
                 description="Sharing technical articles, research updates, and daily notes"
                 keywords={["blog", "technology", "AI", "research", "Lantean"]}
                 url="https://lanteanblog.pages.dev"
-                image="https://lanteanblog.pages.dev/images/avatar-fallback.svg"
+                image="https://lanteanblog.pages.dev/images/share-card.png"
                 siteName="Lantean's Blog"
                 twitterCard="summary_large_image"
               />

@@ -16,7 +16,7 @@ export const PageMeta: React.FC<PageMetaProps> = (props) => {
     title,
     description,
     keywords,
-    image = "https://lanteanblog.pages.dev/images/avatar-fallback.svg",
+    image = "https://lanteanblog.pages.dev/images/share-card.png",
     url = "https://lanteanblog.pages.dev",
     type = "website",
     siteName = "Lantean's Blog",

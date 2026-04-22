@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "npm run optimize-images && npm run validate-content && node scripts/build-data.js",
+    "predev": "npm run optimize-images && node scripts/generate-share-card.mjs && npm run validate-content && node scripts/build-data.js",
     "dev": "node scripts/dev-with-data.js",
     "dev:site": "vite",
     "cms:proxy": "node scripts/start-cms-proxy.js",
@@ -13,7 +13,7 @@
     "dev:watch": "node scripts/dev-with-data.js",
     "optimize-images": "node scripts/optimize-images.js",
     "validate-content": "node scripts/validate-content.js",
-    "prebuild": "npm run optimize-images && npm run validate-content && node scripts/build-data.js",
+    "prebuild": "npm run optimize-images && node scripts/generate-share-card.mjs && npm run validate-content && node scripts/build-data.js",
     "build": "vite build",
     "preview": "vite preview",
     "type-check": "tsc --project tsconfig.json --noEmit",
