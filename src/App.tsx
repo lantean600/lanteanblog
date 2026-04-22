@@ -63,6 +63,10 @@ function App() {
                 title="Lantean's Blog"
                 description="Sharing technical articles, research updates, and daily notes"
                 keywords={["blog", "technology", "AI", "research", "Lantean"]}
+                url="https://lanteanblog.pages.dev"
+                image="https://lanteanblog.pages.dev/images/avatar-fallback.svg"
+                siteName="Lantean's Blog"
+                twitterCard="summary_large_image"
               />
               <Header isDark={isDark} toggleTheme={toggleTheme} />
               <Routes>
